@@ -34,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
 
     return DefaultTabController(
-      initialIndex: 1,
+      initialIndex: 0,
       length: 3,
       child: Scaffold(
         appBar: AppBar(
@@ -55,9 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: const TabBarView(
           children: <Widget>[
-            Center(
-              child: Text("It's account here"),
-            ),
+            ScreenAccount(),
             Center(
               child: Text("It's payments here"),
             ),
@@ -66,6 +64,31 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ScreenAccount extends StatelessWidget {
+  const ScreenAccount({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scrollbar(
+      child: ListView(
+        restorationId: 'test_view',
+        padding: const EdgeInsets.all(16.0),
+        children: <Widget>[
+          for(int index = 1; index < 20; index++)
+            const Card(
+              child: ListTile(
+                leading: FlutterLogo(size: 56.0),
+                title: Text('OTT service name'),
+                subtitle: Text('account: ***'),
+                trailing: Icon(Icons.more_vert),
+              ),
+            ),
+        ],
       ),
     );
   }
