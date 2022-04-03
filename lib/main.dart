@@ -64,6 +64,13 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
+        floatingActionButton: Theme(
+          data: Theme.of(context).copyWith(splashColor: Colors.blueAccent),
+          child: FloatingActionButton(
+            onPressed: () {},
+            child: const Icon(Icons.add),
+          ),
+        ),
       ),
     );
   }
@@ -83,7 +90,7 @@ class ScreenAccount extends StatelessWidget {
             const Card(
               child: ListTile(
                 leading: FlutterLogo(size: 56.0),
-                title: Text('OTT service name'),
+                title: Text('OTT service\'s name'),
                 subtitle: Text('account: ***'),
                 trailing: Icon(Icons.more_vert),
               ),
