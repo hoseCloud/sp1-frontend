@@ -29,48 +29,59 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const List<Widget> _widgetOptions = <Widget>[
+    ScreenAccount(),
+    Text(
+      'Index 1: Business',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 2: School',
+      style: optionStyle,
+    ),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
 
-    return DefaultTabController(
-      initialIndex: 0,
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-          bottom: const TabBar(
-              tabs: <Widget>[
-                Tab(
-                  icon: Icon(Icons.account_circle_sharp),
-                ),
-                Tab(
-                  icon: Icon(Icons.payments_sharp),
-                ),
-                Tab(
-                  icon: Icon(Icons.settings_sharp),
-                ),
-              ],
+  return Scaffold(
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      floatingActionButton: Theme(
+        data: Theme.of(context).copyWith(splashColor: Colors.blueAccent),
+        child: FloatingActionButton(
+          onPressed: () {},
+          child: const Icon(Icons.add),
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle_sharp),
+            label: 'Account',
           ),
-        ),
-        body: const TabBarView(
-          children: <Widget>[
-            ScreenAccount(),
-            Center(
-              child: Text("It's payments here"),
-            ),
-            Center(
-              child: Text("It's settings here"),
-            ),
-          ],
-        ),
-        floatingActionButton: Theme(
-          data: Theme.of(context).copyWith(splashColor: Colors.blueAccent),
-          child: FloatingActionButton(
-            onPressed: () {},
-            child: const Icon(Icons.add),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.payments_sharp),
+            label: 'Payments',
           ),
-        ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings_sharp),
+            label: 'Setting',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
       ),
     );
   }
