@@ -35,12 +35,12 @@ class _MyHomePageState extends State<MyHomePage> {
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     Text(
-      'Index 1: Business',
+      'Index 0: Payments',
       style: optionStyle,
     ),
     ScreenAccount(),
     Text(
-      'Index 2: School',
+      'Index 2: Setting',
       style: optionStyle,
     ),
   ];
@@ -68,12 +68,12 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_sharp),
-            label: 'Account',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.payments_sharp),
             label: 'Payments',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle_sharp),
+            label: 'Account',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings_sharp),
