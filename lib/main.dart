@@ -58,13 +58,6 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      floatingActionButton: Theme(
-        data: Theme.of(context).copyWith(splashColor: Colors.blueAccent),
-        child: FloatingActionButton(
-          onPressed: () {},
-          child: const Icon(Icons.add),
-        ),
-      ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
