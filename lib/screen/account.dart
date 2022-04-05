@@ -9,7 +9,12 @@ class ScreenAccount extends StatelessWidget {
       floatingActionButton: Theme(
         data: Theme.of(context).copyWith(splashColor: Colors.blueAccent),
         child: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ScreenAddAccount()),
+            );
+          },
           child: const Icon(Icons.add),
         ),
       ),
@@ -48,6 +53,27 @@ class ScreenAccount extends StatelessWidget {
                 ),
               ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class ScreenAddAccount extends StatelessWidget {
+  const ScreenAddAccount({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Second Route'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('Go back!'),
         ),
       ),
     );
