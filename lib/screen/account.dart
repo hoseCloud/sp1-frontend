@@ -13,14 +13,15 @@ class ScreenAccount extends StatelessWidget {
     return Scaffold(
       floatingActionButton: Theme(
         data: Theme.of(context).copyWith(splashColor: Colors.blueAccent),
-        child: FloatingActionButton(
+        child: FloatingActionButton.extended(
           onPressed: () {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const ScreenAddAccount()),
             );
           },
-          child: const Icon(Icons.add),
+          label: const Text('Add account'),
+          icon: const Icon(Icons.add),
         ),
       ),
       body: Scrollbar(
@@ -71,16 +72,46 @@ class ScreenAddAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Second Route'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Go back!'),
-        ),
+      body: ListView(
+        children: const <Widget>[
+          Align(
+            alignment: Alignment.topLeft,
+            child: BackButton(
+              color: Colors.blue,
+            ),
+          ),
+          SizedBox(height: 30.0),
+          Center(
+            child: Text(
+              "추가할 서비스가 무엇인가요?",
+              textScaleFactor: 3.0,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          SizedBox(height: 30.0),
+          ColoredBox(
+            color: Colors.blue,
+            child: Center(
+              child: Text(
+                "서치바 자리",
+                textScaleFactor: 3.0,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            )
+          ),
+          SizedBox(height: 30.0),
+          ColoredBox(
+            color: Colors.yellow,
+            child: Center(
+              heightFactor: 8.0,
+              child: Text(
+                "리스트 자리",
+                textScaleFactor: 3.0,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
