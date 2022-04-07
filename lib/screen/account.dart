@@ -73,7 +73,7 @@ class ScreenAddAccount extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
-        padding: const EdgeInsets.all(15.0),
+        padding: const EdgeInsets.all(16.0),
         children: const <Widget>[
           Align(
             alignment: Alignment.topLeft,
