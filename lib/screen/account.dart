@@ -73,6 +73,7 @@ class ScreenAddAccount extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
+        padding: const EdgeInsets.all(15.0),
         children: const <Widget>[
           Align(
             alignment: Alignment.topLeft,
@@ -80,7 +81,6 @@ class ScreenAddAccount extends StatelessWidget {
               color: Colors.blue,
             ),
           ),
-          SizedBox(height: 30.0),
           Center(
             child: Text(
               "추가할 서비스가 무엇인가요?",
@@ -89,26 +89,12 @@ class ScreenAddAccount extends StatelessWidget {
             ),
           ),
           SizedBox(height: 30.0),
-          ColoredBox(
-            color: Colors.blue,
-            child: Center(
-              child: Text(
-                "서치바 자리",
-                textScaleFactor: 3.0,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            )
-          ),
-          SizedBox(height: 30.0),
-          ColoredBox(
-            color: Colors.yellow,
-            child: Center(
-              heightFactor: 8.0,
-              child: Text(
-                "리스트 자리",
-                textScaleFactor: 3.0,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
+          TextField(
+            obscureText: false,
+            decoration: InputDecoration(
+              icon: Icon(Icons.search),
+              border: OutlineInputBorder(),
+              labelText: 'Search',
             ),
           ),
         ],
