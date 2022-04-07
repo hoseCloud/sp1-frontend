@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screen/account.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,73 +30,52 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Index 0: Payments',
+      style: optionStyle,
+    ),
+    ScreenAccount(),
+    Text(
+      'Index 2: Setting',
+      style: optionStyle,
+    ),
+  ];
 
-  @override
-  Widget build(BuildContext context) {
-
-    return DefaultTabController(
-      initialIndex: 0,
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-          bottom: const TabBar(
-              tabs: <Widget>[
-                Tab(
-                  icon: Icon(Icons.account_circle_sharp),
-                ),
-                Tab(
-                  icon: Icon(Icons.payments_sharp),
-                ),
-                Tab(
-                  icon: Icon(Icons.settings_sharp),
-                ),
-              ],
-          ),
-        ),
-        body: const TabBarView(
-          children: <Widget>[
-            ScreenAccount(),
-            Center(
-              child: Text("It's payments here"),
-            ),
-            Center(
-              child: Text("It's settings here"),
-            ),
-          ],
-        ),
-        floatingActionButton: Theme(
-          data: Theme.of(context).copyWith(splashColor: Colors.blueAccent),
-          child: FloatingActionButton(
-            onPressed: () {},
-            child: const Icon(Icons.add),
-          ),
-        ),
-      ),
-    );
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
-}
-
-class ScreenAccount extends StatelessWidget {
-  const ScreenAccount({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scrollbar(
-      child: ListView(
-        restorationId: 'test_view',
-        padding: const EdgeInsets.all(16.0),
-        children: <Widget>[
-          for(int index = 1; index < 20; index++)
-            const Card(
-              child: ListTile(
-                leading: FlutterLogo(size: 56.0),
-                title: Text('OTT service\'s name'),
-                subtitle: Text('account: ***'),
-                trailing: Icon(Icons.more_vert),
-              ),
-            ),
+
+  return Scaffold(
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.payments_sharp),
+            label: 'Payments',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle_sharp),
+            label: 'Account',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings_sharp),
+            label: 'Setting',
+          ),
         ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
       ),
     );
   }
