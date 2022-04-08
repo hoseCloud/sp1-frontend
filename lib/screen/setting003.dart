@@ -1,6 +1,3 @@
-/* List of contained screens
- #003 ScreenSetting
-*/
 import 'package:flutter/material.dart';
 
 // #003 ScreenSetting
