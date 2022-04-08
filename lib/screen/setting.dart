@@ -11,12 +11,30 @@ class ScreenSetting extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
-          padding: const EdgeInsets.all(15.0),
-          children: const <Widget>[
-            Text("test"),
-            Text("test"),
-            Text("test"),
-            Text("test"),
+          padding: const EdgeInsets.all(16.0),
+          children: <Widget>[
+            Card(
+              child: InkWell(
+                splashColor: Colors.blue.withAlpha(30),
+                onTap: () {
+                  debugPrint('Card tapped.');
+                },
+                child: const SizedBox(
+                  width: 300,
+                  height: 100,
+                  child: Center(
+                    child: ListTile(
+                      leading: Icon(Icons.login),
+                      title: Text(
+                        'Login to app',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        textScaleFactor: 2.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
       ),
     );
