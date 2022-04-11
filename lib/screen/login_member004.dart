@@ -25,9 +25,42 @@ class _ScreenLoginMemberState extends State<ScreenLoginMember> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('hello!'),
+    return Scaffold(
+      body: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return Column(
+            children: <Widget>[
+              Container(
+                height: constraints.maxHeight * 0.1,
+                alignment: Alignment.centerLeft,
+                color: Colors.red,
+                child: const BackButton(
+                  color: Colors.blue,
+                ),
+              ),
+              Container(
+                height: constraints.maxHeight * 0.15,
+                alignment: Alignment.center,
+                color: Colors.orange,
+              ),
+              Container(
+                height: constraints.maxHeight * 0.3,
+                alignment: Alignment.center,
+                color: Colors.yellow,
+              ),
+              Container(
+                height: constraints.maxHeight * 0.1,
+                alignment: Alignment.center,
+                color: Colors.green,
+              ),
+              Container(
+                height: constraints.maxHeight * 0.35,
+                alignment: Alignment.center,
+                color: Colors.blue,
+              ),
+            ],
+          );
+        }
       ),
     );
   }
