@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/screen/login_member004.dart';
 
 // #003 ScreenSetting
 class ScreenSetting extends StatelessWidget {
@@ -14,7 +15,10 @@ class ScreenSetting extends StatelessWidget {
               child: InkWell(
                 splashColor: Colors.blue.withAlpha(30),
                 onTap: () {
-                  debugPrint('Card tapped.');
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ScreenLoginMember())
+                  );
                 },
                 child: const SizedBox(
                   width: 300,
