@@ -55,13 +55,13 @@ class _ScreenLoginMemberState extends State<ScreenLoginMember> {
                 ),
               ),
               Container(
-                height: constraints.maxHeight * 0.3,
+                height: constraints.maxHeight * 0.2,
                 alignment: Alignment.center,
                 color: Colors.yellow,
                 child: Column(
                     children: <Widget>[
                       Container(
-                      height: constraints.maxHeight * 0.15,
+                      height: constraints.maxHeight * 0.1,
                         alignment: Alignment.center,
                         padding: const EdgeInsets.all(16.0),
                         color: Colors.blue,
@@ -75,7 +75,7 @@ class _ScreenLoginMemberState extends State<ScreenLoginMember> {
                         ),
                       ),
                       Container(
-                        height: constraints.maxHeight * 0.15,
+                        height: constraints.maxHeight * 0.1,
                         alignment: Alignment.center,
                         padding: const EdgeInsets.all(16.0),
                         color: Colors.red,
@@ -122,7 +122,7 @@ class _ScreenLoginMemberState extends State<ScreenLoginMember> {
                 ),
               ),
               Container(
-                height: constraints.maxHeight * 0.35,
+                height: constraints.maxHeight * 0.45,
                 alignment: Alignment.center,
                 color: Colors.blue,
               ),
