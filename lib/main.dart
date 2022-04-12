@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '/screen/account001.dart';
+import '/screen/setting003.dart';
 
 void main() {
   runApp(const MyApp());
@@ -39,10 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
       style: optionStyle,
     ),
     ScreenAccount(),
-    Text(
-      'Index 2: Setting',
-      style: optionStyle,
-    ),
+    ScreenSetting(),
   ];
 
   void _onItemTapped(int index) {
