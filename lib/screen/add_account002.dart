@@ -27,6 +27,7 @@ class _ScreenAddAccountState extends State<ScreenAddAccount> {
               Container(
                 height: constraints.maxHeight * 0.1,
                 alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.all(16.0),
                 child: const BackButton(
                   color: Colors.blue,
                 ),
@@ -68,7 +69,6 @@ class _ScreenAddAccountState extends State<ScreenAddAccount> {
               Container(
                 height: constraints.maxHeight * 0.6,
                 alignment: Alignment.center,
-                padding: const EdgeInsets.all(16.0),
                 child: ListView(
                   restorationId: 'test_view',
                   padding: const EdgeInsets.all(16.0),
