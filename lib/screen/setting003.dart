@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '/screen/login_member004.dart';
+import '/screen/register_member005.dart';
 
 // #003 ScreenSetting
 class ScreenSetting extends StatelessWidget {
@@ -27,7 +28,32 @@ class ScreenSetting extends StatelessWidget {
                     child: ListTile(
                       leading: Icon(Icons.login),
                       title: Text(
-                        'Login to app',
+                        'Login to member',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        textScaleFactor: 2.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Card(
+              child: InkWell(
+                splashColor: Colors.blue.withAlpha(30),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ScreenRegisterMember())
+                  );
+                },
+                child: const SizedBox(
+                  width: 300,
+                  height: 100,
+                  child: Center(
+                    child: ListTile(
+                      leading: Icon(Icons.app_registration),
+                      title: Text(
+                        'Register to member',
                         style: TextStyle(fontWeight: FontWeight.bold),
                         textScaleFactor: 2.0,
                       ),
