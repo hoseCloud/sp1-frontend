@@ -1,4 +1,9 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:async';
 
 // #006 ScreenLoginService
 class ScreenLoginService extends StatefulWidget {
@@ -24,8 +29,20 @@ class _ScreenLoginServiceState extends State<ScreenLoginService> {
       debugPrint('pw: $_pw');
     });
   }
-  void _doLogin() {
+  void _doLogin() async {
     debugPrint('Do login');
+
+    final response = await http.post(
+        Uri.parse('http://g3un.ddns.net:6644/netflix/info'),
+        body: jsonEncode(<String, String> {
+          'id': _id,
+          'pw': _pw,
+        })
+    );
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
+
+    //debugPrint(await http.read(Uri.parse('https://httpbin.org/post')));
   }
 
   @override
