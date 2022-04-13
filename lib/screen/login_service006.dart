@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:async';
 
 // #006 ScreenLoginService
 class ScreenLoginService extends StatefulWidget {
@@ -24,8 +27,15 @@ class _ScreenLoginServiceState extends State<ScreenLoginService> {
       debugPrint('pw: $_pw');
     });
   }
-  void _doLogin() {
+  void _doLogin() async {
     debugPrint('Do login');
+    var url = Uri.parse('https://httpbin.org/post');
+    var response = await http.post(url, body: {'id': _id, 'pw': _pw});
+
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
+
+    //debugPrint(await http.read(Uri.parse('https://httpbin.org/post')));
   }
 
   @override
