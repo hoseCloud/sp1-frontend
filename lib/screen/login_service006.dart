@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -29,9 +31,14 @@ class _ScreenLoginServiceState extends State<ScreenLoginService> {
   }
   void _doLogin() async {
     debugPrint('Do login');
-    var url = Uri.parse('https://httpbin.org/post');
-    var response = await http.post(url, body: {'id': _id, 'pw': _pw});
 
+    final response = await http.post(
+        Uri.parse('http://g3un.ddns.net:6644/netflix/info'),
+        body: jsonEncode(<String, String> {
+          'id': _id,
+          'pw': _pw,
+        })
+    );
     debugPrint('Response status: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
 
