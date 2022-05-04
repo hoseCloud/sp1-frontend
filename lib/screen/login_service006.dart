@@ -30,7 +30,7 @@ class _ScreenLoginServiceState extends State<ScreenLoginService> {
     debugPrint('Do login');
 
     final response = await http.post(
-        Uri.parse('http://g3un.ddns.net:6644/netflix/info'),
+        Uri.parse('https://sp1-backend.ddns.net/netflix/info'),
         body: jsonEncode(<String, String> {
           'id': _id,
           'pw': _pw,
