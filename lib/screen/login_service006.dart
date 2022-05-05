@@ -4,7 +4,8 @@ import 'dart:convert';
 
 // #006 ScreenLoginService
 class ScreenLoginService extends StatefulWidget {
-  const ScreenLoginService({Key? key}) : super(key: key);
+  const ScreenLoginService({Key? key, required this.serviceName}) : super(key: key);
+  final String serviceName;
 
   @override
   State<ScreenLoginService> createState() => _ScreenLoginServiceState();
@@ -28,18 +29,17 @@ class _ScreenLoginServiceState extends State<ScreenLoginService> {
   }
   void _doLogin() async {
     debugPrint('Do login');
-
+    String name = widget.serviceName;
     final response = await http.post(
-        Uri.parse('https://sp1-backend.ddns.net/netflix/info'),
-        body: jsonEncode(<String, String> {
-          'id': _id,
-          'pw': _pw,
-        })
+      Uri.parse('https://sp1-backend.ddns.net/$name/info'),
+      body: jsonEncode(<String, String> {
+        'id': _id,
+        'pw': _pw,
+      })
     );
+    debugPrint('Url: https://sp1-backend.ddns.net/$name/info');
     debugPrint('Response status: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
-
-    //debugPrint(await http.read(Uri.parse('https://httpbin.org/post')));
   }
 
   @override

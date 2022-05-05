@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/screen/login_service006.dart';
 
 // #002 ScreenAddAccount
 class ScreenAddAccount extends StatefulWidget {
@@ -10,10 +11,12 @@ class ScreenAddAccount extends StatefulWidget {
 
 class _ScreenAddAccountState extends State<ScreenAddAccount> {
   String _value = '';
+  final List<String> _service = ['netflix', 'wavve'];
 
   void _scanValue(String value) {
     setState(() {
       _value = value;
+      debugPrint(_value);
     });
   }
 
@@ -73,29 +76,33 @@ class _ScreenAddAccountState extends State<ScreenAddAccount> {
                   restorationId: 'test_view',
                   padding: const EdgeInsets.all(16.0),
                   children: <Widget>[
-                    for(int index = 0; index < 10; index++)
-                      Card(
-                        child: InkWell(
-                          splashColor: Colors.blue.withAlpha(30),
-                          onTap: () {
-                          debugPrint('Card tapped.');
-                          },
-                          child: const SizedBox(
-                            width: 300,
-                            height: 100,
-                            child: Center(
-                              child: ListTile(
-                                leading: FlutterLogo(size: 100.0),
-                                title: Text(
-                                  'OTT service\'s name',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                  textScaleFactor: 2.0,
+                    for(int index = 0; index < _service.length; index++)
+                      if(_service[index].contains(_value))
+                        Card(
+                          child: InkWell(
+                            splashColor: Colors.blue.withAlpha(30),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => ScreenLoginService(serviceName: _service[index]))
+                              );
+                            },
+                            child: SizedBox(
+                              width: 300,
+                              height: 100,
+                              child: Center(
+                                child: ListTile(
+                                  leading: const FlutterLogo(size: 100.0),
+                                  title: Text(
+                                    _service[index],
+                                    style: const TextStyle(fontWeight: FontWeight.bold),
+                                    textScaleFactor: 2.0,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
                   ],
                 ),
               ),
