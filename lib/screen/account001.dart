@@ -1,9 +1,33 @@
 import 'package:flutter/material.dart';
-import '/screen/add_account002.dart';
+import 'package:flutterapp/screen/add_account002.dart';
+import 'package:flutterapp/global.dart';
 
 // #001 ScreenAccount
-class ScreenAccount extends StatelessWidget {
+class ScreenAccount extends StatefulWidget {
   const ScreenAccount({Key? key}) : super(key: key);
+
+  @override
+  State<ScreenAccount> createState() => _ScreenAccountState();
+}
+
+class _ScreenAccountState extends State<ScreenAccount> {
+  List<Service> service = [Service('netflix', 'hose'), Service('wavve', 'clues')];
+
+  void selectValue(String value, int index) {
+    if(value == 'Remove') {
+      setState(() {
+        service.removeAt(index);
+      });
+      debugPrint('Remove!');
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    debugPrint('One time code????');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,30 +50,52 @@ class ScreenAccount extends StatelessWidget {
           restorationId: 'test_view',
           padding: const EdgeInsets.all(16.0),
           children: <Widget>[
-            for(int index = 0; index < 5; index++)
+            for(int index = 0; index < service.length; index++)
               Card(
                 child: InkWell(
                   splashColor: Colors.blue.withAlpha(30),
                   onTap: () {
                     debugPrint('Card tapped.');
                   },
-                  child: const SizedBox(
+                  child: SizedBox(
                     width: 300,
                     height: 100,
                     child: Center(
                       child: ListTile(
-                        leading: FlutterLogo(size: 100.0),
+                        leading: const FlutterLogo(size: 100.0),
                         title: Text(
-                          'OTT service\'s name',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          service[index].name,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                           textScaleFactor: 2.0,
                         ),
                         subtitle: Text(
-                          'account: ***',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          service[index].account,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                           textScaleFactor: 1.5,
                         ),
-                        trailing: Icon(Icons.more_vert),
+                        trailing: PopupMenuButton<String>(
+                          padding: EdgeInsets.zero,
+                          onSelected: (value) => {
+                            debugPrint('$value tapped.'),
+                            selectValue(value, index)
+                          },
+                          itemBuilder: (context) => <PopupMenuEntry<String>>[
+                            const PopupMenuItem<String>(
+                              value: "Hello",
+                              child: ListTile(
+                                leading: Icon(Icons.front_hand),
+                                title: Text("Hello"),
+                              ),
+                            ),
+                            const PopupMenuItem<String>(
+                              value: "Remove",
+                              child: ListTile(
+                                leading: Icon(Icons.delete),
+                                title: Text("Remove"),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
