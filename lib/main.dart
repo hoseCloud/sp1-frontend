@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '/screen/account001.dart';
-import '/screen/setting003.dart';
+import 'package:flutterapp/screen/account001.dart';
+import 'package:flutterapp/screen/setting003.dart';
 
 void main() {
   runApp(const MyApp());

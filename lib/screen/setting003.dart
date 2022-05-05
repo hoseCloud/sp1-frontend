@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '/screen/login_member004.dart';
-import '/screen/register_member005.dart';
-import '/screen/login_service006.dart';
+import 'package:flutterapp/screen/login_member004.dart';
+import 'package:flutterapp/screen/register_member005.dart';
+import 'package:flutterapp/screen/login_service006.dart';
 
 // #003 ScreenSetting
 class ScreenSetting extends StatelessWidget {
@@ -68,8 +68,8 @@ class ScreenSetting extends StatelessWidget {
                 splashColor: Colors.blue.withAlpha(30),
                 onTap: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const ScreenLoginService())
+                    context,
+                    MaterialPageRoute(builder: (context) => const ScreenLoginService(serviceName: 'netflix'))
                   );
                 },
                 child: const SizedBox(
