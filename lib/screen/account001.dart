@@ -15,7 +15,7 @@ class _ScreenAccountState extends State<ScreenAccount> {
 
   void selectValue(String value, int index) {
     if(value == 'Remove') {
-      setState(() {
+      super.setState(() {
         service.removeAt(index);
       });
       debugPrint('Remove!');
@@ -25,8 +25,8 @@ class _ScreenAccountState extends State<ScreenAccount> {
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
     debugPrint('One time code????');
+    super.initState();
   }
 
   @override
