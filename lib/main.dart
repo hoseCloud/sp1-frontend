@@ -51,8 +51,37 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
-  return Scaffold(
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+          icon: const Icon(Icons.menu),
+          onPressed: () {},
+        ),
+        actions: [
+          PopupMenuButton<Text>(
+            itemBuilder: (context) {
+              return [
+                const PopupMenuItem(
+                  child: Text(
+                   '1',
+                  ),
+                ),
+                const PopupMenuItem(
+                  child: Text(
+                    '2',
+                  ),
+                ),
+                const PopupMenuItem(
+                  child: Text(
+                    '3',
+                  ),
+                ),
+              ];
+            }
+          ),
+        ],
+      ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
