@@ -11,7 +11,9 @@ class ScreenAccount extends StatefulWidget {
 }
 
 class _ScreenAccountState extends State<ScreenAccount> {
-  List<Service> service = [Service('netflix', 'hose'), Service('wavve', 'clues')];
+  late dynamic service = [Service('netflix', 'test'), Service('wavve', '123123')];
+  late dynamic list;
+  static DbService db = DbService();
 
   void selectValue(String value, int index) {
     if(value == 'Remove') {
@@ -25,6 +27,10 @@ class _ScreenAccountState extends State<ScreenAccount> {
   @override
   void initState() {
     // TODO: implement initState
+    db.dbOpen();
+    Future.delayed(const Duration(seconds: 1), () => {
+      //service = db.dbSelect()
+    });
     debugPrint('One time code????');
     super.initState();
   }
@@ -62,7 +68,7 @@ class _ScreenAccountState extends State<ScreenAccount> {
                     height: 100,
                     child: Center(
                       child: ListTile(
-                        leading: const FlutterLogo(size: 100.0),
+                        leading: Image.asset("resource/" + service[index].name + ".png", width: 80,),
                         title: Text(
                           service[index].name,
                           style: const TextStyle(fontWeight: FontWeight.bold),

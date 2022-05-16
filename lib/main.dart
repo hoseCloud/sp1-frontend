@@ -3,6 +3,8 @@ import 'package:flutterapp/screen/account001.dart';
 import 'package:flutterapp/screen/setting003.dart';
 
 void main() {
+  debugPrint('Run main');
+
   runApp(const MyApp());
 }
 
@@ -16,22 +18,22 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'app bar'),
+      home: const MainPage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
 
-  final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MainPage> createState() => _MainPagePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MainPagePageState extends State<MainPage> {
   int _selectedIndex = 0;
+  bool dbOnline = false;
   static const TextStyle optionStyle =
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
