@@ -1,28 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutterapp/global.dart';
 import 'package:flutterapp/stats.dart';
 
-class StatsTest extends StatefulWidget {
+class StatsTest extends StatelessWidget {
   const StatsTest({Key? key}) : super(key: key);
 
   @override
-  State<StatsTest> createState() => _StatsTestState();
-}
-
-class _StatsTestState extends State<StatsTest> {
-
-  @override
   Widget build(BuildContext context) {
-    return Consumer<CartModel> (
-      builder: (context, cart, child) => Stack(
+    return Consumer<ServiceModel> (
+      builder: (context, service, child) => Column(
         children: [
           if(child != null) child,
-          Center(child: Text("Total price: ${cart.totalPrice}")),
+          for(int index = 0; index < service.lengthService; index++)
+            Text(service.items[index].accountId),
           Card(
             child: InkWell(
               splashColor: Colors.blue.withAlpha(30),
               onTap: () {
-                cart.add(Item(1, '12'));
+                service.add(Service.account('netflix', 'hose', 'password'));
               },
               child: const SizedBox(
                 width: 300,

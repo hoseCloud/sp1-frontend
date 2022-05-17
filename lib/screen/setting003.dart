@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterapp/screen/login_member004.dart';
 import 'package:flutterapp/screen/register_member005.dart';
 import 'package:flutterapp/screen/login_service006.dart';
-import 'package:flutterapp/global.dart';
+import 'package:flutterapp/screen/loading.dart';
 import 'package:flutterapp/screen/test_stats.dart';
 
 // #003 ScreenSetting

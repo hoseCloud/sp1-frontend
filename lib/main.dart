@@ -7,7 +7,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => CartModel()),
+        ChangeNotifierProvider(create: (context) => ServiceModel()),
       ],
       child: const MyApp(),
     ),
