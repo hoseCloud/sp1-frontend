@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/screen/account001.dart';
-import 'package:flutterapp/screen/setting003.dart';
+import 'package:flutterapp/screen/splash.dart';
+import 'package:provider/provider.dart';
+import 'package:flutterapp/stats.dart';
 
-void main() {
-  debugPrint('Run main');
-
-  runApp(const MyApp());
+void main() async {
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => CartModel()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -18,94 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MainPage(),
-    );
-  }
-}
-
-class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
-
-
-  @override
-  State<MainPage> createState() => _MainPagePageState();
-}
-
-class _MainPagePageState extends State<MainPage> {
-  int _selectedIndex = 0;
-  bool dbOnline = false;
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Payments',
-      style: optionStyle,
-    ),
-    ScreenAccount(),
-    ScreenSetting(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-          icon: const Icon(Icons.menu),
-          onPressed: () {},
-        ),
-        actions: [
-          PopupMenuButton<Text>(
-            itemBuilder: (context) {
-              return [
-                const PopupMenuItem(
-                  child: Text(
-                   '1',
-                  ),
-                ),
-                const PopupMenuItem(
-                  child: Text(
-                    '2',
-                  ),
-                ),
-                const PopupMenuItem(
-                  child: Text(
-                    '3',
-                  ),
-                ),
-              ];
-            }
-          ),
-        ],
-      ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.payments_sharp),
-            label: 'Payments',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_sharp),
-            label: 'Account',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings_sharp),
-            label: 'Setting',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
-      ),
+      home: const ScreenSplash(),
     );
   }
 }

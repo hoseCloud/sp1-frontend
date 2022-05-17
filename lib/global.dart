@@ -3,6 +3,8 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
+const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+
 Scaffold loading() {
   return Scaffold(
       body: Center(
