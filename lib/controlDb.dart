@@ -7,30 +7,30 @@ class DbService extends Db {
   }
 
   @override
-  void dbCreate() {
-    db.execute('''
+  Future<void> dbCreate() async {
+    await db.execute('''
       CREATE TABLE "Service" (
         "name"	TEXT NOT NULL,
-        "accoutId"	TEXT NOT NULL,
+        "accountId"	TEXT NOT NULL,
         "accountPw"	TEXT NOT NULL,
         "paymentType"	TEXT,
         "paymentDetail"	TEXT,
         "paymentNext"	TEXT,
         "membershipType"	INTEGER,
         "membershipCost"	INTEGER,
-        PRIMARY KEY("name","accoutId")
+        PRIMARY KEY("name","accountId")
       )
       '''
     );
     debugPrint('Success to create db!');
   }
   @override
-  void dbInsert(dynamic data) async {
+  Future<void> dbInsert(dynamic data) async {
     if(opening) {
       await db.transaction((txn) async {
         int id = await txn.rawInsert('''
           INSERT INTO "main"."Service"(
-          "name", "accoutId", "accountPw", 
+          "name", "accountId", "accountPw", 
           "paymentType", "paymentDetail", "paymentNext", 
           "membershipType", "membershipCost")
           VALUES (?, ?, ?, ?, ?, ?, ?, ?);
@@ -47,23 +47,29 @@ class DbService extends Db {
     }
   }
   @override
-  void dbDelete() {}
+  Future<void> dbDelete() async {}
   @override
-  void dbUpdate() {}
+  Future<void> dbUpdate() async {}
   @override
-  dynamic dbSelect() async {
+  Future<dynamic> dbSelect() async {
     dynamic result = await db.query('Service');
-    /*
-    late dynamic list;
-
-    list = List.generate(result.length, (i) => {
-      result[i]['name'],
-      result[i]['account'],
-    });
-
-    debugPrint(list.toString());
-    */
-
+    List<Service> list = [];
+/*
+    for(int i = 0; i < result.length; i++) {
+      list.add(
+          Service(
+            result[i]['name'],
+            result[i]['accountId'],
+            result[i]['accountPw'],
+            result[i]['paymentType'],
+            result[i]['paymentDetail'],
+            result[i]['paymentNext'],
+            result[i]['membershipType'],
+            result[i]['membershipCost'],
+          )
+      );
+    }
+*/
     return result;
   }
 }
