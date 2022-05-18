@@ -18,7 +18,7 @@ class StatsTest extends StatelessWidget {
             child: InkWell(
               splashColor: Colors.blue.withAlpha(30),
               onTap: () {
-                service.add(Service.account('netflix', 'hose', 'password'));
+                service.db.dbInsert(Service.account('netflix', 'hose', 'password'));
               },
               child: const SizedBox(
                 width: 300,

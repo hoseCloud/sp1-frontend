@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/screen/mainTabs.dart';
 import 'package:flutterapp/screen/loading.dart';
+import 'package:provider/provider.dart';
+import 'package:flutterapp/stats.dart';
+import 'package:flutterapp/global.dart';
 
 class ScreenSplash extends StatefulWidget {
   const ScreenSplash({Key? key}) : super(key: key);
@@ -12,14 +15,35 @@ class ScreenSplash extends StatefulWidget {
 
 class _ScreenSplashState extends State<ScreenSplash> {
 
+  void initDb() async {
+    dynamic pro = Provider.of<ServiceModel>(context, listen: false);
+    await pro.db.dbOpen();
+    //await pro.db.dbEliminate();
+    //await pro.db.dbCreate();
+    dynamic list = await pro.db.dbSelect();
+    for(int idx = 0; idx < list.length; idx++) {
+      pro.add(Service(
+        list[idx]['name'],
+        list[idx]['accountId'],
+        list[idx]['accountPw'],
+        list[idx]['paymentType'],
+        list[idx]['paymentDetail'],
+        list[idx]['paymentNext'],
+        list[idx]['membershipType'],
+        list[idx]['membershipCost'],
+      ));
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 3), () {
       Navigator.push(context, MaterialPageRoute(
         builder: (context) => const ScreenMainTabs(),
       ));
     });
+   initDb();
   }
 
   @override
@@ -31,7 +55,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
     return WillPopScope(
       onWillPop: () async => false,
       child: MediaQuery(
-        data: MediaQuery.of(context).copyWith(textScaleFactor:1.0),
+        data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
         child: Scaffold(
           body: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -40,7 +64,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
               Center(
                 child: loading(),
               ),
-              SizedBox( height: MediaQuery.of(context).size.height*0.0625,),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.0625),
             ],
           ),
         ),

@@ -44,7 +44,7 @@ abstract class Db {
   void error(String msg) {
     debugPrint('Error! ' + msg);
   }
-  void dbOpen() async {
+  Future<void> dbOpen() async {
     if(!opening) {
       databasePath = await getDatabasesPath();
       String path = join(databasePath, dbName + '.db');
@@ -53,26 +53,25 @@ abstract class Db {
       debugPrint('Success to open db!');
     }
   }
-  void dbClose() async {
+  Future<void> dbClose() async {
     if(opening) {
       db.close();
       opening = false;
       debugPrint('Success to close db!');
     }
   }
-  void dbEliminate() async {
+  Future<void> dbEliminate() async {
     if(opening) {
-      await db.close();
-      await deleteDatabase(databasePath);
+      await deleteDatabase(join(databasePath, dbName + '.db'));
       debugPrint('Success to eliminate db!');
     }
     else {
       error('Db isn\'t opened!');
     }
   }
-  void dbCreate();
-  void dbInsert(dynamic data);
-  void dbDelete();
-  void dbUpdate();
-  dynamic dbSelect();
+  Future<void> dbCreate();
+  Future<void> dbInsert(dynamic data);
+  Future<void> dbDelete();
+  Future<void> dbUpdate();
+  Future<dynamic> dbSelect();
 }
