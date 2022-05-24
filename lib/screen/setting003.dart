@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import '/screen/login_member004.dart';
-import '/screen/register_member005.dart';
-import '/screen/login_service006.dart';
+import 'package:flutterapp/screen/login_member004.dart';
+import 'package:flutterapp/screen/register_member005.dart';
+import 'package:flutterapp/screen/login_service006.dart';
+import 'package:flutterapp/screen/loading.dart';
+import 'package:flutterapp/screen/test_stats.dart';
 
 // #003 ScreenSetting
 class ScreenSetting extends StatelessWidget {
@@ -69,7 +71,7 @@ class ScreenSetting extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const ScreenLoginService())
+                      MaterialPageRoute(builder: (context) => const ScreenLoginService(serviceName: 'netflix'))
                   );
                 },
                 child: const SizedBox(
@@ -80,6 +82,56 @@ class ScreenSetting extends StatelessWidget {
                       leading: Icon(Icons.login),
                       title: Text(
                         'Login to Netflix',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        textScaleFactor: 2.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Card(
+              child: InkWell(
+                splashColor: Colors.blue.withAlpha(30),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => loading())
+                  );
+                },
+                child: const SizedBox(
+                  width: 300,
+                  height: 100,
+                  child: Center(
+                    child: ListTile(
+                      leading: Icon(Icons.login),
+                      title: Text(
+                        'Loading screen',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        textScaleFactor: 2.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Card(
+              child: InkWell(
+                splashColor: Colors.blue.withAlpha(30),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const StatsTest())
+                  );
+                },
+                child: const SizedBox(
+                  width: 300,
+                  height: 100,
+                  child: Center(
+                    child: ListTile(
+                      leading: Icon(Icons.login),
+                      title: Text(
+                        'Test stats',
                         style: TextStyle(fontWeight: FontWeight.bold),
                         textScaleFactor: 2.0,
                       ),
