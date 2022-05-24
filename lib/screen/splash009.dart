@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/screen/mainTabs.dart';
-import 'package:flutterapp/screen/loading.dart';
+import 'package:flutterapp/screen/mainTabs008.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:flutterapp/stats.dart';
 import 'package:flutterapp/global.dart';
@@ -64,7 +64,12 @@ class _ScreenSplashState extends State<ScreenSplash> {
             children: <Widget>[
               SizedBox(height: screenHeight * 0.384375),
               Center(
-                child: loading(),
+                child: Center(
+                  child: LoadingAnimationWidget.staggeredDotsWave(
+                    color: Colors.grey,
+                    size: 100,
+                  ),
+                ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.0625),
             ],
