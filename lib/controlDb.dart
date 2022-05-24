@@ -37,7 +37,7 @@ class DbService extends Db {
           ''',
           [data.name, data.accountId, data.accountPw,
            data.paymentType, data.paymentDetail, data.paymentNext,
-           data.membershipType, data.membershipCost]
+           data.membershipType, data.membershipCost],
         );
         debugPrint('Success to insert: $id');
       });
@@ -47,29 +47,30 @@ class DbService extends Db {
     }
   }
   @override
-  Future<void> dbDelete() async {}
+  Future<void> dbDelete(dynamic data) async {
+    if(opening) {
+      await db.transaction((txn) async {
+        int id = await txn.rawInsert(
+            'DELETE FROM "Service" WHERE "name" = ? AND "accountId" = ?',
+            [data.name, data.accountId],
+        );
+        debugPrint('Success to delete: $id');
+      });
+    }
+    else {
+      error('DbService isn\'t opened!');
+    }
+  }
   @override
   Future<void> dbUpdate() async {}
   @override
   Future<dynamic> dbSelect() async {
-    dynamic result = await db.query('Service');
-    List<Service> list = [];
-/*
-    for(int i = 0; i < result.length; i++) {
-      list.add(
-          Service(
-            result[i]['name'],
-            result[i]['accountId'],
-            result[i]['accountPw'],
-            result[i]['paymentType'],
-            result[i]['paymentDetail'],
-            result[i]['paymentNext'],
-            result[i]['membershipType'],
-            result[i]['membershipCost'],
-          )
-      );
-    }
-*/
-    return result;
+    return await db.query('Service');
+  }
+  Future<dynamic> deSelect(String name, String accountId) async {
+    return await db.rawQuery(
+        'SELECT * FROM "Service" WHERE '
+        '"name" = "$name" AND "accountId" = "$accountId"'
+    );
   }
 }

@@ -11,6 +11,7 @@ class Service {
   String? paymentNext;
   int? membershipType;
   int? membershipCost;
+  int status = 0;
 
   Service(
       this.name, this.accountId, this.accountPw,
@@ -32,6 +33,9 @@ class Service {
   void getMembership(int? membershipType, int? membershipCost) {
     this.membershipType = membershipType;
     this.membershipCost = membershipCost;
+  }
+  void changeStatus(int status) {
+    this.status = status;
   }
 }
 
@@ -71,7 +75,7 @@ abstract class Db {
   }
   Future<void> dbCreate();
   Future<void> dbInsert(dynamic data);
-  Future<void> dbDelete();
+  Future<void> dbDelete(dynamic data);
   Future<void> dbUpdate();
   Future<dynamic> dbSelect();
 }
