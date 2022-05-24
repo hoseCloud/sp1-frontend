@@ -22,7 +22,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'sp-1 frontend',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        // primarySwatch: Colors.blue,
+        colorSchemeSeed: const Color(0xff2962ff),
+        useMaterial3: true,
       ),
       home: const ScreenSplash(),
     );
