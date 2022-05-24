@@ -22,7 +22,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
     //await pro.db.dbCreate();
     dynamic list = await pro.db.dbSelect();
     for(int idx = 0; idx < list.length; idx++) {
-      pro.add(Service(
+      Service service = Service(
         list[idx]['name'],
         list[idx]['accountId'],
         list[idx]['accountPw'],
@@ -31,7 +31,9 @@ class _ScreenSplashState extends State<ScreenSplash> {
         list[idx]['paymentNext'],
         list[idx]['membershipType'],
         list[idx]['membershipCost'],
-      ));
+      );
+      service.changeStatus(200);
+      pro.add(service);
     }
   }
 
@@ -39,7 +41,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.push(context, MaterialPageRoute(
+      Navigator.pushReplacement(context, MaterialPageRoute(
         builder: (context) => const ScreenMainTabs(),
       ));
     });

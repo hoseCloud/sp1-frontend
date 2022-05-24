@@ -14,20 +14,18 @@ class ScreenAccount extends StatefulWidget {
 
 class _ScreenAccountState extends State<ScreenAccount> {
 
-  void selectValue(String value, int index) {
+  void selectValue(String value, int index) async {
     if(value == 'Remove') {
-      super.setState(() {
-        //service.removeAt(index);
-      });
-      debugPrint('Remove!');
+      dynamic pro = Provider.of<ServiceModel>(context, listen: false);
+      Service service = pro.items[index];
+      pro.remove(service);
+      pro.db.dbDelete(service);
     }
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    debugPrint('One time code????');
-    super.initState();
+    else if(value == 'Status') {
+      dynamic pro = Provider.of<ServiceModel>(context, listen: false);
+      Service service = pro.items[index];
+      debugPrint('${service.status}');
+    }
   }
 
   @override
@@ -55,6 +53,7 @@ class _ScreenAccountState extends State<ScreenAccount> {
                 if(child != null) child,
                 for(int index = 0; index < service.lengthService; index++)
                   Card(
+                    // color: Colors.white70,
                     child: InkWell(
                       splashColor: Colors.blue.withAlpha(30),
                       onTap: () {
@@ -78,15 +77,14 @@ class _ScreenAccountState extends State<ScreenAccount> {
                             trailing: PopupMenuButton<String>(
                               padding: EdgeInsets.zero,
                               onSelected: (value) => {
-                                debugPrint('$value tapped.'),
                                 selectValue(value, index)
                               },
                               itemBuilder: (context) => <PopupMenuEntry<String>>[
                                 const PopupMenuItem<String>(
-                                  value: "Hello",
+                                  value: "Status",
                                   child: ListTile(
-                                    leading: Icon(Icons.front_hand),
-                                    title: Text("Hello"),
+                                    leading: Icon(Icons.follow_the_signs),
+                                    title: Text("Status"),
                                   ),
                                 ),
                                 const PopupMenuItem<String>(
