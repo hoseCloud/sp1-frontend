@@ -3,6 +3,7 @@ import 'package:flutterapp/screen/add_account002.dart';
 import 'package:provider/provider.dart';
 import 'package:flutterapp/stats.dart';
 import 'package:flutterapp/global.dart';
+import 'package:flutterapp/screen/service_detail010.dart';
 
 // #001 ScreenAccount
 class ScreenAccount extends StatefulWidget {
@@ -78,6 +79,10 @@ class _ScreenAccountState extends State<ScreenAccount> {
                       splashColor: Colors.blue.withAlpha(30),
                       onTap: () {
                         debugPrint('Card tapped.');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ScreenServiceDetail(data: service.items[index])),
+                        );
                       },
                       child: SizedBox(
                         width: 300,
