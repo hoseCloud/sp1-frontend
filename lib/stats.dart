@@ -28,4 +28,16 @@ class ServiceModel extends ChangeNotifier {
     _service.clear();
     notifyListeners();
   }
+
+  int priceAll() {
+    int result = 0;
+
+    for(int idx = 0; idx < lengthService; idx++) {
+      if(_service[idx].membershipCost != null) {
+        result += _service[idx].membershipCost!.toInt();
+      }
+    }
+
+    return result;
+  }
 }
