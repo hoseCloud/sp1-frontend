@@ -35,6 +35,7 @@ class _ScreenLoginServiceState extends State<ScreenLoginService> {
     String name = widget.serviceName;
     dynamic pro = Provider.of<ServiceModel>(context, listen: false);
     Service service = Service.account(name, _id, _pw);
+    service.changeStatus(0);
     await pro.add(service);
     final response = await http.post(
       Uri.parse('https://sp1-backend.ddns.net/$name/info'),
@@ -54,12 +55,15 @@ class _ScreenLoginServiceState extends State<ScreenLoginService> {
           name, account['id'], account['pw'],
           payment['type'], payment['detail'], payment['next'],
           membership['type'], membership['cost']);
+      service.changeStatus(response.statusCode);
       await pro.add(service);
       await pro.db.dbInsert(service);
     }
     else {
       debugPrint("fail... else");
       pro.remove(service);
+      service.changeStatus(response.statusCode);
+      pro.add(service);
     }
     debugPrint('Url: https://sp1-backend.ddns.net/$name/info');
     debugPrint('Response status: ${response.statusCode}');

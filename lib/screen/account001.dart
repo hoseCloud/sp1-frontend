@@ -3,6 +3,7 @@ import 'package:flutterapp/screen/add_account002.dart';
 import 'package:provider/provider.dart';
 import 'package:flutterapp/stats.dart';
 import 'package:flutterapp/global.dart';
+import 'package:flutterapp/screen/service_detail010.dart';
 
 // #001 ScreenAccount
 class ScreenAccount extends StatefulWidget {
@@ -26,7 +27,30 @@ class _ScreenAccountState extends State<ScreenAccount> {
       Service service = pro.items[index];
       debugPrint('${service.status}');
     }
+    else if(value == 'Refresh') {
+      debugPrint('$value tapped');
+    }
   }
+  Color sColor(int status) {
+    Color result = Colors.deepOrange;
+
+    if(status == 0) {
+      result = Colors.white30;
+    }
+    if(status == 200) {
+      result = Colors.greenAccent;
+    }
+    if(status == 400 || status == 401) {
+      result = Colors.redAccent;
+    }
+    if(status == 405) {
+      result = Colors.red;
+    }
+    if(status == 500) {
+      result = Colors.grey;
+    }
+    return result;
+}
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +77,15 @@ class _ScreenAccountState extends State<ScreenAccount> {
                 if(child != null) child,
                 for(int index = 0; index < service.lengthService; index++)
                   Card(
-                    // color: Colors.white70,
+                    color: sColor(service.items[index].status),
                     child: InkWell(
                       splashColor: Colors.blue.withAlpha(30),
                       onTap: () {
                         debugPrint('Card tapped.');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ScreenServiceDetail(data: service.items[index])),
+                        );
                       },
                       child: SizedBox(
                         width: 300,
@@ -85,6 +113,13 @@ class _ScreenAccountState extends State<ScreenAccount> {
                                   child: ListTile(
                                     leading: Icon(Icons.follow_the_signs),
                                     title: Text("Status"),
+                                  ),
+                                ),
+                                const PopupMenuItem<String>(
+                                  value: "Refresh",
+                                  child: ListTile(
+                                    leading: Icon(Icons.refresh),
+                                    title: Text("Refresh"),
                                   ),
                                 ),
                                 const PopupMenuItem<String>(

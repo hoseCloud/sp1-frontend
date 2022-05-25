@@ -25,23 +25,23 @@ class _ScreenMainTabsState extends State<ScreenMainTabs> {
     });
   }
 
+  void refresh() {
+    debugPrint('refresh tapped!');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-          icon: const Icon(Icons.menu),
-          onPressed: () {},
-        ),
         actions: [
           PopupMenuButton<Text>(
               itemBuilder: (context) {
                 return [
-                  const PopupMenuItem(
-                    child: Text(
-                      '1',
+                  PopupMenuItem(
+                    child: const Text(
+                      'Refresh all account',
                     ),
+                    onTap: refresh,
                   ),
                   const PopupMenuItem(
                     child: Text(
@@ -60,6 +60,23 @@ class _ScreenMainTabsState extends State<ScreenMainTabs> {
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: const [
+            UserAccountsDrawerHeader(
+              accountName: Text('Hose'),
+              accountEmail: Text('hose@gmail.com'),
+              currentAccountPicture: CircleAvatar(
+                child: FlutterLogo(size: 42.0),
+              ),
+            ),
+            ListTile(
+              title: Text('Detail'),
+              leading: Icon(Icons.person),
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
