@@ -7,32 +7,32 @@ import 'package:flutterapp/global.dart';
 class ScreenServiceDetail extends StatelessWidget {
   const ScreenServiceDetail({Key? key, required this.data}) : super(key: key);
   final dynamic data;
-/*
-  String name;
-  String accountId;
-  String accountPw;
-  String? paymentType;
-  String? paymentDetail;
-  String? paymentNext;
-  int? membershipType;
-  int? membershipCost;
-  int status = 0;
- */
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Text(
-        'name: ${data.name}\n'
-        'accountId: ${data.accountId}\n'
-        'accountPw: ${data.accountPw}\n'
-        'paymentType: ${data.paymentType}\n'
-        'paymentDatail: ${data.paymentDetail}\n'
-        'paymentNext: ${data.paymentNext}\n'
-        'membershipType: ${data.membershipType}\n'
-        'membershipCost: ${data.membershipCost}\n'
-        'status: ${data.status}\n',
-        textScaleFactor: 2.0,
+      body: Column(
+        children: [
+          Text(
+            'name: ${data.name}\n'
+                'accountId: ${data.accountId}\n'
+                'accountPw: ${data.accountPw}\n'
+                'paymentType: ${data.paymentType}\n'
+                'paymentDatail: ${data.paymentDetail}\n'
+                'paymentNext: ${data.paymentNext}\n'
+                'membershipType: ${data.membershipType}\n'
+                'membershipCost: ${data.membershipCost}\n'
+                'status: ${data.status}\n',
+            textScaleFactor: 2.0,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              debugPrint('refresh tapped!');
+            },
+            child: const Icon(Icons.refresh),
+          ),
+        ],
       ),
     );
   }
