@@ -27,6 +27,26 @@ class _ScreenAccountState extends State<ScreenAccount> {
       debugPrint('${service.status}');
     }
   }
+  Color sColor(int status) {
+    Color result = Colors.deepOrange;
+
+    if(status == 0) {
+      result = Colors.white30;
+    }
+    if(status == 200) {
+      result = Colors.greenAccent;
+    }
+    if(status == 400 || status == 401) {
+      result = Colors.redAccent;
+    }
+    if(status == 405) {
+      result = Colors.red;
+    }
+    if(status == 500) {
+      result = Colors.grey;
+    }
+    return result;
+}
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +73,7 @@ class _ScreenAccountState extends State<ScreenAccount> {
                 if(child != null) child,
                 for(int index = 0; index < service.lengthService; index++)
                   Card(
-                    // color: Colors.white70,
+                    color: sColor(service.items[index].status),
                     child: InkWell(
                       splashColor: Colors.blue.withAlpha(30),
                       onTap: () {
