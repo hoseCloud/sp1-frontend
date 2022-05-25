@@ -25,6 +25,10 @@ class _ScreenMainTabsState extends State<ScreenMainTabs> {
     });
   }
 
+  void refresh() {
+    debugPrint('refresh tapped!');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,10 +37,11 @@ class _ScreenMainTabsState extends State<ScreenMainTabs> {
           PopupMenuButton<Text>(
               itemBuilder: (context) {
                 return [
-                  const PopupMenuItem(
-                    child: Text(
-                      '1',
+                  PopupMenuItem(
+                    child: const Text(
+                      'Refresh all account',
                     ),
+                    onTap: refresh,
                   ),
                   const PopupMenuItem(
                     child: Text(

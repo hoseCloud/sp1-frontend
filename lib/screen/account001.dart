@@ -27,6 +27,9 @@ class _ScreenAccountState extends State<ScreenAccount> {
       Service service = pro.items[index];
       debugPrint('${service.status}');
     }
+    else if(value == 'Refresh') {
+      debugPrint('$value tapped');
+    }
   }
   Color sColor(int status) {
     Color result = Colors.deepOrange;
@@ -110,6 +113,13 @@ class _ScreenAccountState extends State<ScreenAccount> {
                                   child: ListTile(
                                     leading: Icon(Icons.follow_the_signs),
                                     title: Text("Status"),
+                                  ),
+                                ),
+                                const PopupMenuItem<String>(
+                                  value: "Refresh",
+                                  child: ListTile(
+                                    leading: Icon(Icons.refresh),
+                                    title: Text("Refresh"),
                                   ),
                                 ),
                                 const PopupMenuItem<String>(
