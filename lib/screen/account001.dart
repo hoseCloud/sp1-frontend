@@ -3,6 +3,7 @@ import 'package:flutterapp/screen/add_account002.dart';
 import 'package:provider/provider.dart';
 import 'package:flutterapp/stats.dart';
 import 'package:flutterapp/screen/service_detail010.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 // #001 ScreenAccount
 class ScreenAccount extends StatefulWidget {
@@ -17,23 +18,37 @@ class _ScreenAccountState extends State<ScreenAccount> {
   Color sColor(int status) {
     Color result = Colors.deepOrange;
 
-    if(status == 0) {
+    if (status == 0) {
       result = Colors.white30;
     }
-    if(status == 200) {
+    if (status == 200) {
       result = Colors.greenAccent;
     }
-    if(status == 400 || status == 401) {
+    if (status == 400 || status == 401) {
       result = Colors.redAccent;
     }
-    if(status == 405) {
-      result = Colors.red;
-    }
-    if(status == 500) {
+    if (status == 405 || status == 500) {
       result = Colors.grey;
     }
     return result;
-}
+  }
+  dynamic sIcons (int status) {
+    dynamic result = const Icon(Icons.question_mark);
+
+    if (status == 0) {
+      result = LoadingAnimationWidget.threeArchedCircle(color: Colors.black, size: 20.0);
+    }
+    if (status == 200) {
+      result = const Icon(Icons.check);
+    }
+    if (status == 400 || status == 401) {
+      result = const Icon(Icons.block);
+    }
+    if (status == 405 || status == 500) {
+      result = const Icon(Icons.build);
+    }
+    return result;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +90,7 @@ class _ScreenAccountState extends State<ScreenAccount> {
                       height: 100,
                       child: Center(
                         child: ListTile(
+                          trailing: sIcons(service.items[index].status),
                           title: Text(
                             service.items[index].name,
                             style: const TextStyle(fontWeight: FontWeight.bold),
