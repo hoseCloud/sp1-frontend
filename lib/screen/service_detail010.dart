@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutterapp/stats.dart';
-import 'package:flutterapp/global.dart';
 
-// #001 ScreenAccount
+// #010 ScreenServiceDetail
 class ScreenServiceDetail extends StatelessWidget {
   const ScreenServiceDetail({Key? key, required this.data}) : super(key: key);
   final dynamic data;
@@ -16,21 +15,41 @@ class ScreenServiceDetail extends StatelessWidget {
         children: [
           Text(
             'name: ${data.name}\n'
-                'accountId: ${data.accountId}\n'
-                'accountPw: ${data.accountPw}\n'
-                'paymentType: ${data.paymentType}\n'
-                'paymentDatail: ${data.paymentDetail}\n'
-                'paymentNext: ${data.paymentNext}\n'
-                'membershipType: ${data.membershipType}\n'
-                'membershipCost: ${data.membershipCost}\n'
-                'status: ${data.status}\n',
+            'accountId: ${data.accountId}\n'
+            'accountPw: ${data.accountPw}\n'
+            'paymentType: ${data.paymentType}\n'
+            'paymentDatail: ${data.paymentDetail}\n'
+            'paymentNext: ${data.paymentNext}\n'
+            'membershipType: ${data.membershipType}\n'
+            'membershipCost: ${data.membershipCost}\n'
+            'status: ${data.status}\n',
             textScaleFactor: 2.0,
           ),
           ElevatedButton(
             onPressed: () {
-              debugPrint('refresh tapped!');
+              debugPrint('Refresh tapped!');
             },
-            child: const Icon(Icons.refresh),
+            child: const Center(
+              child: Text(
+                'Refresh',
+                textScaleFactor: 2.0,
+              ),
+            )
+          ),
+          ElevatedButton(
+              onPressed: () {
+                dynamic pro = Provider.of<ServiceModel>(context, listen: false);
+                pro.remove(data);
+                pro.db.dbDelete(data);
+                Navigator.pop(context);
+                debugPrint('Delete tapped!');
+              },
+              child: const Center(
+                child: Text(
+                  'Delete',
+                  textScaleFactor: 2.0,
+                ),
+              )
           ),
         ],
       ),
