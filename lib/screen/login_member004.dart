@@ -30,105 +30,95 @@ class _ScreenLoginMemberState extends State<ScreenLoginMember> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          return Column(
+    var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
+    List<Widget> containers = [
+      Container(
+        height: screenHeight * 0.15,
+        alignment: Alignment.center,
+        color: Colors.orange,
+        child: const Text(
+          "로그인",
+          textScaleFactor: 2.5,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ),
+      Container(
+          height: screenHeight * 0.2,
+          alignment: Alignment.center,
+          color: Colors.yellow,
+          child: Column(
             children: <Widget>[
               Container(
-                height: constraints.maxHeight * 0.1,
-                alignment: Alignment.centerLeft,
+                height: screenHeight * 0.1,
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(16.0),
+                color: Colors.blue,
+                child: TextField(
+                  obscureText: false,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: '아이디',
+                  ),
+                  onChanged: _scanId,
+                ),
+              ),
+              Container(
+                height: screenHeight * 0.1,
+                alignment: Alignment.center,
                 padding: const EdgeInsets.all(16.0),
                 color: Colors.red,
-                child: const BackButton(
-                  color: Colors.blue,
+                child: TextField(
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: '비밀번호',
+                  ),
+                  onChanged: _scanPw,
                 ),
-              ),
-              Container(
-                height: constraints.maxHeight * 0.15,
-                alignment: Alignment.center,
-                color: Colors.orange,
-                child: const Text(
-                  "로그인",
-                  textScaleFactor: 2.5,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              Container(
-                height: constraints.maxHeight * 0.2,
-                alignment: Alignment.center,
-                color: Colors.yellow,
-                child: Column(
-                    children: <Widget>[
-                      Container(
-                      height: constraints.maxHeight * 0.1,
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.all(16.0),
-                        color: Colors.blue,
-                        child: TextField(
-                          obscureText: false,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: '아이디',
-                          ),
-                          onChanged: _scanId,
-                        ),
-                      ),
-                      Container(
-                        height: constraints.maxHeight * 0.1,
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.all(16.0),
-                        color: Colors.red,
-                        child: TextField(
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: '비밀번호',
-                          ),
-                          onChanged: _scanPw,
-                        ),
-                      ),
-                    ],
-                )
-              ),
-              Container(
-                height: constraints.maxHeight * 0.1,
-                alignment: Alignment.center,
-                color: Colors.green,
-                child: Row(
-                  children: <Widget> [
-                    Container(
-                      height: constraints.maxHeight * 0.1,
-                      width: constraints.maxWidth * 0.5,
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.all(16.0),
-                      color: Colors.yellow,
-                      child: const Text('회원가입'),
-                    ),
-                    Container(
-                      height: constraints.maxHeight * 0.1,
-                      width: constraints.maxWidth * 0.5,
-                      alignment: Alignment.centerRight,
-                      padding: const EdgeInsets.all(16.0),
-                      color: Colors.orange,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          _doLogin();
-                        },
-                        child: const Text('로그인'),
-                      )
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                height: constraints.maxHeight * 0.45,
-                alignment: Alignment.center,
-                color: Colors.blue,
               ),
             ],
-          );
-        }
+          )
+      ),
+      Container(
+        height: screenHeight * 0.1,
+        alignment: Alignment.center,
+        color: Colors.green,
+        child: Row(
+          children: <Widget> [
+            Container(
+              height: screenHeight * 0.1,
+              width: screenWidth * 0.5,
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.all(16.0),
+              color: Colors.yellow,
+              child: const Text('회원가입'),
+            ),
+            Container(
+                height: screenHeight * 0.1,
+                width: screenWidth * 0.5,
+                alignment: Alignment.centerRight,
+                padding: const EdgeInsets.all(16.0),
+                color: Colors.orange,
+                child: ElevatedButton(
+                  onPressed: () {
+                    _doLogin();
+                  },
+                  child: const Text('로그인'),
+                )
+            ),
+          ],
+        ),
+      ),
+    ];
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        foregroundColor: const Color(0xff2962ff),
+        elevation: 0.0,
+      ),
+      body: ListView(
+        children: containers,
       ),
     );
   }
