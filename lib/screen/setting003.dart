@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterapp/screen/login_member004.dart';
 import 'package:flutterapp/screen/register_member005.dart';
 import 'package:flutterapp/screen/login_service006.dart';
-import 'package:flutterapp/screen/test_stats.dart';
+import 'package:flutterapp/screen/test_stateful.dart';
 
 // #003 ScreenSetting
 class ScreenSetting extends StatelessWidget {
@@ -95,7 +95,7 @@ class ScreenSetting extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const StatsTest())
+                      MaterialPageRoute(builder: (context) => const ScreenTestStateful())
                   );
                 },
                 child: const SizedBox(
@@ -105,7 +105,7 @@ class ScreenSetting extends StatelessWidget {
                     child: ListTile(
                       leading: Icon(Icons.login),
                       title: Text(
-                        'Test stats',
+                        'Test stateful',
                         style: TextStyle(fontWeight: FontWeight.bold),
                         textScaleFactor: 2.0,
                       ),
