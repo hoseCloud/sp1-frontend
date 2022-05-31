@@ -8,7 +8,7 @@ class Service {
   String accountPw;
   String? paymentType;
   String? paymentDetail;
-  String? paymentNext;
+  int? paymentNext;
   int? membershipType;
   int? membershipCost;
   int status = 0;
@@ -25,7 +25,7 @@ class Service {
       this.name, this.accountId, this.accountPw,
       this.membershipType, this.membershipCost);
 
-  void getPayment(String? paymentType, String? paymentDetail, String? paymentNext) {
+  void getPayment(String? paymentType, String? paymentDetail, int? paymentNext) {
     this.paymentType = paymentType;
     this.paymentDetail = paymentDetail;
     this.paymentNext = paymentNext;

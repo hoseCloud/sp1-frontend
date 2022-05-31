@@ -15,7 +15,7 @@ class DbService extends Db {
         "accountPw"	TEXT NOT NULL,
         "paymentType"	TEXT,
         "paymentDetail"	TEXT,
-        "paymentNext"	TEXT,
+        "paymentNext"	INTEGER,
         "membershipType"	INTEGER,
         "membershipCost"	INTEGER,
         PRIMARY KEY("name","accountId")

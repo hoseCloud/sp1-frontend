@@ -38,21 +38,24 @@ class _ScreenLoginServiceState extends State<ScreenLoginService> {
     service.changeStatus(0);
     await pro.add(service);
     final response = await http.post(
-      Uri.parse('https://sp1-backend.ddns.net/$name/info'),
+      Uri.parse('https://sp1-backend.ddns.net/$name/account'),
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: jsonEncode(<String, String> {
-        'id': _id,
-        'pw': _pw,
-      })
+        'ott_id': _id,
+        'ott_pw': _pw,
+      }),
     );
     if(response.statusCode == 200) {
       debugPrint("success 200");
       pro.remove(service);
+      debugPrint('Response body: ${response.body}');
       Map<String, dynamic> user = jsonDecode(response.body);
-      Map<String, dynamic> account = user['account'];
-      Map<String, dynamic> payment = account['payment'];
-      Map<String, dynamic> membership = account['membership'];
+      Map<String, dynamic> payment = user['payment'];
+      Map<String, dynamic> membership = user['membership'];
       service = Service(
-          name, account['id'], account['pw'],
+          name, user['id'], user['pw'],
           payment['type'], payment['detail'], payment['next'],
           membership['type'], membership['cost']);
       service.changeStatus(response.statusCode);
@@ -65,7 +68,7 @@ class _ScreenLoginServiceState extends State<ScreenLoginService> {
       service.changeStatus(response.statusCode);
       pro.add(service);
     }
-    debugPrint('Url: https://sp1-backend.ddns.net/$name/info');
+    debugPrint('Url: https://sp1-backend.ddns.net/$name/account');
     debugPrint('Response status: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
   }
