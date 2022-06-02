@@ -20,24 +20,28 @@ class _ScreenRegisterMemberState extends State<ScreenRegisterMember> {
       debugPrint('email $_email');
     });
   }
+
   void _scanId(String value) {
     setState(() {
       _id = value;
       debugPrint('id $_id');
     });
   }
+
   void _scanPw(String value) {
     setState(() {
       _pw = value;
       debugPrint('pw: $_pw');
     });
   }
+
   void _scanPwc(String value) {
     setState(() {
       _pwc = value;
       debugPrint('pwc: $_pwc');
     });
   }
+
   void _doRegister() {
     debugPrint('Do register');
   }
@@ -45,7 +49,7 @@ class _ScreenRegisterMemberState extends State<ScreenRegisterMember> {
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
-    var screenWidth = MediaQuery.of(context).size.width;
+    // var screenWidth = MediaQuery.of(context).size.width;
     List<Widget> containers = [
       Container(
         height: screenHeight * 0.15,
@@ -120,8 +124,7 @@ class _ScreenRegisterMemberState extends State<ScreenRegisterMember> {
                 ),
               ),
             ],
-          )
-      ),
+          )),
       Container(
         height: screenHeight * 0.1,
         alignment: Alignment.centerRight,

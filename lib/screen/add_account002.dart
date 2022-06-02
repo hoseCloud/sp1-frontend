@@ -23,7 +23,7 @@ class _ScreenAddAccountState extends State<ScreenAddAccount> {
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
-    var screenWidth = MediaQuery.of(context).size.width;
+    // var screenWidth = MediaQuery.of(context).size.width;
     List<Widget> containers = [
       Container(
         height: screenHeight * 0.3,
@@ -66,16 +66,17 @@ class _ScreenAddAccountState extends State<ScreenAddAccount> {
           restorationId: 'test_view',
           padding: const EdgeInsets.all(16.0),
           children: <Widget>[
-            for(int index = 0; index < _service.length; index++)
-              if(_service[index].contains(_value))
+            for (int index = 0; index < _service.length; index++)
+              if (_service[index].contains(_value))
                 Card(
                   child: InkWell(
                     splashColor: Colors.blue.withAlpha(30),
                     onTap: () {
                       Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ScreenLoginService(serviceName: _service[index]))
-                      );
+                          MaterialPageRoute(
+                              builder: (context) => ScreenLoginService(
+                                  serviceName: _service[index])));
                     },
                     child: SizedBox(
                       width: 300,
