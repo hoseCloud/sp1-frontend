@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
+class User {
+  String id;
+  String pw;
+
+  User(this.id, this.pw);
+}
+
 class Service {
   String name;
   String accountId;
@@ -14,26 +21,32 @@ class Service {
   int status = 0;
 
   Service(
-      this.name, this.accountId, this.accountPw,
-      this.paymentType, this.paymentDetail, this.paymentNext,
-      this.membershipType, this.membershipCost);
+      this.name,
+      this.accountId,
+      this.accountPw,
+      this.paymentType,
+      this.paymentDetail,
+      this.paymentNext,
+      this.membershipType,
+      this.membershipCost);
   Service.account(this.name, this.accountId, this.accountPw);
-  Service.payment(
-      this.name, this.accountId, this.accountPw,
-      this.paymentType, this.paymentDetail, this.paymentNext);
-  Service.membership(
-      this.name, this.accountId, this.accountPw,
+  Service.payment(this.name, this.accountId, this.accountPw, this.paymentType,
+      this.paymentDetail, this.paymentNext);
+  Service.membership(this.name, this.accountId, this.accountPw,
       this.membershipType, this.membershipCost);
 
-  void getPayment(String? paymentType, String? paymentDetail, int? paymentNext) {
+  void getPayment(
+      String? paymentType, String? paymentDetail, int? paymentNext) {
     this.paymentType = paymentType;
     this.paymentDetail = paymentDetail;
     this.paymentNext = paymentNext;
   }
+
   void getMembership(int? membershipType, int? membershipCost) {
     this.membershipType = membershipType;
     this.membershipCost = membershipCost;
   }
+
   void changeStatus(int status) {
     this.status = status;
   }
@@ -48,8 +61,9 @@ abstract class Db {
   void error(String msg) {
     debugPrint('Error! ' + msg);
   }
+
   Future<void> dbOpen() async {
-    if(!opening) {
+    if (!opening) {
       databasePath = await getDatabasesPath();
       String path = join(databasePath, dbName + '.db');
       db = await openDatabase(path, version: 1);
@@ -57,22 +71,24 @@ abstract class Db {
       debugPrint('Success to open db!');
     }
   }
+
   Future<void> dbClose() async {
-    if(opening) {
+    if (opening) {
       db.close();
       opening = false;
       debugPrint('Success to close db!');
     }
   }
+
   Future<void> dbEliminate() async {
-    if(opening) {
+    if (opening) {
       await deleteDatabase(join(databasePath, dbName + '.db'));
       debugPrint('Success to eliminate db!');
-    }
-    else {
+    } else {
       error('Db isn\'t opened!');
     }
   }
+
   Future<void> dbCreate();
   Future<void> dbInsert(dynamic data);
   Future<void> dbDelete(dynamic data);
