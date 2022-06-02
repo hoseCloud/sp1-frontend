@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:provider/provider.dart';
 import 'package:flutterapp/stats.dart';
 import 'package:flutterapp/global.dart';
+import 'package:flutterapp/uris.dart';
 
 // #006 ScreenLoginService
 class ScreenLoginService extends StatefulWidget {
-  const ScreenLoginService({Key? key, required this.serviceName}) : super(key: key);
+  const ScreenLoginService({Key? key, required this.serviceName})
+      : super(key: key);
   final String serviceName;
 
   @override
@@ -24,59 +24,31 @@ class _ScreenLoginServiceState extends State<ScreenLoginService> {
       debugPrint('id $_id');
     });
   }
+
   void _scanPw(String value) {
     setState(() {
       _pw = value;
       debugPrint('pw: $_pw');
     });
   }
+
   void _doLogin() async {
     debugPrint('Do login');
     String name = widget.serviceName;
     dynamic pro = Provider.of<ServiceModel>(context, listen: false);
-    Service service = Service.account(name, _id, _pw);
-    service.changeStatus(0);
-    await pro.add(service);
-    final response = await http.post(
-      Uri.parse('https://sp1-backend.ddns.net/$name/account'),
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: jsonEncode(<String, String> {
-        'ott_id': _id,
-        'ott_pw': _pw,
-      }),
-    );
-    if(response.statusCode == 200) {
-      debugPrint("success 200");
-      pro.remove(service);
-      debugPrint('Response body: ${response.body}');
-      Map<String, dynamic> user = jsonDecode(response.body);
-      Map<String, dynamic> payment = user['payment'];
-      Map<String, dynamic> membership = user['membership'];
-      service = Service(
-          name, user['id'], user['pw'],
-          payment['type'], payment['detail'], payment['next'],
-          membership['type'], membership['cost']);
-      service.changeStatus(response.statusCode);
-      await pro.add(service);
-      await pro.db.dbInsert(service);
-    }
-    else {
-      debugPrint("fail... else");
-      pro.remove(service);
-      service.changeStatus(response.statusCode);
-      pro.add(service);
-    }
-    debugPrint('Url: https://sp1-backend.ddns.net/$name/account');
-    debugPrint('Response status: ${response.statusCode}');
-    debugPrint('Response body: ${response.body}');
+    Service blank = Service.account(name, _id, _pw);
+    blank.changeStatus(0);
+    await pro.add(blank);
+    Service service = await Netflix().accountLogin(_id, _pw);
+
+    await pro.remove(blank);
+    pro.add(service);
   }
 
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
-    var screenWidth = MediaQuery.of(context).size.width;
+    // var screenWidth = MediaQuery.of(context).size.width;
     List<Widget> containers = [
       Container(
         height: screenHeight * 0.15,
@@ -119,8 +91,7 @@ class _ScreenLoginServiceState extends State<ScreenLoginService> {
                 ),
               ),
             ],
-          )
-      ),
+          )),
       Container(
           height: screenHeight * 0.1,
           alignment: Alignment.centerRight,
@@ -132,8 +103,7 @@ class _ScreenLoginServiceState extends State<ScreenLoginService> {
               Navigator.pop(context);
             },
             child: const Text('로그인'),
-          )
-      ),
+          )),
     ];
 
     return Scaffold(
