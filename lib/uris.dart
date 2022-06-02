@@ -5,11 +5,11 @@ import 'package:flutterapp/global.dart';
 
 const String uri = 'https://sp1-backend.ddns.net';
 
-abstract class Uris {
-  late String name;
-}
+class User {}
 
-class OTT extends Uris {
+class OTT {
+  late String name;
+
   Future<Service> doAccountLogin(Service service) async {
     late Service result;
     switch (service.name) {
@@ -30,9 +30,7 @@ class OTT extends Uris {
   }
 }
 
-class User extends OTT {}
-
-class Netflix extends Uris {
+class Netflix extends OTT {
   Netflix() {
     name = 'netflix';
   }
