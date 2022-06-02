@@ -50,4 +50,41 @@ class Netflix extends Uris {
 
     return service;
   }
+
+  Future<Service> accountRefresh(Service service) async {
+    service.changeStatus(0);
+
+    final response = await http.put(
+      Uri.parse('https://sp1-backend.ddns.net/$name/account'),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(<String, String>{
+        'ott_id': service.accountId,
+        'ott_pw': service.accountPw,
+      }),
+    );
+    if (response.statusCode == 200) {
+      debugPrint("success 200");
+      debugPrint('Response body: ${response.body}');
+      Map<String, dynamic> user = jsonDecode(response.body);
+      Map<String, dynamic> payment = user['payment'];
+      Map<String, dynamic> membership = user['membership'];
+      service = Service(
+          name,
+          user['id'],
+          user['pw'],
+          payment['type'],
+          payment['detail'],
+          payment['next'],
+          membership['type'],
+          membership['cost']);
+    } else {
+      debugPrint("fail... else");
+    }
+    service.changeStatus(response.statusCode);
+    debugPrint('Url: https://sp1-backend.ddns.net/$name/account');
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
+
+    return service;
+  }
 }
