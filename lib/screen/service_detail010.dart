@@ -18,7 +18,7 @@ class ScreenServiceDetail extends StatelessWidget {
             'accountId: ${data.accountId}\n'
             'accountPw: ${data.accountPw}\n'
             'paymentType: ${data.paymentType}\n'
-            'paymentDatail: ${data.paymentDetail}\n'
+            'paymentDetail: ${data.paymentDetail}\n'
             'paymentNext: ${data.paymentNext}\n'
             'membershipType: ${data.membershipType}\n'
             'membershipCost: ${data.membershipCost}\n'
@@ -26,16 +26,15 @@ class ScreenServiceDetail extends StatelessWidget {
             textScaleFactor: 2.0,
           ),
           ElevatedButton(
-            onPressed: () {
-              debugPrint('Refresh tapped!');
-            },
-            child: const Center(
-              child: Text(
-                'Refresh',
-                textScaleFactor: 2.0,
-              ),
-            )
-          ),
+              onPressed: () {
+                debugPrint('Refresh tapped!');
+              },
+              child: const Center(
+                child: Text(
+                  'Refresh',
+                  textScaleFactor: 2.0,
+                ),
+              )),
           ElevatedButton(
               onPressed: () {
                 dynamic pro = Provider.of<ServiceModel>(context, listen: false);
@@ -49,8 +48,7 @@ class ScreenServiceDetail extends StatelessWidget {
                   'Delete',
                   textScaleFactor: 2.0,
                 ),
-              )
-          ),
+              )),
         ],
       ),
     );
