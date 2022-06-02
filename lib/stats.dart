@@ -40,4 +40,34 @@ class ServiceModel extends ChangeNotifier {
 
     return result;
   }
+
+  bool search(String name, String accountId) {
+    bool result = _service.any(
+      (x) {
+        if (x.name != name || x.accountId != accountId) {
+          return false;
+        }
+        return true;
+      },
+    );
+
+    return result;
+  }
+
+  bool update(Service service) {
+    bool result = false;
+    if (search(service.name, service.accountId)) {
+      for (int i = 0; i < _service.length; i++) {
+        if (_service[i].name == service.name &&
+            _service[i].accountId == service.accountId) {
+          _service[i] = service;
+          result = true;
+          break;
+        }
+      }
+    }
+
+    notifyListeners();
+    return result;
+  }
 }

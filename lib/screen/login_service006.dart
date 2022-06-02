@@ -35,14 +35,13 @@ class _ScreenLoginServiceState extends State<ScreenLoginService> {
   void _doLogin() async {
     debugPrint('Do login');
     String name = widget.serviceName;
-    dynamic pro = Provider.of<ServiceModel>(context, listen: false);
-    Service blank = Service.account(name, _id, _pw);
-    blank.changeStatus(0);
-    await pro.add(blank);
-    Service service = await Netflix().accountLogin(_id, _pw);
-
-    await pro.remove(blank);
+    ServiceModel pro = Provider.of<ServiceModel>(context, listen: false);
+    Service service = Service.account(name, _id, _pw);
+    service.changeStatus(0);
     pro.add(service);
+    service = await Netflix().accountLogin(_id, _pw);
+
+    pro.update(service);
   }
 
   @override
