@@ -20,57 +20,64 @@ class DbService extends Db {
         "membershipCost"	INTEGER,
         PRIMARY KEY("name","accountId")
       )
-      '''
-    );
+      ''');
     debugPrint('Success to create db!');
   }
+
   @override
   Future<void> dbInsert(dynamic data) async {
-    if(opening) {
+    if (opening) {
       await db.transaction((txn) async {
-        int id = await txn.rawInsert('''
+        int id = await txn.rawInsert(
+          '''
           INSERT INTO "main"."Service"(
-          "name", "accountId", "accountPw", 
-          "paymentType", "paymentDetail", "paymentNext", 
+          "name", "accountId", "accountPw",
+          "paymentType", "paymentDetail", "paymentNext",
           "membershipType", "membershipCost")
           VALUES (?, ?, ?, ?, ?, ?, ?, ?);
           ''',
-          [data.name, data.accountId, data.accountPw,
-           data.paymentType, data.paymentDetail, data.paymentNext,
-           data.membershipType, data.membershipCost],
+          [
+            data.name,
+            data.accountId,
+            data.accountPw,
+            data.paymentType,
+            data.paymentDetail,
+            data.paymentNext,
+            data.membershipType,
+            data.membershipCost
+          ],
         );
         debugPrint('Success to insert: $id');
       });
-    }
-    else {
+    } else {
       error('DbService isn\'t opened!');
     }
   }
+
   @override
   Future<void> dbDelete(dynamic data) async {
-    if(opening) {
+    if (opening) {
       await db.transaction((txn) async {
         int id = await txn.rawInsert(
-            'DELETE FROM "Service" WHERE "name" = ? AND "accountId" = ?',
-            [data.name, data.accountId],
+          'DELETE FROM "Service" WHERE "name" = ? AND "accountId" = ?',
+          [data.name, data.accountId],
         );
         debugPrint('Success to delete: $id');
       });
-    }
-    else {
+    } else {
       error('DbService isn\'t opened!');
     }
   }
+
   @override
   Future<void> dbUpdate() async {}
   @override
   Future<dynamic> dbSelect() async {
     return await db.query('Service');
   }
+
   Future<dynamic> deSelect(String name, String accountId) async {
-    return await db.rawQuery(
-        'SELECT * FROM "Service" WHERE '
-        '"name" = "$name" AND "accountId" = "$accountId"'
-    );
+    return await db.rawQuery('SELECT * FROM "Service" WHERE '
+        '"name" = "$name" AND "accountId" = "$accountId"');
   }
 }

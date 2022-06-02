@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/global.dart';
 import 'package:collection/collection.dart';
-import 'package:flutterapp/controlDb.dart';
+import 'package:flutterapp/control_db.dart';
 
 class ServiceModel extends ChangeNotifier {
   final List<Service> _service = [];
@@ -32,8 +32,8 @@ class ServiceModel extends ChangeNotifier {
   int priceAll() {
     int result = 0;
 
-    for(int idx = 0; idx < lengthService; idx++) {
-      if(_service[idx].membershipCost != null) {
+    for (int idx = 0; idx < lengthService; idx++) {
+      if (_service[idx].membershipCost != null) {
         result += _service[idx].membershipCost!.toInt();
       }
     }

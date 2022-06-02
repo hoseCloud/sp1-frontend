@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/screen/mainTabs008.dart';
+import 'package:flutterapp/screen/main_tabs.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:flutterapp/stats.dart';
@@ -9,20 +9,18 @@ import 'package:flutterapp/global.dart';
 class ScreenSplash extends StatefulWidget {
   const ScreenSplash({Key? key}) : super(key: key);
 
-
   @override
   State<ScreenSplash> createState() => _ScreenSplashState();
 }
 
 class _ScreenSplashState extends State<ScreenSplash> {
-
   void initDb() async {
     dynamic pro = Provider.of<ServiceModel>(context, listen: false);
     await pro.db.dbOpen();
     //await pro.db.dbEliminate();
     //await pro.db.dbCreate();
     dynamic list = await pro.db.dbSelect();
-    for(int idx = 0; idx < list.length; idx++) {
+    for (int idx = 0; idx < list.length; idx++) {
       Service service = Service(
         list[idx]['name'],
         list[idx]['accountId'],
@@ -42,16 +40,17 @@ class _ScreenSplashState extends State<ScreenSplash> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(context, MaterialPageRoute(
-        builder: (context) => const ScreenMainTabs(),
-      ));
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ScreenMainTabs(),
+          ));
     });
-   initDb();
+    initDb();
   }
 
   @override
   Widget build(BuildContext context) {
-
     var screenHeight = MediaQuery.of(context).size.height;
     //var screenWidth = MediaQuery.of(context).size.width;
 
