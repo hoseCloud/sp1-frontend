@@ -94,6 +94,7 @@ class DbUser extends Db {
         "id"	TEXT NOT NULL,
         "pw"	TEXT NOT NULL,
         "email"	TEXT NOT NULL,
+        "auto"	INTEGER NOT NULL DEFAULT 0 CHECK("auto" == 0 OR "auto" == 1),
         PRIMARY KEY("id")
       );
       ''');
