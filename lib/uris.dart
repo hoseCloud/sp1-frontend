@@ -5,7 +5,65 @@ import 'package:flutterapp/global.dart';
 
 const String uri = 'https://sp1-backend.ddns.net';
 
-class User {}
+class Users {
+  void userLogin(String id, String pw) async {
+    final response = await http.post(
+      Uri.parse('$uri/login'),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(<String, String>{
+        'app_id': id,
+        'app_pw': pw,
+      }),
+    );
+    debugPrint('Url: $uri/login');
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
+  }
+
+  void userAdd(User user) async {
+    final response = await http.post(
+      Uri.parse('$uri/user'),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(<String, String>{
+        'app_id': user.id,
+        'app_pw': user.pw,
+        'app_email': user.email,
+      }),
+    );
+    debugPrint('Url: $uri/user');
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
+  }
+
+  void userDelete(String id, String pw) async {
+    final response = await http.delete(
+      Uri.parse('$uri/user'),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(<String, String>{
+        'app_id': id,
+        'app_pw': pw,
+      }),
+    );
+    debugPrint('Url: $uri/user');
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
+  }
+
+  void userEdit(User user) async {
+    final response = await http.put(
+      Uri.parse('$uri/user'),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(<String, String>{
+        'app_id': user.id,
+        'app_pw': user.pw,
+        'app_email': user.email,
+      }),
+    );
+    debugPrint('Url: $uri/user');
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
+  }
+}
 
 class OTT {
   late String name;
