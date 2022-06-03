@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutterapp/stats.dart';
+import 'package:flutterapp/global.dart';
+import 'package:flutterapp/uris.dart';
 
 // #010 ScreenServiceDetail
 class ScreenServiceDetail extends StatelessWidget {
   const ScreenServiceDetail({Key? key, required this.data}) : super(key: key);
-  final dynamic data;
+  final Service data;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class ScreenServiceDetail extends StatelessWidget {
             'accountId: ${data.accountId}\n'
             'accountPw: ${data.accountPw}\n'
             'paymentType: ${data.paymentType}\n'
-            'paymentDatail: ${data.paymentDetail}\n'
+            'paymentDetail: ${data.paymentDetail}\n'
             'paymentNext: ${data.paymentNext}\n'
             'membershipType: ${data.membershipType}\n'
             'membershipCost: ${data.membershipCost}\n'
@@ -26,19 +28,24 @@ class ScreenServiceDetail extends StatelessWidget {
             textScaleFactor: 2.0,
           ),
           ElevatedButton(
-            onPressed: () {
-              debugPrint('Refresh tapped!');
-            },
-            child: const Center(
-              child: Text(
-                'Refresh',
-                textScaleFactor: 2.0,
-              ),
-            )
-          ),
+              onPressed: () async {
+                ServiceModel pro =
+                    Provider.of<ServiceModel>(context, listen: false);
+                Service service = await Netflix().accountRefresh(data);
+                pro.update(service);
+                Navigator.pop(context);
+                debugPrint('Refresh tapped!');
+              },
+              child: const Center(
+                child: Text(
+                  'Refresh',
+                  textScaleFactor: 2.0,
+                ),
+              )),
           ElevatedButton(
               onPressed: () {
-                dynamic pro = Provider.of<ServiceModel>(context, listen: false);
+                ServiceModel pro =
+                    Provider.of<ServiceModel>(context, listen: false);
                 pro.remove(data);
                 pro.db.dbDelete(data);
                 Navigator.pop(context);
@@ -49,8 +56,7 @@ class ScreenServiceDetail extends StatelessWidget {
                   'Delete',
                   textScaleFactor: 2.0,
                 ),
-              )
-          ),
+              )),
         ],
       ),
     );
