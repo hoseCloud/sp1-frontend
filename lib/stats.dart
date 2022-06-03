@@ -71,3 +71,59 @@ class ServiceModel extends ChangeNotifier {
     return result;
   }
 }
+
+class UserModel extends ChangeNotifier {
+  final List<User> _user = [];
+  DbUser db = DbUser();
+
+  UserModel() {
+    debugPrint('create db var!');
+  }
+  UnmodifiableListView<User> get items => UnmodifiableListView(_user);
+
+  int get lengthUser => _user.length;
+
+  void add(User user) {
+    _user.add(user);
+    notifyListeners();
+  }
+
+  void remove(User user) {
+    _user.remove(user);
+    notifyListeners();
+  }
+
+  void removeAll() {
+    _user.clear();
+    notifyListeners();
+  }
+
+  bool search(String id) {
+    bool result = _user.any(
+      (x) {
+        if (x.id != id) {
+          return false;
+        }
+        return true;
+      },
+    );
+
+    return result;
+  }
+
+  bool update(User user) {
+    bool result = false;
+    if (search(user.id)) {
+      for (int i = 0; i < _user.length; i++) {
+        if (_user[i].id == user.id) {
+          _user[i] = user;
+          result = true;
+          break;
+        }
+      }
+    }
+
+    notifyListeners();
+    return result;
+  }
+}

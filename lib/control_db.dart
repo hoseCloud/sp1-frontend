@@ -91,10 +91,11 @@ class DbUser extends Db {
   Future<void> dbCreate() async {
     await db.execute('''
       CREATE TABLE "User" (
-      "id"	TEXT NOT NULL,
-      "pw"	TEXT NOT NULL,
-      "email"	TEXT NOT NULL,
-      PRIMARY KEY("id","pw")
+        "id"	TEXT NOT NULL,
+        "pw"	TEXT NOT NULL,
+        "email"	TEXT NOT NULL,
+        PRIMARY KEY("id")
+      );
       ''');
     debugPrint('[User] Success to create db!');
   }
