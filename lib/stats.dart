@@ -126,4 +126,15 @@ class UserModel extends ChangeNotifier {
     notifyListeners();
     return result;
   }
+
+  User searchAuto() {
+    User result = User('', '', '', 0);
+    for (int i = 0; i < _user.length; i++) {
+      if (_user[i].auto == 1) {
+        result = _user[i];
+        break;
+      }
+    }
+    return result;
+  }
 }

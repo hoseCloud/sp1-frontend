@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:flutterapp/stats.dart';
 import 'package:flutterapp/global.dart';
 import 'package:flutterapp/uris.dart';
+import 'package:flutterapp/screen/main_tabs008.dart';
 
 // #004 ScreenLoginMember
 class ScreenLoginMember extends StatefulWidget {
@@ -30,13 +31,23 @@ class _ScreenLoginMemberState extends State<ScreenLoginMember> {
     });
   }
 
-  void _doLogin() {
+  void _doLogin() async {
     debugPrint('Do login');
-    UserModel pro = Provider.of<UserModel>(context, listen: false);
 
-    Users().userLogin(_id, _pw);
+    User user = await Users().userLogin(_id, _pw);
+    if (user.id != '') {
+      UserModel pro = Provider.of<UserModel>(context, listen: false);
+      pro.add(user);
+      pro.db.dbInsert(user);
 
-    debugPrint(pro.items.toString());
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ScreenMainTabs(),
+          ));
+    } else {
+      debugPrint('login fail...');
+    }
   }
 
   @override

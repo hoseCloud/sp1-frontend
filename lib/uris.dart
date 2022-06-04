@@ -6,7 +6,9 @@ import 'package:flutterapp/global.dart';
 const String uri = 'https://sp1-backend.ddns.net';
 
 class Users {
-  void userLogin(String id, String pw) async {
+  Future<User> userLogin(String id, String pw) async {
+    User user = User('', '', '', 0);
+
     final response = await http.post(
       Uri.parse('$uri/login'),
       headers: {"Content-Type": "application/json"},
@@ -15,9 +17,26 @@ class Users {
         'app_pw': pw,
       }),
     );
+
+    if (response.statusCode == 200) {
+      debugPrint("success 200");
+      debugPrint('Response body: ${response.body}');
+      Map<String, dynamic> table = jsonDecode(response.body);
+      user = User(
+        table['app_id'],
+        table['app_pw'],
+        '',
+        1,
+      );
+    } else {
+      debugPrint("fail... else");
+    }
+
     debugPrint('Url: $uri/login');
     debugPrint('Response status: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
+
+    return user;
   }
 
   void userAdd(User user) async {

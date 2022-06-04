@@ -146,8 +146,8 @@ class DbUser extends Db {
     return await db.query('User');
   }
 
-  Future<dynamic> deSelect(String id, String pw) async {
-    return await db.rawQuery('SELECT * FROM "User" WHERE '
-        '"id" = "$id" AND "pw" = "$pw"');
+  Future<dynamic> dbIsAuto() {
+    return db.rawQuery('SELECT * FROM "User" WHERE '
+        '"auto" = 1');
   }
 }
