@@ -39,19 +39,38 @@ class Users {
     return user;
   }
 
-  void userAdd(User user) async {
+  Future<User> userAdd(User data) async {
+    User user = User('', '', '', 0);
+
     final response = await http.post(
       Uri.parse('$uri/user'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(<String, String>{
-        'app_id': user.id,
-        'app_pw': user.pw,
-        'app_email': user.email,
+        'app_id': data.id,
+        'app_pw': data.pw,
+        'app_email': data.email,
       }),
     );
+
+    if (response.statusCode == 201) {
+      debugPrint("success 201");
+      debugPrint('Response body: ${response.body}');
+      Map<String, dynamic> table = jsonDecode(response.body);
+      user = User(
+        table['app_id'],
+        table['app_pw'],
+        '',
+        1,
+      );
+    } else {
+      debugPrint("fail... else");
+    }
+
     debugPrint('Url: $uri/user');
     debugPrint('Response status: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
+
+    return user;
   }
 
   void userDelete(String id, String pw) async {

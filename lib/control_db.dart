@@ -108,13 +108,14 @@ class DbUser extends Db {
         int id = await txn.rawInsert(
           '''
           INSERT INTO "main"."User"(
-          "id", "pw", "email",
-          VALUES (?, ?, ?);
+          "id", "pw", "email", "auto")
+          VALUES (?, ?, ?, ?);
           ''',
           [
             data.id,
             data.pw,
             data.email,
+            data.auto,
           ],
         );
         debugPrint('[User] Success to insert: $id');
