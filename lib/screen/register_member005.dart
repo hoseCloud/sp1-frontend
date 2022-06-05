@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:flutterapp/stats.dart';
 import 'package:flutterapp/global.dart';
 import 'package:flutterapp/uris.dart';
 
