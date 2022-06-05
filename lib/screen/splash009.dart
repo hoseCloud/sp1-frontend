@@ -24,13 +24,10 @@ class _ScreenSplashState extends State<ScreenSplash> {
     for (int idx = 0; idx < list.length; idx++) {
       Service service = Service(
         list[idx]['name'],
-        list[idx]['accountId'],
-        list[idx]['accountPw'],
-        list[idx]['paymentType'],
-        list[idx]['paymentDetail'],
-        list[idx]['paymentNext'],
-        list[idx]['membershipType'],
-        list[idx]['membershipCost'],
+        Account(list[idx]['accountId'], list[idx]['accountPw']),
+        Payment(list[idx]['paymentType'], list[idx]['paymentDetail'],
+            list[idx]['paymentNext']),
+        Membership(list[idx]['membershipType'], list[idx]['membershipCost']),
       );
       service.changeStatus(200);
       proService.add(service);

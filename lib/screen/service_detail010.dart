@@ -17,13 +17,13 @@ class ScreenServiceDetail extends StatelessWidget {
         children: [
           Text(
             'name: ${data.name}\n'
-            'accountId: ${data.accountId}\n'
-            'accountPw: ${data.accountPw}\n'
-            'paymentType: ${data.paymentType}\n'
-            'paymentDetail: ${data.paymentDetail}\n'
-            'paymentNext: ${data.paymentNext}\n'
-            'membershipType: ${data.membershipType}\n'
-            'membershipCost: ${data.membershipCost}\n'
+            'accountId: ${data.account.id}\n'
+            'accountPw: ${data.account.pw}\n'
+            'paymentType: ${data.payment.type}\n'
+            'paymentDetail: ${data.payment.detail}\n'
+            'paymentNext: ${data.payment.next}\n'
+            'membershipType: ${data.membership.type}\n'
+            'membershipCost: ${data.membership.cost}\n'
             'status: ${data.status}\n',
             textScaleFactor: 2.0,
           ),

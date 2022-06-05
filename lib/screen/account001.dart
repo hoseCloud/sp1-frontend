@@ -14,7 +14,6 @@ class ScreenAccount extends StatefulWidget {
 }
 
 class _ScreenAccountState extends State<ScreenAccount> {
-
   Color sColor(int status) {
     Color result = Colors.deepOrange;
 
@@ -32,11 +31,13 @@ class _ScreenAccountState extends State<ScreenAccount> {
     }
     return result;
   }
-  dynamic sIcons (int status) {
+
+  dynamic sIcons(int status) {
     dynamic result = const Icon(Icons.question_mark);
 
     if (status == 0) {
-      result = LoadingAnimationWidget.threeArchedCircle(color: Colors.black, size: 20.0);
+      result = LoadingAnimationWidget.threeArchedCircle(
+          color: Colors.black, size: 20.0);
     }
     if (status == 200) {
       result = const Icon(Icons.check);
@@ -52,7 +53,7 @@ class _ScreenAccountState extends State<ScreenAccount> {
 
   @override
   Widget build(BuildContext context) {
-    dynamic pro = Provider.of<ServiceModel>(context, listen: true);
+    ServiceModel pro = Provider.of<ServiceModel>(context, listen: true);
     return Scaffold(
       floatingActionButton: Theme(
         data: Theme.of(context).copyWith(splashColor: Colors.blueAccent),
@@ -72,7 +73,7 @@ class _ScreenAccountState extends State<ScreenAccount> {
           restorationId: 'test_view',
           padding: const EdgeInsets.all(16.0),
           children: <Widget>[
-            for(int index = 0; index < pro.lengthService; index++)
+            for (int index = 0; index < pro.lengthService; index++)
               Card(
                 color: sColor(pro.items[index].status),
                 child: InkWell(
@@ -81,8 +82,9 @@ class _ScreenAccountState extends State<ScreenAccount> {
                     debugPrint('Card tapped.');
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) =>
-                          ScreenServiceDetail(data: pro.items[index])),
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ScreenServiceDetail(data: pro.items[index])),
                     );
                   },
                   child: SizedBox(
@@ -97,7 +99,7 @@ class _ScreenAccountState extends State<ScreenAccount> {
                           textScaleFactor: 2.0,
                         ),
                         subtitle: Text(
-                          pro.items[index].accountId,
+                          pro.items[index].account.id,
                           style: const TextStyle(fontWeight: FontWeight.bold),
                           textScaleFactor: 1.5,
                         ),

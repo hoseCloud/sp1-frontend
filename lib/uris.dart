@@ -103,6 +103,8 @@ class Users {
   }
 }
 
+class Groups {}
+
 class OTT {
   late String name;
 
@@ -110,12 +112,12 @@ class OTT {
     late Service result;
     switch (service.name) {
       case 'netflix':
-        result =
-            await Netflix().accountLogin(service.accountId, service.accountPw);
+        result = await Netflix()
+            .accountLogin(service.account.id, service.account.pw);
         break;
       case 'wavve':
         result =
-            await Wavve().accountLogin(service.accountId, service.accountPw);
+            await Wavve().accountLogin(service.account.id, service.account.pw);
         break;
       default:
         result = service;
@@ -132,10 +134,10 @@ class Netflix extends OTT {
   }
 
   Future<Service> accountLogin(String id, String pw) async {
-    Service service = Service.account(name, id, pw);
+    Service service = Service.account(name, Account(id, pw));
     service.changeStatus(0);
     final response = await http.post(
-      Uri.parse('https://sp1-backend.ddns.net/$name/account'),
+      Uri.parse('$uri/$name/account'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(<String, String>{
         'ott_id': id,
@@ -145,23 +147,20 @@ class Netflix extends OTT {
     if (response.statusCode == 200) {
       debugPrint("success 200");
       debugPrint('Response body: ${response.body}');
-      Map<String, dynamic> user = jsonDecode(response.body);
-      Map<String, dynamic> payment = user['payment'];
-      Map<String, dynamic> membership = user['membership'];
+      Map<String, dynamic> account = jsonDecode(response.body);
+      Map<String, dynamic> payment = account['payment'];
+      Map<String, dynamic> membership = account['membership'];
       service = Service(
-          name,
-          user['id'],
-          user['pw'],
-          payment['type'],
-          payment['detail'],
-          payment['next'],
-          membership['type'],
-          membership['cost']);
+        name,
+        Account(account['id'], account['pw']),
+        Payment(payment['type'], payment['detail'], payment['next']),
+        Membership(membership['type'], membership['cost']),
+      );
     } else {
       debugPrint("fail... else");
     }
     service.changeStatus(response.statusCode);
-    debugPrint('Url: https://sp1-backend.ddns.net/$name/account');
+    debugPrint('Url: $uri/$name/account');
     debugPrint('Response status: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
 
@@ -172,33 +171,30 @@ class Netflix extends OTT {
     service.changeStatus(0);
 
     final response = await http.put(
-      Uri.parse('https://sp1-backend.ddns.net/$name/account'),
+      Uri.parse('$uri/$name/account'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(<String, String>{
-        'ott_id': service.accountId,
-        'ott_pw': service.accountPw,
+        'ott_id': service.account.id,
+        'ott_pw': service.account.pw,
       }),
     );
     if (response.statusCode == 200) {
       debugPrint("success 200");
       debugPrint('Response body: ${response.body}');
-      Map<String, dynamic> user = jsonDecode(response.body);
-      Map<String, dynamic> payment = user['payment'];
-      Map<String, dynamic> membership = user['membership'];
+      Map<String, dynamic> account = jsonDecode(response.body);
+      Map<String, dynamic> payment = account['payment'];
+      Map<String, dynamic> membership = account['membership'];
       service = Service(
-          name,
-          user['id'],
-          user['pw'],
-          payment['type'],
-          payment['detail'],
-          payment['next'],
-          membership['type'],
-          membership['cost']);
+        name,
+        Account(account['id'], account['pw']),
+        Payment(payment['type'], payment['detail'], payment['next']),
+        Membership(membership['type'], membership['cost']),
+      );
     } else {
       debugPrint("fail... else");
     }
     service.changeStatus(response.statusCode);
-    debugPrint('Url: https://sp1-backend.ddns.net/$name/account');
+    debugPrint('Url: $uri/$name/account');
     debugPrint('Response status: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
 
@@ -212,10 +208,10 @@ class Wavve extends OTT {
   }
 
   Future<Service> accountLogin(String id, String pw) async {
-    Service service = Service.account(name, id, pw);
+    Service service = Service.account(name, Account(id, pw));
     service.changeStatus(0);
     final response = await http.post(
-      Uri.parse('https://sp1-backend.ddns.net/$name'),
+      Uri.parse('$uri/$name'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(<String, String>{
         'ott_id': id,
@@ -224,23 +220,20 @@ class Wavve extends OTT {
     );
     if (response.statusCode == 200) {
       debugPrint("success 200");
-      Map<String, dynamic> user = jsonDecode(response.body);
-      Map<String, dynamic> payment = user['payment'];
-      Map<String, dynamic> membership = user['membership'];
+      Map<String, dynamic> account = jsonDecode(response.body);
+      Map<String, dynamic> payment = account['payment'];
+      Map<String, dynamic> membership = account['membership'];
       service = Service(
-          name,
-          user['id'],
-          user['pw'],
-          payment['type'],
-          payment['detail'],
-          payment['next'],
-          membership['type'],
-          membership['cost']);
+        name,
+        Account(account['id'], account['pw']),
+        Payment(payment['type'], payment['detail'], payment['next']),
+        Membership(membership['type'], membership['cost']),
+      );
     } else {
       debugPrint("fail... else");
     }
     service.changeStatus(response.statusCode);
-    debugPrint('Url: https://sp1-backend.ddns.net/$name');
+    debugPrint('Url: $uri/$name');
     debugPrint('Response status: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
 
