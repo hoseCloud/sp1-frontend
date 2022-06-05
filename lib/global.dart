@@ -37,24 +37,45 @@ class Membership {
   Membership(this.type, this.cost);
 }
 
+class Member {
+  String appId = '';
+  int isAdmin = 0;
+
+  Member.init() {
+    appId = '';
+    isAdmin = 0;
+  }
+  Member(this.appId, this.isAdmin);
+}
+
 class User {
-  String id;
-  String pw;
-  String email;
+  String id = '';
+  String pw = '';
+  String email = '';
   int auto = 0;
 
+  User.init() {
+    id = '';
+    pw = '';
+    email = '';
+    auto = 0;
+  }
   User(this.id, this.pw, this.email, this.auto);
 }
 
 class Group {
-  String groupId;
-  Service ott;
-  String updateTime;
-  String memberAppId;
-  String memberIsAdmin;
+  int groupId = -1;
+  Service ott = Service.init();
+  DateTime updateTime = DateTime(0);
+  List<Member> members = [];
 
-  Group(this.groupId, this.ott, this.updateTime, this.memberAppId,
-      this.memberIsAdmin);
+  Group.init() {
+    groupId = -1;
+    ott = Service.init();
+    updateTime = DateTime(0);
+    members = [];
+  }
+  Group(this.groupId, this.ott, this.updateTime, this.members);
 }
 
 class Service {
