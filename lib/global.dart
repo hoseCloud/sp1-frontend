@@ -5,8 +5,10 @@ import 'package:path/path.dart';
 class User {
   String id;
   String pw;
+  String email;
+  int auto = 0;
 
-  User(this.id, this.pw);
+  User(this.id, this.pw, this.email, this.auto);
 }
 
 class Service {

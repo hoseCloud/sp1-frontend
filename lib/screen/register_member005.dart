@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/global.dart';
+import 'package:flutterapp/uris.dart';
 
 // #005 ScreenRegisterMember
 class ScreenRegisterMember extends StatefulWidget {
@@ -43,7 +45,12 @@ class _ScreenRegisterMemberState extends State<ScreenRegisterMember> {
   }
 
   void _doRegister() {
+    if (_pw != _pwc) {
+      return;
+    }
     debugPrint('Do register');
+    User user = User(_id, _pw, _email, 1);
+    Users().userAdd(user);
   }
 
   @override
@@ -73,7 +80,7 @@ class _ScreenRegisterMemberState extends State<ScreenRegisterMember> {
                 padding: const EdgeInsets.all(16.0),
                 color: Colors.red,
                 child: TextField(
-                  obscureText: true,
+                  obscureText: false,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: '이메일',

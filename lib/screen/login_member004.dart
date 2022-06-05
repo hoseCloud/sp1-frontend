@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutterapp/stats.dart';
+import 'package:flutterapp/global.dart';
+import 'package:flutterapp/uris.dart';
+import 'package:flutterapp/screen/main_tabs008.dart';
 
 // #004 ScreenLoginMember
 class ScreenLoginMember extends StatefulWidget {
@@ -18,14 +23,31 @@ class _ScreenLoginMemberState extends State<ScreenLoginMember> {
       debugPrint('id $_id');
     });
   }
+
   void _scanPw(String value) {
     setState(() {
       _pw = value;
       debugPrint('pw: $_pw');
     });
   }
-  void _doLogin() {
+
+  void _doLogin() async {
     debugPrint('Do login');
+
+    User user = await Users().userLogin(_id, _pw);
+    if (user.id != '') {
+      UserModel pro = Provider.of<UserModel>(context, listen: false);
+      pro.add(user);
+      pro.db.dbInsert(user);
+
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ScreenMainTabs(),
+          ));
+    } else {
+      debugPrint('login fail...');
+    }
   }
 
   @override
@@ -78,14 +100,13 @@ class _ScreenLoginMemberState extends State<ScreenLoginMember> {
                 ),
               ),
             ],
-          )
-      ),
+          )),
       Container(
         height: screenHeight * 0.1,
         alignment: Alignment.center,
         color: Colors.green,
         child: Row(
-          children: <Widget> [
+          children: <Widget>[
             Container(
               height: screenHeight * 0.1,
               width: screenWidth * 0.5,
@@ -105,12 +126,12 @@ class _ScreenLoginMemberState extends State<ScreenLoginMember> {
                     _doLogin();
                   },
                   child: const Text('로그인'),
-                )
-            ),
+                )),
           ],
         ),
       ),
     ];
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,

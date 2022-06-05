@@ -4,6 +4,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:flutterapp/stats.dart';
 import 'package:flutterapp/global.dart';
+import 'package:flutterapp/screen/login_member004.dart';
 
 // #009 ScreenSplash
 class ScreenSplash extends StatefulWidget {
@@ -15,11 +16,11 @@ class ScreenSplash extends StatefulWidget {
 
 class _ScreenSplashState extends State<ScreenSplash> {
   void initDb() async {
-    dynamic pro = Provider.of<ServiceModel>(context, listen: false);
-    await pro.db.dbOpen();
-    //await pro.db.dbEliminate();
-    //await pro.db.dbCreate();
-    dynamic list = await pro.db.dbSelect();
+    ServiceModel proService = Provider.of<ServiceModel>(context, listen: false);
+    await proService.db.dbOpen();
+    //await proService.db.dbEliminate();
+    //await proService.db.dbCreate();
+    dynamic list = await proService.db.dbSelect();
     for (int idx = 0; idx < list.length; idx++) {
       Service service = Service(
         list[idx]['name'],
@@ -32,20 +33,41 @@ class _ScreenSplashState extends State<ScreenSplash> {
         list[idx]['membershipCost'],
       );
       service.changeStatus(200);
-      pro.add(service);
+      proService.add(service);
     }
+
+    UserModel proUser = Provider.of<UserModel>(context, listen: false);
+    await proUser.db.dbOpen();
+    //await proUser.db.dbEliminate();
+    //await proUser.db.dbCreate();
+    dynamic userA = await proUser.db.dbIsAuto();
+    User user = User('', '', '', 0);
+    if (userA.length > 0) {
+      user = User(
+          userA[0]['id'], userA[0]['pw'], userA[0]['email'], userA[0]['auto']);
+    }
+    debugPrint('${user.id}, ${user.pw}, ${user.email}, ${user.auto}');
+
+    Future.delayed(const Duration(seconds: 3), () {
+      if (user.auto == 1) {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const ScreenMainTabs(),
+            ));
+      } else {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const ScreenLoginMember(),
+            ));
+      }
+    });
   }
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const ScreenMainTabs(),
-          ));
-    });
     initDb();
   }
 

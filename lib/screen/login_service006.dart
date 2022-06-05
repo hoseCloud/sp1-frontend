@@ -42,6 +42,9 @@ class _ScreenLoginServiceState extends State<ScreenLoginService> {
     service = await OTT().doAccountLogin(service);
 
     pro.update(service);
+    if (service.status == 200) {
+      await pro.db.dbInsert(service);
+    }
   }
 
   @override
