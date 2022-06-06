@@ -43,7 +43,7 @@ class _ScreenLoginServiceState extends State<ScreenLoginService> {
 
     pro.update(service);
     if (service.status == 200) {
-      await pro.db.dbInsert(service);
+      // await pro.db.dbInsert(service);
     }
   }
 

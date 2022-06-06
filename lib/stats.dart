@@ -5,7 +5,6 @@ import 'package:flutterapp/control_db.dart';
 
 class ServiceModel extends ChangeNotifier {
   final List<Service> _service = [];
-  DbService db = DbService();
 
   ServiceModel() {
     debugPrint('create db var!');
