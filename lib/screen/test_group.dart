@@ -1,12 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/screen/login_member004.dart';
-import 'package:flutterapp/screen/register_member005.dart';
-import 'package:flutterapp/screen/login_service006.dart';
-import 'package:flutterapp/screen/test_group.dart';
+import 'package:flutterapp/global.dart';
+import 'package:flutterapp/uris.dart';
 
-// #003 ScreenSetting
-class ScreenSetting extends StatelessWidget {
-  const ScreenSetting({Key? key}) : super(key: key);
+class TestGroup extends StatefulWidget {
+  const TestGroup({Key? key}) : super(key: key);
+
+  @override
+  State<TestGroup> createState() => _TestGroupState();
+}
+
+class _TestGroupState extends State<TestGroup> {
+  void search() async {
+    debugPrint('search tap!');
+    Group group = await Groups().groupSearch('groupId');
+
+    debugPrint(group.toString());
+  }
+
+  void make() async {
+    debugPrint('make tap!');
+    String groupId = await Groups()
+        .groupMake('hose', 'netflix', '4osecloud@gmail.com', 'JjJ2hyeyxDEWXGx');
+    debugPrint(groupId);
+  }
+
+  void delete() async {
+    debugPrint('delete tap!');
+    await Groups().groupDelete('groupId', '4osecloud@gmail.com');
+  }
+
+  void update() async {
+    debugPrint('update tap!');
+    await Groups().groupUpdate('groupId', Service.init());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +44,7 @@ class ScreenSetting extends StatelessWidget {
             child: InkWell(
               splashColor: Colors.blue.withAlpha(30),
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ScreenLoginMember()));
+                search();
               },
               child: const SizedBox(
                 width: 300,
@@ -30,7 +53,7 @@ class ScreenSetting extends StatelessWidget {
                   child: ListTile(
                     leading: Icon(Icons.login),
                     title: Text(
-                      'Login to member',
+                      'Search group',
                       style: TextStyle(fontWeight: FontWeight.bold),
                       textScaleFactor: 2.0,
                     ),
@@ -43,19 +66,16 @@ class ScreenSetting extends StatelessWidget {
             child: InkWell(
               splashColor: Colors.blue.withAlpha(30),
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ScreenRegisterMember()));
+                make();
               },
               child: const SizedBox(
                 width: 300,
                 height: 100,
                 child: Center(
                   child: ListTile(
-                    leading: Icon(Icons.app_registration),
+                    leading: Icon(Icons.login),
                     title: Text(
-                      'Register to member',
+                      'Make group',
                       style: TextStyle(fontWeight: FontWeight.bold),
                       textScaleFactor: 2.0,
                     ),
@@ -68,11 +88,7 @@ class ScreenSetting extends StatelessWidget {
             child: InkWell(
               splashColor: Colors.blue.withAlpha(30),
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            const ScreenLoginService(serviceName: 'netflix')));
+                delete();
               },
               child: const SizedBox(
                 width: 300,
@@ -81,7 +97,7 @@ class ScreenSetting extends StatelessWidget {
                   child: ListTile(
                     leading: Icon(Icons.login),
                     title: Text(
-                      'Login to Netflix',
+                      'Delete group',
                       style: TextStyle(fontWeight: FontWeight.bold),
                       textScaleFactor: 2.0,
                     ),
@@ -94,8 +110,7 @@ class ScreenSetting extends StatelessWidget {
             child: InkWell(
               splashColor: Colors.blue.withAlpha(30),
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const TestGroup()));
+                update();
               },
               child: const SizedBox(
                 width: 300,
@@ -104,7 +119,7 @@ class ScreenSetting extends StatelessWidget {
                   child: ListTile(
                     leading: Icon(Icons.login),
                     title: Text(
-                      'Test group api',
+                      'Update group',
                       style: TextStyle(fontWeight: FontWeight.bold),
                       textScaleFactor: 2.0,
                     ),
