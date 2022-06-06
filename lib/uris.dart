@@ -7,7 +7,7 @@ const String uri = 'https://sp1-backend.ddns.net';
 
 class Users {
   Future<User> userLogin(String id, String pw) async {
-    User user = User('', '', '', 0);
+    User user = User('', '', '');
 
     final response = await http.post(
       Uri.parse('$uri/login'),
@@ -26,7 +26,6 @@ class Users {
         table['app_id'],
         table['app_pw'],
         '',
-        1,
       );
     } else {
       debugPrint("fail... else");
@@ -40,7 +39,7 @@ class Users {
   }
 
   Future<User> userAdd(User data) async {
-    User user = User('', '', '', 0);
+    User user = User('', '', '');
 
     final response = await http.post(
       Uri.parse('$uri/user'),
@@ -60,7 +59,6 @@ class Users {
         table['app_id'],
         table['app_pw'],
         '',
-        1,
       );
     } else {
       debugPrint("fail... else");

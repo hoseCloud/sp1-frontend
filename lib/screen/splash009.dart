@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/screen/main_tabs008.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:flutterapp/stats.dart';
@@ -16,6 +15,24 @@ class ScreenSplash extends StatefulWidget {
 
 class _ScreenSplashState extends State<ScreenSplash> {
   void initDb() async {
+    // 1. 로그인 시도
+    UserModel proUser = Provider.of<UserModel>(context, listen: false);
+    User user = User('', '', '');
+
+    debugPrint('${user.id}, ${user.pw}, ${user.email}');
+
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ScreenLoginMember(),
+          ));
+    });
+
+    // 2. 로그인 정보를 DB와 stats에 저장
+    // 3. 계정에 저장된 서비스를 DB와 stats에 저장
+    // 4. 로그아웃시 DB에 저장된 정보를 삭제
+    /*
     UserModel proUser = Provider.of<UserModel>(context, listen: false);
     await proUser.db.dbOpen();
     //await proUser.db.dbEliminate();
@@ -43,6 +60,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
             ));
       }
     });
+    */
   }
 
   @override

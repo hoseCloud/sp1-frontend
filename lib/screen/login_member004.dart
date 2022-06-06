@@ -38,7 +38,6 @@ class _ScreenLoginMemberState extends State<ScreenLoginMember> {
     if (user.id != '') {
       UserModel pro = Provider.of<UserModel>(context, listen: false);
       pro.add(user);
-      pro.db.dbInsert(user);
 
       Navigator.pushReplacement(
           context,

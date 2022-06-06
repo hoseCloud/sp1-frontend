@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/global.dart';
 import 'package:collection/collection.dart';
-import 'package:flutterapp/control_db.dart';
 
 class ServiceModel extends ChangeNotifier {
   final List<Service> _service = [];
@@ -71,7 +70,6 @@ class ServiceModel extends ChangeNotifier {
 
 class UserModel extends ChangeNotifier {
   final List<User> _user = [];
-  DbUser db = DbUser();
 
   UserModel() {
     debugPrint('create db var!');
@@ -121,17 +119,6 @@ class UserModel extends ChangeNotifier {
     }
 
     notifyListeners();
-    return result;
-  }
-
-  User searchAuto() {
-    User result = User('', '', '', 0);
-    for (int i = 0; i < _user.length; i++) {
-      if (_user[i].auto == 1) {
-        result = _user[i];
-        break;
-      }
-    }
     return result;
   }
 }
