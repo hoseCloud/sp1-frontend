@@ -103,6 +103,131 @@ class Users {
   }
 }
 
+class Groups {
+  Future<Group> groupSearch(String groupId) async {
+    Group group = Group.init();
+    final response = await http.get(
+      Uri.parse('$uri/group/$groupId'),
+      headers: {"Content-Type": "application/json"},
+    );
+    if (response.statusCode == 200) {
+      debugPrint("success 200");
+      debugPrint('Response body: ${response.body}');
+      Map<String, dynamic> table = jsonDecode(response.body);
+      group = Group(
+        table['group_id'],
+        table['ott'],
+        table['account'],
+        table['members'],
+      );
+    } else {
+      debugPrint("fail... else");
+    }
+    debugPrint('Url: $uri/group/$groupId');
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
+
+    return group;
+  }
+
+  Future<String> groupMake(
+      String appId, String ott, String ottId, String ottPw) async {
+    String groupId = '';
+    final response = await http.post(
+      Uri.parse('$uri/group'),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(<String, String>{
+        'app_id': appId,
+        'ott': ott,
+        'ott_id': ottId,
+        'ott_pw': ottPw,
+      }),
+    );
+    if (response.statusCode == 200) {
+      debugPrint("success 200");
+      debugPrint('Response body: ${response.body}');
+      Map<String, dynamic> table = jsonDecode(response.body);
+      groupId = table['group_id'];
+    } else {
+      debugPrint("fail... else");
+    }
+    debugPrint('Url: $uri/group');
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
+
+    return groupId;
+  }
+
+  Future<Group> groupDelete(String groupId, String appId) async {
+    Group group = Group.init();
+    final response = await http.delete(
+      Uri.parse('$uri/group/$groupId'),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(<String, String>{
+        'app_id': appId,
+      }),
+    );
+    if (response.statusCode == 200) {
+      debugPrint("success 200");
+      debugPrint('Response body: ${response.body}');
+      Map<String, dynamic> table = jsonDecode(response.body);
+      group = Group(
+        table['group_id'],
+        table['ott'],
+        table['account'],
+        table['members'],
+      );
+    } else {
+      debugPrint("fail... else");
+    }
+
+    debugPrint('Url: $uri/group/$groupId');
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
+
+    return group;
+  }
+
+  Future<Group> groupUpdate(String groupId, Service service) async {
+    Group group = Group.init();
+    final response = await http.put(
+      Uri.parse('$uri/group/$groupId'),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(<String, dynamic>{
+        'ott_pw': service.account.pw,
+        'payment': {
+          'type': service.payment.type,
+          'detail': service.payment.detail,
+          'next': service.payment.next,
+        },
+        'membership': {
+          'type': service.membership.type,
+          'cost': service.membership.cost,
+        }
+      }),
+    );
+    if (response.statusCode == 200) {
+      debugPrint("success 200");
+      debugPrint('Response body: ${response.body}');
+      Map<String, dynamic> table = jsonDecode(response.body);
+      group = Group(
+        table['group_id'],
+        table['ott'],
+        table['account'],
+        table['members'],
+      );
+    } else {
+      debugPrint("fail... else");
+    }
+
+    debugPrint('Url: $uri/group/$groupId');
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
+
+    return group;
+  }
+}
+
 class OTT {
   late String name;
 
@@ -110,12 +235,12 @@ class OTT {
     late Service result;
     switch (service.name) {
       case 'netflix':
-        result =
-            await Netflix().accountLogin(service.accountId, service.accountPw);
+        result = await Netflix()
+            .accountLogin(service.account.id, service.account.pw);
         break;
       case 'wavve':
         result =
-            await Wavve().accountLogin(service.accountId, service.accountPw);
+            await Wavve().accountLogin(service.account.id, service.account.pw);
         break;
       default:
         result = service;
@@ -132,10 +257,10 @@ class Netflix extends OTT {
   }
 
   Future<Service> accountLogin(String id, String pw) async {
-    Service service = Service.account(name, id, pw);
+    Service service = Service.account(name, Account(id, pw));
     service.changeStatus(0);
     final response = await http.post(
-      Uri.parse('https://sp1-backend.ddns.net/$name/account'),
+      Uri.parse('$uri/$name/account'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(<String, String>{
         'ott_id': id,
@@ -145,23 +270,20 @@ class Netflix extends OTT {
     if (response.statusCode == 200) {
       debugPrint("success 200");
       debugPrint('Response body: ${response.body}');
-      Map<String, dynamic> user = jsonDecode(response.body);
-      Map<String, dynamic> payment = user['payment'];
-      Map<String, dynamic> membership = user['membership'];
+      Map<String, dynamic> account = jsonDecode(response.body);
+      Map<String, dynamic> payment = account['payment'];
+      Map<String, dynamic> membership = account['membership'];
       service = Service(
-          name,
-          user['id'],
-          user['pw'],
-          payment['type'],
-          payment['detail'],
-          payment['next'],
-          membership['type'],
-          membership['cost']);
+        name,
+        Account(account['id'], account['pw']),
+        Payment(payment['type'], payment['detail'], payment['next']),
+        Membership(membership['type'], membership['cost']),
+      );
     } else {
       debugPrint("fail... else");
     }
     service.changeStatus(response.statusCode);
-    debugPrint('Url: https://sp1-backend.ddns.net/$name/account');
+    debugPrint('Url: $uri/$name/account');
     debugPrint('Response status: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
 
@@ -172,33 +294,30 @@ class Netflix extends OTT {
     service.changeStatus(0);
 
     final response = await http.put(
-      Uri.parse('https://sp1-backend.ddns.net/$name/account'),
+      Uri.parse('$uri/$name/account'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(<String, String>{
-        'ott_id': service.accountId,
-        'ott_pw': service.accountPw,
+        'ott_id': service.account.id,
+        'ott_pw': service.account.pw,
       }),
     );
     if (response.statusCode == 200) {
       debugPrint("success 200");
       debugPrint('Response body: ${response.body}');
-      Map<String, dynamic> user = jsonDecode(response.body);
-      Map<String, dynamic> payment = user['payment'];
-      Map<String, dynamic> membership = user['membership'];
+      Map<String, dynamic> account = jsonDecode(response.body);
+      Map<String, dynamic> payment = account['payment'];
+      Map<String, dynamic> membership = account['membership'];
       service = Service(
-          name,
-          user['id'],
-          user['pw'],
-          payment['type'],
-          payment['detail'],
-          payment['next'],
-          membership['type'],
-          membership['cost']);
+        name,
+        Account(account['id'], account['pw']),
+        Payment(payment['type'], payment['detail'], payment['next']),
+        Membership(membership['type'], membership['cost']),
+      );
     } else {
       debugPrint("fail... else");
     }
     service.changeStatus(response.statusCode);
-    debugPrint('Url: https://sp1-backend.ddns.net/$name/account');
+    debugPrint('Url: $uri/$name/account');
     debugPrint('Response status: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
 
@@ -212,10 +331,10 @@ class Wavve extends OTT {
   }
 
   Future<Service> accountLogin(String id, String pw) async {
-    Service service = Service.account(name, id, pw);
+    Service service = Service.account(name, Account(id, pw));
     service.changeStatus(0);
     final response = await http.post(
-      Uri.parse('https://sp1-backend.ddns.net/$name'),
+      Uri.parse('$uri/$name/account'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(<String, String>{
         'ott_id': id,
@@ -224,23 +343,21 @@ class Wavve extends OTT {
     );
     if (response.statusCode == 200) {
       debugPrint("success 200");
-      Map<String, dynamic> user = jsonDecode(response.body);
-      Map<String, dynamic> payment = user['payment'];
-      Map<String, dynamic> membership = user['membership'];
+      debugPrint('Response body: ${response.body}');
+      Map<String, dynamic> account = jsonDecode(response.body);
+      Map<String, dynamic> payment = account['payment'];
+      Map<String, dynamic> membership = account['membership'];
       service = Service(
-          name,
-          user['id'],
-          user['pw'],
-          payment['type'],
-          payment['detail'],
-          payment['next'],
-          membership['type'],
-          membership['cost']);
+        name,
+        Account(account['id'], account['pw']),
+        Payment(payment['type'], payment['detail'], payment['next']),
+        Membership(membership['type'], membership['cost']),
+      );
     } else {
       debugPrint("fail... else");
     }
     service.changeStatus(response.statusCode);
-    debugPrint('Url: https://sp1-backend.ddns.net/$name');
+    debugPrint('Url: $uri/$name');
     debugPrint('Response status: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
 

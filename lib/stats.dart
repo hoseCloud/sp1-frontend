@@ -5,7 +5,6 @@ import 'package:flutterapp/control_db.dart';
 
 class ServiceModel extends ChangeNotifier {
   final List<Service> _service = [];
-  DbService db = DbService();
 
   ServiceModel() {
     debugPrint('create db var!');
@@ -33,18 +32,16 @@ class ServiceModel extends ChangeNotifier {
     int result = 0;
 
     for (int idx = 0; idx < lengthService; idx++) {
-      if (_service[idx].membershipCost != null) {
-        result += _service[idx].membershipCost!.toInt();
-      }
+      result += _service[idx].membership.cost.toInt();
     }
 
     return result;
   }
 
-  bool search(String name, String accountId) {
+  bool search(String name, String id) {
     bool result = _service.any(
       (x) {
-        if (x.name != name || x.accountId != accountId) {
+        if (x.name != name || x.account.id != id) {
           return false;
         }
         return true;
@@ -56,10 +53,10 @@ class ServiceModel extends ChangeNotifier {
 
   bool update(Service service) {
     bool result = false;
-    if (search(service.name, service.accountId)) {
+    if (search(service.name, service.account.id)) {
       for (int i = 0; i < _service.length; i++) {
         if (_service[i].name == service.name &&
-            _service[i].accountId == service.accountId) {
+            _service[i].account.id == service.account.id) {
           _service[i] = service;
           result = true;
           break;

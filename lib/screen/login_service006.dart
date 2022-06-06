@@ -36,14 +36,14 @@ class _ScreenLoginServiceState extends State<ScreenLoginService> {
     debugPrint('Do login');
     String name = widget.serviceName;
     ServiceModel pro = Provider.of<ServiceModel>(context, listen: false);
-    Service service = Service.account(name, _id, _pw);
+    Service service = Service.account(name, Account(_id, _pw));
     service.changeStatus(0);
     pro.add(service);
     service = await OTT().doAccountLogin(service);
 
     pro.update(service);
     if (service.status == 200) {
-      await pro.db.dbInsert(service);
+      // await pro.db.dbInsert(service);
     }
   }
 

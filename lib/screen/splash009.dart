@@ -16,26 +16,6 @@ class ScreenSplash extends StatefulWidget {
 
 class _ScreenSplashState extends State<ScreenSplash> {
   void initDb() async {
-    ServiceModel proService = Provider.of<ServiceModel>(context, listen: false);
-    await proService.db.dbOpen();
-    //await proService.db.dbEliminate();
-    //await proService.db.dbCreate();
-    dynamic list = await proService.db.dbSelect();
-    for (int idx = 0; idx < list.length; idx++) {
-      Service service = Service(
-        list[idx]['name'],
-        list[idx]['accountId'],
-        list[idx]['accountPw'],
-        list[idx]['paymentType'],
-        list[idx]['paymentDetail'],
-        list[idx]['paymentNext'],
-        list[idx]['membershipType'],
-        list[idx]['membershipCost'],
-      );
-      service.changeStatus(200);
-      proService.add(service);
-    }
-
     UserModel proUser = Provider.of<UserModel>(context, listen: false);
     await proUser.db.dbOpen();
     //await proUser.db.dbEliminate();

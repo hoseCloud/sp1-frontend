@@ -2,52 +2,98 @@ import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
+class Account {
+  String id = '';
+  String pw = '';
+
+  Account.init() {
+    id = '';
+    pw = '';
+  }
+  Account(this.id, this.pw);
+}
+
+class Payment {
+  String type = '';
+  String detail = '';
+  int next = 0;
+
+  Payment.init() {
+    type = '';
+    detail = '';
+    next = 0;
+  }
+  Payment(this.type, this.detail, this.next);
+}
+
+class Membership {
+  int type = 0;
+  int cost = 0;
+
+  Membership.init() {
+    type = 0;
+    cost = 0;
+  }
+  Membership(this.type, this.cost);
+}
+
+class Member {
+  String appId = '';
+  int isAdmin = 0;
+
+  Member.init() {
+    appId = '';
+    isAdmin = 0;
+  }
+  Member(this.appId, this.isAdmin);
+}
+
 class User {
-  String id;
-  String pw;
-  String email;
+  String id = '';
+  String pw = '';
+  String email = '';
   int auto = 0;
 
+  User.init() {
+    id = '';
+    pw = '';
+    email = '';
+    auto = 0;
+  }
   User(this.id, this.pw, this.email, this.auto);
 }
 
+class Group {
+  int groupId = -1;
+  Service ott = Service.init();
+  DateTime updateTime = DateTime(0);
+  List<Member> members = [];
+
+  Group.init() {
+    groupId = -1;
+    ott = Service.init();
+    updateTime = DateTime(0);
+    members = [];
+  }
+  Group(this.groupId, this.ott, this.updateTime, this.members);
+}
+
 class Service {
-  String name;
-  String accountId;
-  String accountPw;
-  String? paymentType;
-  String? paymentDetail;
-  int? paymentNext;
-  int? membershipType;
-  int? membershipCost;
+  String name = '';
+  Account account = Account.init();
+  Payment payment = Payment.init();
+  Membership membership = Membership.init();
   int status = 0;
 
-  Service(
-      this.name,
-      this.accountId,
-      this.accountPw,
-      this.paymentType,
-      this.paymentDetail,
-      this.paymentNext,
-      this.membershipType,
-      this.membershipCost);
-  Service.account(this.name, this.accountId, this.accountPw);
-  Service.payment(this.name, this.accountId, this.accountPw, this.paymentType,
-      this.paymentDetail, this.paymentNext);
-  Service.membership(this.name, this.accountId, this.accountPw,
-      this.membershipType, this.membershipCost);
-
-  void getPayment(
-      String? paymentType, String? paymentDetail, int? paymentNext) {
-    this.paymentType = paymentType;
-    this.paymentDetail = paymentDetail;
-    this.paymentNext = paymentNext;
+  Service.init() {
+    name = '';
+    account = Account.init();
+    payment = Payment.init();
+    membership = Membership.init();
+    status = 0;
   }
-
-  void getMembership(int? membershipType, int? membershipCost) {
-    this.membershipType = membershipType;
-    this.membershipCost = membershipCost;
-  }
+  Service(this.name, this.account, this.payment, this.membership);
+  Service.account(this.name, this.account);
 
   void changeStatus(int status) {
     this.status = status;
