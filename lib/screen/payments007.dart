@@ -23,14 +23,15 @@ class _ScreenPaymentsState extends State<ScreenPayments> {
                 height: 100,
                 child: Card(
                   child: Center(
-                      child: Text(
-                        '${service.priceAll()}',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                        textScaleFactor: 2.0,
-                      ),
+                    child: Text(
+                      '이번달 결제금액\n${service.priceAll()}',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                      textScaleFactor: 2.0,
+                    ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
