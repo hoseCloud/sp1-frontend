@@ -211,7 +211,7 @@ class Wavve extends OTT {
     Service service = Service.account(name, Account(id, pw));
     service.changeStatus(0);
     final response = await http.post(
-      Uri.parse('$uri/$name'),
+      Uri.parse('$uri/$name/account'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(<String, String>{
         'ott_id': id,
@@ -220,6 +220,7 @@ class Wavve extends OTT {
     );
     if (response.statusCode == 200) {
       debugPrint("success 200");
+      debugPrint('Response body: ${response.body}');
       Map<String, dynamic> account = jsonDecode(response.body);
       Map<String, dynamic> payment = account['payment'];
       Map<String, dynamic> membership = account['membership'];
