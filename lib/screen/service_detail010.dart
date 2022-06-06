@@ -47,7 +47,7 @@ class ScreenServiceDetail extends StatelessWidget {
                 ServiceModel pro =
                     Provider.of<ServiceModel>(context, listen: false);
                 pro.remove(data);
-                pro.db.dbDelete(data);
+                // pro.db.dbDelete(data);
                 Navigator.pop(context);
                 debugPrint('Delete tapped!');
               },
