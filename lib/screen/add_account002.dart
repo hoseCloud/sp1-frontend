@@ -37,7 +37,7 @@ class _ScreenAddAccountState extends State<ScreenAddAccount> {
               child: const Center(
                 child: Text(
                   "추가할 서비스가 무엇인가요?",
-                  textScaleFactor: 2.5,
+                  textScaleFactor: 2.0,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
