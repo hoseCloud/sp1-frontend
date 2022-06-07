@@ -32,14 +32,15 @@ class ScreenServiceDetail extends StatelessWidget {
           ),
           ElevatedButton(
               onPressed: () async {
-                GroupModel pro =
-                    Provider.of<GroupModel>(context, listen: false);
-                /*
-                Service service = await Netflix().accountRefresh(data.ott);
-                pro.update(service);
-                */
                 Navigator.pop(context);
                 debugPrint('Refresh tapped!');
+                GroupModel pro = Provider.of<GroupModel>(context, listen: false);
+                data.ott.changeStatus(0);
+                pro.update(data);
+                Service service = await Netflix().accountRefresh(data.ott);
+                data.ott = service;
+                await Groups().groupUpdate(data.groupId, data.ott);
+                pro.update(data);
               },
               child: const Center(
                 child: Text(
