@@ -7,7 +7,7 @@ const String uri = 'https://sp1-backend.ddns.net';
 
 class Users {
   Future<User> userLogin(String id, String pw) async {
-    User user = User('', '', '');
+    User user = User.init();
 
     final response = await http.post(
       Uri.parse('$uri/login'),
@@ -22,11 +22,64 @@ class Users {
       debugPrint("success 200");
       debugPrint('Response body: ${response.body}');
       Map<String, dynamic> table = jsonDecode(response.body);
-      user = User(
-        table['app_id'],
-        table['app_pw'],
-        '',
-      );
+      if(table['groups'] == null) {
+        user = User(
+          table['app_id'],
+          table['app_pw'],
+          '',
+          [],
+        );
+      }
+      else {
+        List<Group> group = [];
+        List<dynamic> groups = table['groups'];
+
+        for(int i = 0; i < groups.length; i++) {
+          Map<String, dynamic> table = groups[i];
+          Map<String, dynamic> account = table['account'];
+          Map<String, dynamic> payment = account['payment'];
+          Map<String, dynamic> membership = account['membership'];
+
+          List<Member> member = [];
+          if(table['members'] != null) {
+            List<dynamic> members = table['members'];
+
+            for(int j = 0; j < members.length; j++) {
+              Map<String, dynamic> table = members[j];
+              member.add(Member(table['app_id'], table['is_admin']));
+            }
+          }
+
+          group.add(
+            Group(
+              table['group_id'],
+              Service(
+                table['ott'],
+                Account(
+                  account['id'],
+                  account['pw'],
+                ),
+                Payment(
+                  payment['type'],
+                  payment['detail'] ?? '',
+                  payment['next'],
+                ),
+                Membership(
+                  membership['type'],
+                  membership['cost'],
+                )
+              ),
+              table['update_time'],
+              member,
+            ));
+        }
+        user = User(
+          table['app_id'],
+          table['app_pw'],
+          '',
+          group,
+        );
+      }
     } else {
       debugPrint("fail... else");
     }
@@ -39,7 +92,7 @@ class Users {
   }
 
   Future<User> userAdd(User data) async {
-    User user = User('', '', '');
+    User user = User.init();
 
     final response = await http.post(
       Uri.parse('$uri/user'),

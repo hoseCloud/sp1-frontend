@@ -17,19 +17,26 @@ class _ScreenSplashState extends State<ScreenSplash> {
   void initDb() async {
     // 1. 로그인 시도
     UserModel proUser = Provider.of<UserModel>(context, listen: false);
-    User user = User('', '', '');
+    User user = User.init();
 
     debugPrint('${user.id}, ${user.pw}, ${user.email}');
 
-    Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const ScreenLoginMember(),
-          ));
-    });
+    if(proUser.lengthUser == 0) {
+      Future.delayed(const Duration(seconds: 3), () {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ScreenLoginMember(),
+                ));
+          });
+    }
+    // 2. 로그인 정보를 stats에 저장
+    else {
+      user = proUser.items[0];
+      debugPrint(user.toString());
+    }
 
-    // 2. 로그인 정보를 DB와 stats에 저장
+    // 2. 로그인 정보를 stats에 저장
     // 3. 계정에 저장된 서비스를 DB와 stats에 저장
     // 4. 로그아웃시 DB에 저장된 정보를 삭제
     /*
