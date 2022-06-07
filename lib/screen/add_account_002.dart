@@ -86,7 +86,7 @@ class _ScreenAddAccountState extends State<ScreenAddAccount> {
                       height: 100,
                       child: Center(
                         child: ListTile(
-                          leading: const FlutterLogo(size: 100.0),
+                          leading: Image.asset('assets/images/${_service[index]}.png'),
                           title: Text(
                             _service[index],
                             style: const TextStyle(fontWeight: FontWeight.bold),

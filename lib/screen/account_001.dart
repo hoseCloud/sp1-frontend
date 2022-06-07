@@ -93,6 +93,7 @@ class _ScreenAccountState extends State<ScreenAccount> {
                     height: 100,
                     child: Center(
                       child: ListTile(
+                        leading: Image.asset('assets/images/${pro.items[index].ott.name}.png'),
                         trailing: sIcons(pro.items[index].ott.status),
                         title: Text(
                           pro.items[index].ott.name,
