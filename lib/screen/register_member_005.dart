@@ -60,7 +60,7 @@ class _ScreenRegisterMemberState extends State<ScreenRegisterMember> {
         height: screenHeight * 0.15,
         alignment: Alignment.center,
         child: const Text(
-          "로그인",
+          "회원가입",
           textScaleFactor: 2.5,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),

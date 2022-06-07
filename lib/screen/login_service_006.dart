@@ -61,15 +61,23 @@ class _ScreenLoginServiceState extends State<ScreenLoginService> {
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
-    // var screenWidth = MediaQuery.of(context).size.width;
+    var screenWidth = MediaQuery.of(context).size.width;
     List<Widget> containers = [
       Container(
         height: screenHeight * 0.15,
         alignment: Alignment.center,
-        child: const Text(
-          "로그인",
-          textScaleFactor: 2.5,
-          style: TextStyle(fontWeight: FontWeight.bold),
+        child: Row(
+          children: <Widget> [
+            SizedBox(
+              width: screenWidth * 0.14,
+            ),
+            Image.asset('assets/images/${widget.serviceName}.png'),
+            const Text(
+              "로그인",
+              textScaleFactor: 2.5,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ],
         ),
       ),
       Container(
