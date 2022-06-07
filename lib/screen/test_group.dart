@@ -12,7 +12,7 @@ class TestGroup extends StatefulWidget {
 class _TestGroupState extends State<TestGroup> {
   void search() async {
     debugPrint('search tap!');
-    Group group = await Groups().groupSearch('groupId');
+    Group group = await Groups().groupSearch('629e1576fe4214a8bbd75e20');
 
     debugPrint(group.toString());
   }
