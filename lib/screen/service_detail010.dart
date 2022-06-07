@@ -38,6 +38,7 @@ class ScreenServiceDetail extends StatelessWidget {
             '결제예정: ${DateTime.fromMillisecondsSinceEpoch(data.ott.payment.next * 1000)}\n'
             '맴버쉽 종류: ${data.ott.membership.type}\n'
             '맴버쉽 가격: ${data.ott.membership.cost}\n'
+            '마지막 동기화: ${DateTime.fromMillisecondsSinceEpoch(data.updateTime * 1000)}\n'
             '계정 상태: ${data.ott.status}\n',
             textScaleFactor: 1.5,
             textAlign: TextAlign.left,
