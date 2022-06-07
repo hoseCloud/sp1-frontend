@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:flutterapp/stats.dart';
 import 'package:flutterapp/global.dart';
 import 'package:flutterapp/uris.dart';
-import 'package:flutterapp/screen/main_tabs008.dart';
+import 'package:flutterapp/screen/splash009.dart';
 import 'package:flutterapp/screen/register_member005.dart';
 
 // #004 ScreenLoginMember
@@ -43,7 +43,7 @@ class _ScreenLoginMemberState extends State<ScreenLoginMember> {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const ScreenMainTabs(),
+            builder: (context) => const ScreenSplash(),
           ));
     } else {
       debugPrint('login fail...');

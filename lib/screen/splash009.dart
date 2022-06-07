@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:flutterapp/stats.dart';
 import 'package:flutterapp/global.dart';
 import 'package:flutterapp/screen/login_member004.dart';
+import 'package:flutterapp/screen/main_tabs008.dart';
 
 // #009 ScreenSplash
 class ScreenSplash extends StatefulWidget {
@@ -17,9 +18,6 @@ class _ScreenSplashState extends State<ScreenSplash> {
   void initDb() async {
     // 1. 로그인 시도
     UserModel proUser = Provider.of<UserModel>(context, listen: false);
-    User user = User.init();
-
-    debugPrint('${user.id}, ${user.pw}, ${user.email}');
 
     if(proUser.lengthUser == 0) {
       Future.delayed(const Duration(seconds: 3), () {
@@ -30,10 +28,25 @@ class _ScreenSplashState extends State<ScreenSplash> {
                 ));
           });
     }
-    // 2. 로그인 정보를 stats에 저장
     else {
-      user = proUser.items[0];
-      debugPrint(user.toString());
+      // 2. 로그인 정보를 stats에 저장
+      // login screen 에서 처리
+
+      // 3. 계정에 저장된 서비스를 stats에 저장
+      ServiceModel proService = Provider.of<ServiceModel>(context, listen: false);
+      List<Group> group = proUser.items[0].groups;
+
+      for(int i = 0; i < group.length; i++) {
+        proService.add(group[i].ott);
+      }
+
+      Future.delayed(const Duration(seconds: 3), () {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ScreenMainTabs(),
+              ));
+        });
     }
 
     // 2. 로그인 정보를 stats에 저장
@@ -87,7 +100,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
         data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
         child: Scaffold(
           body: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            //mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               SizedBox(height: screenHeight * 0.384375),
               Center(
