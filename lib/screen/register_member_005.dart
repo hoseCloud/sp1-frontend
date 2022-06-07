@@ -59,7 +59,6 @@ class _ScreenRegisterMemberState extends State<ScreenRegisterMember> {
       Container(
         height: screenHeight * 0.15,
         alignment: Alignment.center,
-        color: Colors.orange,
         child: const Text(
           "로그인",
           textScaleFactor: 2.5,
@@ -69,14 +68,12 @@ class _ScreenRegisterMemberState extends State<ScreenRegisterMember> {
       Container(
           height: screenHeight * 0.4,
           alignment: Alignment.center,
-          color: Colors.yellow,
           child: Column(
             children: <Widget>[
               Container(
                 height: screenHeight * 0.1,
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(16.0),
-                color: Colors.red,
                 child: TextField(
                   obscureText: false,
                   decoration: const InputDecoration(
@@ -90,7 +87,6 @@ class _ScreenRegisterMemberState extends State<ScreenRegisterMember> {
                 height: screenHeight * 0.1,
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(16.0),
-                color: Colors.orange,
                 child: TextField(
                   obscureText: false,
                   decoration: const InputDecoration(
@@ -104,7 +100,6 @@ class _ScreenRegisterMemberState extends State<ScreenRegisterMember> {
                 height: screenHeight * 0.1,
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(16.0),
-                color: Colors.yellow,
                 child: TextField(
                   obscureText: true,
                   decoration: const InputDecoration(
@@ -118,7 +113,6 @@ class _ScreenRegisterMemberState extends State<ScreenRegisterMember> {
                 height: screenHeight * 0.1,
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(16.0),
-                color: Colors.green,
                 child: TextField(
                   obscureText: true,
                   decoration: const InputDecoration(
@@ -134,7 +128,6 @@ class _ScreenRegisterMemberState extends State<ScreenRegisterMember> {
         height: screenHeight * 0.1,
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.all(16.0),
-        color: Colors.purple,
         child: ElevatedButton(
           onPressed: () {
             _doRegister();

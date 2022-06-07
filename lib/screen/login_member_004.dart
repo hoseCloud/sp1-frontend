@@ -56,7 +56,6 @@ class _ScreenLoginMemberState extends State<ScreenLoginMember> {
       Container(
         height: screenHeight * 0.15,
         alignment: Alignment.center,
-        color: Colors.orange,
         child: const Text(
           "로그인",
           textScaleFactor: 2.5,
@@ -66,7 +65,6 @@ class _ScreenLoginMemberState extends State<ScreenLoginMember> {
       Container(
           height: screenHeight * 0.2,
           alignment: Alignment.center,
-          color: Colors.yellow,
           child: Column(
             children: <Widget>[
               Container(
@@ -87,7 +85,6 @@ class _ScreenLoginMemberState extends State<ScreenLoginMember> {
                 height: screenHeight * 0.1,
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(16.0),
-                color: Colors.red,
                 child: TextField(
                   obscureText: true,
                   decoration: const InputDecoration(
@@ -102,7 +99,6 @@ class _ScreenLoginMemberState extends State<ScreenLoginMember> {
       Container(
         height: screenHeight * 0.1,
         alignment: Alignment.center,
-        color: Colors.green,
         child: Row(
           children: <Widget>[
             Container(
@@ -110,7 +106,6 @@ class _ScreenLoginMemberState extends State<ScreenLoginMember> {
               width: screenWidth * 0.5,
               alignment: Alignment.centerLeft,
               padding: const EdgeInsets.all(16.0),
-              color: Colors.yellow,
               child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
@@ -127,7 +122,6 @@ class _ScreenLoginMemberState extends State<ScreenLoginMember> {
                 width: screenWidth * 0.5,
                 alignment: Alignment.centerRight,
                 padding: const EdgeInsets.all(16.0),
-                color: Colors.orange,
                 child: ElevatedButton(
                   onPressed: () {
                     _doLogin();
