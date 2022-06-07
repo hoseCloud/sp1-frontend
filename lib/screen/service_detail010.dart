@@ -13,21 +13,22 @@ class ScreenServiceDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
+      body: ListView(
         children: [
           Text('''
-            groupId: ${data.groupId}\n
-            name: ${data.ott.name}\n
-            accountId: ${data.ott.account.id}\n
-            accountPw: ${data.ott.account.pw}\n
-            paymentType: ${data.ott.payment.type}\n
-            paymentDetail: ${data.ott.payment.detail}\n
-            paymentNext: ${data.ott.payment.next}\n
-            membershipType: ${data.ott.membership.type}\n
-            membershipCost: ${data.ott.membership.cost}\n
-            status: ${data.ott.status}\n',
+            groupId: ${data.groupId}
+            name: ${data.ott.name}
+            accountId: ${data.ott.account.id}
+            accountPw: ${data.ott.account.pw}
+            paymentType: ${data.ott.payment.type}
+            paymentDetail: ${data.ott.payment.detail}
+            paymentNext: ${data.ott.payment.next}
+            membershipType: ${data.ott.membership.type}
+            membershipCost: ${data.ott.membership.cost}
+            status: ${data.ott.status}
             ''',
             textScaleFactor: 2.0,
+            textAlign: TextAlign.left,
           ),
           ElevatedButton(
               onPressed: () async {
