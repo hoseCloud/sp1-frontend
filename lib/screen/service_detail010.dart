@@ -7,7 +7,7 @@ import 'package:flutterapp/uris.dart';
 // #010 ScreenServiceDetail
 class ScreenServiceDetail extends StatelessWidget {
   const ScreenServiceDetail({Key? key, required this.data}) : super(key: key);
-  final Service data;
+  final Group data;
 
   @override
   Widget build(BuildContext context) {
@@ -15,23 +15,25 @@ class ScreenServiceDetail extends StatelessWidget {
       appBar: AppBar(),
       body: Column(
         children: [
-          Text(
-            'name: ${data.name}\n'
-            'accountId: ${data.account.id}\n'
-            'accountPw: ${data.account.pw}\n'
-            'paymentType: ${data.payment.type}\n'
-            'paymentDetail: ${data.payment.detail}\n'
-            'paymentNext: ${data.payment.next}\n'
-            'membershipType: ${data.membership.type}\n'
-            'membershipCost: ${data.membership.cost}\n'
-            'status: ${data.status}\n',
+          Text('''
+            groupId: ${data.groupId}\n
+            name: ${data.ott.name}\n
+            accountId: ${data.ott.account.id}\n
+            accountPw: ${data.ott.account.pw}\n
+            paymentType: ${data.ott.payment.type}\n
+            paymentDetail: ${data.ott.payment.detail}\n
+            paymentNext: ${data.ott.payment.next}\n
+            membershipType: ${data.ott.membership.type}\n
+            membershipCost: ${data.ott.membership.cost}\n
+            status: ${data.ott.status}\n',
+            ''',
             textScaleFactor: 2.0,
           ),
           ElevatedButton(
               onPressed: () async {
-                ServiceModel pro =
-                    Provider.of<ServiceModel>(context, listen: false);
-                Service service = await Netflix().accountRefresh(data);
+                GroupModel pro =
+                    Provider.of<GroupModel>(context, listen: false);
+                Service service = await Netflix().accountRefresh(data.ott);
                 pro.update(service);
                 Navigator.pop(context);
                 debugPrint('Refresh tapped!');
@@ -44,8 +46,8 @@ class ScreenServiceDetail extends StatelessWidget {
               )),
           ElevatedButton(
               onPressed: () {
-                ServiceModel pro =
-                    Provider.of<ServiceModel>(context, listen: false);
+                GroupModel pro =
+                    Provider.of<GroupModel>(context, listen: false);
                 pro.remove(data);
                 // pro.db.dbDelete(data);
                 Navigator.pop(context);

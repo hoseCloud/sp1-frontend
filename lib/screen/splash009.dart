@@ -33,11 +33,13 @@ class _ScreenSplashState extends State<ScreenSplash> {
       // login screen 에서 처리
 
       // 3. 계정에 저장된 서비스를 stats에 저장
-      ServiceModel proService = Provider.of<ServiceModel>(context, listen: false);
+      GroupModel proGroup = Provider.of<GroupModel>(context, listen: false);
       List<Group> group = proUser.items[0].groups;
 
       for(int i = 0; i < group.length; i++) {
-        proService.add(group[i].ott);
+        Group temp = Group.init();
+        temp.ott = group[i].ott;
+        proGroup.add(temp);
       }
 
       Future.delayed(const Duration(seconds: 3), () {

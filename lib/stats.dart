@@ -2,45 +2,42 @@ import 'package:flutter/material.dart';
 import 'package:flutterapp/global.dart';
 import 'package:collection/collection.dart';
 
-class ServiceModel extends ChangeNotifier {
-  final List<Service> _service = [];
+class GroupModel extends ChangeNotifier {
+  final List<Group> _group = [];
 
-  ServiceModel() {
-    debugPrint('create db var!');
-  }
-  UnmodifiableListView<Service> get items => UnmodifiableListView(_service);
+  UnmodifiableListView<Group> get items => UnmodifiableListView(_group);
 
-  int get lengthService => _service.length;
+  int get lengthGroup => _group.length;
 
-  void add(Service service) {
-    _service.add(service);
+  void add(Group group) {
+    _group.add(group);
     notifyListeners();
   }
 
-  void remove(Service service) {
-    _service.remove(service);
+  void remove(Group group) {
+    _group.remove(group);
     notifyListeners();
   }
 
   void removeAll() {
-    _service.clear();
+    _group.clear();
     notifyListeners();
   }
 
   int priceAll() {
     int result = 0;
 
-    for (int idx = 0; idx < lengthService; idx++) {
-      result += _service[idx].membership.cost.toInt();
+    for (int idx = 0; idx < lengthGroup; idx++) {
+      result += _group[idx].ott.membership.cost;
     }
 
     return result;
   }
 
   bool search(String name, String id) {
-    bool result = _service.any(
+    bool result = _group.any(
       (x) {
-        if (x.name != name || x.account.id != id) {
+        if (x.ott.name != name || x.ott.account.id != id) {
           return false;
         }
         return true;
@@ -53,10 +50,10 @@ class ServiceModel extends ChangeNotifier {
   bool update(Service service) {
     bool result = false;
     if (search(service.name, service.account.id)) {
-      for (int i = 0; i < _service.length; i++) {
-        if (_service[i].name == service.name &&
-            _service[i].account.id == service.account.id) {
-          _service[i] = service;
+      for (int i = 0; i < _group.length; i++) {
+        if (_group[i].ott.name == service.name &&
+            _group[i].ott.account.id == service.account.id) {
+          _group[i].ott = service;
           result = true;
           break;
         }

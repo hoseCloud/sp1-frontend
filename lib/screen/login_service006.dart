@@ -35,14 +35,16 @@ class _ScreenLoginServiceState extends State<ScreenLoginService> {
   void _doLogin() async {
     debugPrint('Do login');
     String name = widget.serviceName;
-    ServiceModel proService = Provider.of<ServiceModel>(context, listen: false);
+    GroupModel proGroup = Provider.of<GroupModel>(context, listen: false);
     UserModel proUser = Provider.of<UserModel>(context, listen: false);
     Service service = Service.account(name, Account(_id, _pw));
     service.changeStatus(0);
-    proService.add(service);
+    Group group = Group.init();
+    group.ott = service;
+    proGroup.add(group);
     service = await OTT().doAccountLogin(service);
 
-    proService.update(service);
+    proGroup.update(service);
     if (service.status == 200) {
       String appId = proUser.items[0].id;
       Groups().groupMake(appId, name, _id, _pw);
