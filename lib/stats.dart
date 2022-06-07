@@ -64,6 +64,20 @@ class GroupModel extends ChangeNotifier {
     notifyListeners();
     return result;
   }
+
+  Service soonPayment() {
+    Service service = Service.init();
+    int recent = 4294967296;
+
+    for(int i = 0; i < _group.length; i++) {
+      int next = _group[i].ott.payment.next;
+      if(recent > next) {
+        service = _group[i].ott;
+      }
+    }
+
+    return service;
+  }
 }
 
 class UserModel extends ChangeNotifier {
