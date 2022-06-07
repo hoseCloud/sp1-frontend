@@ -47,13 +47,14 @@ class GroupModel extends ChangeNotifier {
     return result;
   }
 
-  bool update(Service service) {
+  bool update(Group group) {
     bool result = false;
+    Service service = group.ott;
     if (search(service.name, service.account.id)) {
       for (int i = 0; i < _group.length; i++) {
         if (_group[i].ott.name == service.name &&
             _group[i].ott.account.id == service.account.id) {
-          _group[i].ott = service;
+          _group[i] = group;
           result = true;
           break;
         }

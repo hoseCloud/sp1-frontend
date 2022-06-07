@@ -34,8 +34,10 @@ class ScreenServiceDetail extends StatelessWidget {
               onPressed: () async {
                 GroupModel pro =
                     Provider.of<GroupModel>(context, listen: false);
+                /*
                 Service service = await Netflix().accountRefresh(data.ott);
                 pro.update(service);
+                */
                 Navigator.pop(context);
                 debugPrint('Refresh tapped!');
               },

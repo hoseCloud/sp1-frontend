@@ -37,9 +37,8 @@ class _ScreenSplashState extends State<ScreenSplash> {
       List<Group> group = proUser.items[0].groups;
 
       for(int i = 0; i < group.length; i++) {
-        Group temp = Group.init();
-        temp.ott = group[i].ott;
-        proGroup.add(temp);
+        group[i].ott.changeStatus(200);
+        proGroup.add(group[i]);
       }
 
       Future.delayed(const Duration(seconds: 3), () {

@@ -43,11 +43,15 @@ class _ScreenLoginServiceState extends State<ScreenLoginService> {
     group.ott = service;
     proGroup.add(group);
     service = await OTT().doAccountLogin(service);
+    group.ott = service;
 
-    proGroup.update(service);
+    proGroup.update(group);
     if (service.status == 200) {
       String appId = proUser.items[0].id;
-      Groups().groupMake(appId, name, _id, _pw);
+      String groupId = await Groups().groupMake(appId, name, _id, _pw);
+      group.groupId = groupId;
+      proGroup.update(group);
+      await Groups().groupUpdate(groupId, service);
     }
   }
 
