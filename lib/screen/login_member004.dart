@@ -3,7 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:flutterapp/stats.dart';
 import 'package:flutterapp/global.dart';
 import 'package:flutterapp/uris.dart';
-import 'package:flutterapp/screen/main_tabs008.dart';
+import 'package:flutterapp/screen/splash009.dart';
+import 'package:flutterapp/screen/register_member005.dart';
 
 // #004 ScreenLoginMember
 class ScreenLoginMember extends StatefulWidget {
@@ -38,12 +39,11 @@ class _ScreenLoginMemberState extends State<ScreenLoginMember> {
     if (user.id != '') {
       UserModel pro = Provider.of<UserModel>(context, listen: false);
       pro.add(user);
-      pro.db.dbInsert(user);
 
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const ScreenMainTabs(),
+            builder: (context) => const ScreenSplash(),
           ));
     } else {
       debugPrint('login fail...');
@@ -113,7 +113,16 @@ class _ScreenLoginMemberState extends State<ScreenLoginMember> {
               alignment: Alignment.centerLeft,
               padding: const EdgeInsets.all(16.0),
               color: Colors.yellow,
-              child: const Text('회원가입'),
+              child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ScreenRegisterMember(),
+                      ));
+                  },
+                  child: const Text('회원가입'),
+                ),
             ),
             Container(
                 height: screenHeight * 0.1,

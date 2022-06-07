@@ -52,27 +52,27 @@ class User {
   String id = '';
   String pw = '';
   String email = '';
-  int auto = 0;
+  List<Group> groups = [];
 
   User.init() {
     id = '';
     pw = '';
     email = '';
-    auto = 0;
+    groups = [];
   }
-  User(this.id, this.pw, this.email, this.auto);
+  User(this.id, this.pw, this.email, this.groups);
 }
 
 class Group {
-  int groupId = -1;
+  String groupId = '';
   Service ott = Service.init();
-  DateTime updateTime = DateTime(0);
+  int updateTime = 0;
   List<Member> members = [];
 
   Group.init() {
-    groupId = -1;
+    groupId = '';
     ott = Service.init();
-    updateTime = DateTime(0);
+    updateTime = 0;
     members = [];
   }
   Group(this.groupId, this.ott, this.updateTime, this.members);

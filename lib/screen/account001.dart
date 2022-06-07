@@ -53,7 +53,7 @@ class _ScreenAccountState extends State<ScreenAccount> {
 
   @override
   Widget build(BuildContext context) {
-    ServiceModel pro = Provider.of<ServiceModel>(context, listen: true);
+    GroupModel pro = Provider.of<GroupModel>(context, listen: true);
     return Scaffold(
       floatingActionButton: Theme(
         data: Theme.of(context).copyWith(splashColor: Colors.blueAccent),
@@ -73,9 +73,9 @@ class _ScreenAccountState extends State<ScreenAccount> {
           restorationId: 'test_view',
           padding: const EdgeInsets.all(16.0),
           children: <Widget>[
-            for (int index = 0; index < pro.lengthService; index++)
+            for (int index = 0; index < pro.lengthGroup; index++)
               Card(
-                color: sColor(pro.items[index].status),
+                color: sColor(pro.items[index].ott.status),
                 child: InkWell(
                   splashColor: Colors.blue.withAlpha(30),
                   onTap: () {
@@ -92,14 +92,14 @@ class _ScreenAccountState extends State<ScreenAccount> {
                     height: 100,
                     child: Center(
                       child: ListTile(
-                        trailing: sIcons(pro.items[index].status),
+                        trailing: sIcons(pro.items[index].ott.status),
                         title: Text(
-                          pro.items[index].name,
+                          pro.items[index].ott.name,
                           style: const TextStyle(fontWeight: FontWeight.bold),
                           textScaleFactor: 2.0,
                         ),
                         subtitle: Text(
-                          pro.items[index].account.id,
+                          pro.items[index].ott.account.id,
                           style: const TextStyle(fontWeight: FontWeight.bold),
                           textScaleFactor: 1.5,
                         ),

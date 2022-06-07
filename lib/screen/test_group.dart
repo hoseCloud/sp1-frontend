@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/global.dart';
 import 'package:flutterapp/uris.dart';
+import 'package:flutterapp/stats.dart';
+import 'package:provider/provider.dart';
 
 class TestGroup extends StatefulWidget {
   const TestGroup({Key? key}) : super(key: key);
@@ -12,7 +14,7 @@ class TestGroup extends StatefulWidget {
 class _TestGroupState extends State<TestGroup> {
   void search() async {
     debugPrint('search tap!');
-    Group group = await Groups().groupSearch('groupId');
+    Group group = await Groups().groupSearch('629e1576fe4214a8bbd75e20');
 
     debugPrint(group.toString());
   }
@@ -26,12 +28,16 @@ class _TestGroupState extends State<TestGroup> {
 
   void delete() async {
     debugPrint('delete tap!');
-    await Groups().groupDelete('groupId', '4osecloud@gmail.com');
+    await Groups().groupDelete('629efef6910f0b6761b3243f', 'hose');
   }
 
   void update() async {
     debugPrint('update tap!');
-    await Groups().groupUpdate('groupId', Service.init());
+    Service service = Service.init();
+    service.account.pw = 'JjJ2hyeyxDEWXGx';
+    service.payment = Payment('hello', 'test', 10000);
+    service.membership = Membership(7, 77777);
+    await Groups().groupUpdate('629efef6910f0b6761b3243f', service);
   }
 
   @override
