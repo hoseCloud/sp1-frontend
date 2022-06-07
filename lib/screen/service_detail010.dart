@@ -16,6 +16,7 @@ class ScreenServiceDetail extends StatelessWidget {
       result += member[i].isAdmin == 1 ? 'O' : 'X';
       result += ' ';
       result += member[i].appId;
+      result += '\n';
     }
 
     return result;
