@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:flutterapp/stats.dart';
 import 'package:flutterapp/global.dart';
@@ -22,8 +23,31 @@ class ScreenServiceDetail extends StatelessWidget {
     return result;
   }
 
+  void refresh(BuildContext context) async {
+    Navigator.pop(context);
+    debugPrint('Refresh tapped!');
+    GroupModel pro = Provider.of<GroupModel>(context, listen: false);
+    data.ott.changeStatus(0);
+    pro.update(data);
+    Service service = await Netflix().accountRefresh(data.ott);
+    data.ott = service;
+    await Groups().groupUpdate(data.groupId, data.ott);
+    pro.update(data);
+  }
+
+  void delete(BuildContext context) async {
+    GroupModel pro =
+        Provider.of<GroupModel>(context, listen: false);
+    pro.remove(data);
+    Navigator.pop(context);
+    debugPrint('Delete tapped!');
+  }
+
   @override
   Widget build(BuildContext context) {
+    var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(),
       body: ListView(
@@ -49,39 +73,45 @@ class ScreenServiceDetail extends StatelessWidget {
             textScaleFactor: 1.5,
             textAlign: TextAlign.left,
           ),
-          ElevatedButton(
-              onPressed: () async {
-                Navigator.pop(context);
-                debugPrint('Refresh tapped!');
-                GroupModel pro = Provider.of<GroupModel>(context, listen: false);
-                data.ott.changeStatus(0);
-                pro.update(data);
-                Service service = await Netflix().accountRefresh(data.ott);
-                data.ott = service;
-                await Groups().groupUpdate(data.groupId, data.ott);
-                pro.update(data);
-              },
-              child: const Center(
-                child: Text(
-                  'Refresh',
-                  textScaleFactor: 2.0,
+          Container(
+            alignment: Alignment.center,
+            child: Row(
+              children: [
+                Container(
+                  width: screenWidth * 0.05,
                 ),
-              )),
-          ElevatedButton(
-              onPressed: () {
-                GroupModel pro =
-                    Provider.of<GroupModel>(context, listen: false);
-                pro.remove(data);
-                // pro.db.dbDelete(data);
-                Navigator.pop(context);
-                debugPrint('Delete tapped!');
-              },
-              child: const Center(
-                child: Text(
-                  'Delete',
-                  textScaleFactor: 2.0,
+                Container(
+                  width: screenWidth * 0.4,
+                  child: ElevatedButton(
+                    child: const Text(
+                      'Refresh',
+                      textScaleFactor: 2.0,
+                    ),
+                    onPressed: () async {
+                      refresh(context);
+                    },
+                  ),
                 ),
-              ),
+                Container(
+                  width: screenWidth * 0.1,
+                ),
+                Container(
+                  width: screenWidth * 0.4,
+                  child: ElevatedButton(
+                    child: const Text(
+                      'Delete',
+                      textScaleFactor: 2.0,
+                    ),
+                    onPressed: () async {
+                      delete(context);
+                    },
+                  ),
+                ),
+                Container(
+                  width: screenWidth * 0.05,
+                ),
+              ],
+            )
           ),
         ],
       ),
