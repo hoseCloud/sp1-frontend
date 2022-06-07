@@ -9,25 +9,42 @@ class ScreenServiceDetail extends StatelessWidget {
   const ScreenServiceDetail({Key? key, required this.data}) : super(key: key);
   final Group data;
 
+  String sharing(List<Member> member) {
+    String result = '';
+
+    for(int i = 0; i < member.length; i++) {
+      result += member[i].isAdmin == 1 ? 'O' : 'X';
+      result += ' ';
+      result += member[i].appId;
+    }
+
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: ListView(
         children: [
-          Text('''
-            groupId: ${data.groupId}
-            name: ${data.ott.name}
-            accountId: ${data.ott.account.id}
-            accountPw: ${data.ott.account.pw}
-            paymentType: ${data.ott.payment.type}
-            paymentDetail: ${data.ott.payment.detail}
-            paymentNext: ${data.ott.payment.next}
-            membershipType: ${data.ott.membership.type}
-            membershipCost: ${data.ott.membership.cost}
-            status: ${data.ott.status}
-            ''',
-            textScaleFactor: 2.0,
+          Text(
+            'GID: ${data.groupId}\n'
+            '서비스: ${data.ott.name}\n'
+            '계정 ID: ${data.ott.account.id}\n'
+            '계정 PW: ${data.ott.account.pw}\n'
+            '결제수단: ${data.ott.payment.type}\n'
+            '결제정보: ${data.ott.payment.detail}\n'
+            '결제예정: ${DateTime.fromMillisecondsSinceEpoch(data.ott.payment.next * 1000)}\n'
+            '맴버쉽 종류: ${data.ott.membership.type}\n'
+            '맴버쉽 가격: ${data.ott.membership.cost}\n'
+            '계정 상태: ${data.ott.status}\n',
+            textScaleFactor: 1.5,
+            textAlign: TextAlign.left,
+          ),
+          Text(
+            '공유중인 유저\n'
+            '${sharing(data.members)}\n',
+            textScaleFactor: 1.5,
             textAlign: TextAlign.left,
           ),
           ElevatedButton(
