@@ -28,9 +28,9 @@ class ScreenServiceDetail extends StatelessWidget {
       appBar: AppBar(),
       body: ListView(
         children: [
+          Image.asset('assets/images/${data.ott.name}_banner.png'),
           Text(
             'GID: ${data.groupId}\n'
-            '서비스: ${data.ott.name}\n'
             '계정 ID: ${data.ott.account.id}\n'
             '계정 PW: ${data.ott.account.pw}\n'
             '결제수단: ${data.ott.payment.type}\n'
