@@ -13,7 +13,7 @@ class ScreenPayments extends StatefulWidget {
 class _ScreenPaymentsState extends State<ScreenPayments> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<ServiceModel>(
+    return Consumer<GroupModel>(
       builder: (context, service, child) => Scaffold(
         body: Scrollbar(
           child: ListView(

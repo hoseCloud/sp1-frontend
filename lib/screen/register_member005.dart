@@ -49,7 +49,7 @@ class _ScreenRegisterMemberState extends State<ScreenRegisterMember> {
       return;
     }
     debugPrint('Do register');
-    User user = User(_id, _pw, _email, 1);
+    User user = User(_id, _pw, _email, []);
     Users().userAdd(user);
   }
 

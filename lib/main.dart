@@ -7,7 +7,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => ServiceModel()),
+        ChangeNotifierProvider(create: (context) => GroupModel()),
         ChangeNotifierProvider(create: ((context) => UserModel())),
       ],
       child: const MyApp(),

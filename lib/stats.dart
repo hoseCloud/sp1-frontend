@@ -1,50 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/global.dart';
 import 'package:collection/collection.dart';
-import 'package:flutterapp/control_db.dart';
 
-class ServiceModel extends ChangeNotifier {
-  final List<Service> _service = [];
-  DbService db = DbService();
+class GroupModel extends ChangeNotifier {
+  final List<Group> _group = [];
 
-  ServiceModel() {
-    debugPrint('create db var!');
-  }
-  UnmodifiableListView<Service> get items => UnmodifiableListView(_service);
+  UnmodifiableListView<Group> get items => UnmodifiableListView(_group);
 
-  int get lengthService => _service.length;
+  int get lengthGroup => _group.length;
 
-  void add(Service service) {
-    _service.add(service);
+  void add(Group group) {
+    _group.add(group);
     notifyListeners();
   }
 
-  void remove(Service service) {
-    _service.remove(service);
+  void remove(Group group) {
+    _group.remove(group);
     notifyListeners();
   }
 
   void removeAll() {
-    _service.clear();
+    _group.clear();
     notifyListeners();
   }
 
   int priceAll() {
     int result = 0;
 
-    for (int idx = 0; idx < lengthService; idx++) {
-      if (_service[idx].membershipCost != null) {
-        result += _service[idx].membershipCost!.toInt();
-      }
+    for (int idx = 0; idx < lengthGroup; idx++) {
+      result += _group[idx].ott.membership.cost;
     }
 
     return result;
   }
 
-  bool search(String name, String accountId) {
-    bool result = _service.any(
+  bool search(String name, String id) {
+    bool result = _group.any(
       (x) {
-        if (x.name != name || x.accountId != accountId) {
+        if (x.ott.name != name || x.ott.account.id != id) {
           return false;
         }
         return true;
@@ -54,13 +47,14 @@ class ServiceModel extends ChangeNotifier {
     return result;
   }
 
-  bool update(Service service) {
+  bool update(Group group) {
     bool result = false;
-    if (search(service.name, service.accountId)) {
-      for (int i = 0; i < _service.length; i++) {
-        if (_service[i].name == service.name &&
-            _service[i].accountId == service.accountId) {
-          _service[i] = service;
+    Service service = group.ott;
+    if (search(service.name, service.account.id)) {
+      for (int i = 0; i < _group.length; i++) {
+        if (_group[i].ott.name == service.name &&
+            _group[i].ott.account.id == service.account.id) {
+          _group[i] = group;
           result = true;
           break;
         }
@@ -74,7 +68,6 @@ class ServiceModel extends ChangeNotifier {
 
 class UserModel extends ChangeNotifier {
   final List<User> _user = [];
-  DbUser db = DbUser();
 
   UserModel() {
     debugPrint('create db var!');
@@ -124,17 +117,6 @@ class UserModel extends ChangeNotifier {
     }
 
     notifyListeners();
-    return result;
-  }
-
-  User searchAuto() {
-    User result = User('', '', '', 0);
-    for (int i = 0; i < _user.length; i++) {
-      if (_user[i].auto == 1) {
-        result = _user[i];
-        break;
-      }
-    }
     return result;
   }
 }
