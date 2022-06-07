@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutterapp/stats.dart';
-import 'package:flutterapp/screen/account001.dart';
-import 'package:flutterapp/screen/setting003.dart';
-import 'package:flutterapp/screen/payments007.dart';
-import 'package:flutterapp/screen/splash009.dart';
+import 'package:flutterapp/screen/account_001.dart';
+import 'package:flutterapp/screen/setting_003.dart';
+import 'package:flutterapp/screen/payments_007.dart';
+import 'package:flutterapp/screen/splash_009.dart';
 
 // #008 ScreenMainTabs
 class ScreenMainTabs extends StatefulWidget {
@@ -34,7 +34,6 @@ class _ScreenMainTabsState extends State<ScreenMainTabs> {
   }
 
   void logout() async {
-    // 4. 로그아웃시 stats에 저장된 정보를 삭제
     UserModel proUser = Provider.of<UserModel>(context, listen: false);
     proUser.removeAll();
 

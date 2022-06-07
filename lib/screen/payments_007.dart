@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/stats.dart';
 import 'package:provider/provider.dart';
+import 'package:flutterapp/stats.dart';
 
 // #007 ScreenPayments
 class ScreenPayments extends StatefulWidget {

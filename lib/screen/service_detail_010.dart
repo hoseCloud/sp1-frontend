@@ -81,7 +81,8 @@ class ScreenServiceDetail extends StatelessWidget {
                   'Delete',
                   textScaleFactor: 2.0,
                 ),
-              )),
+              ),
+          ),
         ],
       ),
     );

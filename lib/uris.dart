@@ -19,8 +19,6 @@ class Users {
     );
 
     if (response.statusCode == 200) {
-      debugPrint("success 200");
-      debugPrint('Response body: ${response.body}');
       Map<String, dynamic> table = jsonDecode(response.body);
       if(table['groups'] == null) {
         user = User(
@@ -80,11 +78,9 @@ class Users {
           group,
         );
       }
-    } else {
-      debugPrint("fail... else");
     }
 
-    debugPrint('Url: $uri/login');
+    debugPrint('URI: POST $uri/login');
     debugPrint('Response status: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
 
@@ -104,22 +100,14 @@ class Users {
       }),
     );
 
-    if (response.statusCode == 201) {
-      debugPrint("success 201");
-      debugPrint(response.bodyBytes.toString());
-      debugPrint(response.body);
-    } else {
-      debugPrint("fail... else");
-    }
-
-    debugPrint('Url: $uri/user');
+    debugPrint('URL: POST $uri/user');
     debugPrint('Response status: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
 
     return user;
   }
 
-  void userDelete(String id, String pw) async {
+  Future<void> userDelete(String id, String pw) async {
     final response = await http.delete(
       Uri.parse('$uri/user'),
       headers: {"Content-Type": "application/json"},
@@ -128,12 +116,13 @@ class Users {
         'app_pw': pw,
       }),
     );
-    debugPrint('Url: $uri/user');
+
+    debugPrint('URL: DELETE $uri/user');
     debugPrint('Response status: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
   }
 
-  void userEdit(User user) async {
+  Future<void> userEdit(User user) async {
     final response = await http.put(
       Uri.parse('$uri/user'),
       headers: {"Content-Type": "application/json"},
@@ -143,7 +132,8 @@ class Users {
         'app_email': user.email,
       }),
     );
-    debugPrint('Url: $uri/user');
+
+    debugPrint('URL: PUT $uri/user');
     debugPrint('Response status: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
   }
@@ -195,10 +185,9 @@ class Groups {
             member,
           );
       }
-    } else {
-      debugPrint("fail... else");
     }
-    debugPrint('Url: $uri/group/$groupId');
+
+    debugPrint('URL: GET $uri/group/$groupId');
     debugPrint('Response status: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
 
@@ -206,7 +195,7 @@ class Groups {
   }
 
   Future<String> groupMake(
-      String appId, String ott, String ottId, String ottPw) async {
+    String appId, String ott, String ottId, String ottPw) async {
     String groupId = '';
     final response = await http.post(
       Uri.parse('$uri/group'),
@@ -219,14 +208,11 @@ class Groups {
       }),
     );
     if (response.statusCode == 200) {
-      debugPrint("success 200");
-      debugPrint('Response body: ${response.body}');
       Map<String, dynamic> table = jsonDecode(response.body);
       groupId = table['group_id'];
-    } else {
-      debugPrint("fail... else");
     }
-    debugPrint('Url: $uri/group');
+
+    debugPrint('URL: POST $uri/group');
     debugPrint('Response status: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
 
@@ -241,14 +227,8 @@ class Groups {
         'app_id': appId,
       }),
     );
-    if (response.statusCode == 200) {
-      debugPrint("success 200");
-      debugPrint('Response body: ${response.body}');
-    } else {
-      debugPrint("fail... else");
-    }
 
-    debugPrint('Url: $uri/group/$groupId');
+    debugPrint('URL: DELETE $uri/group/$groupId');
     debugPrint('Response status: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
   }
@@ -270,14 +250,8 @@ class Groups {
         }
       }),
     );
-    if (response.statusCode == 200) {
-      debugPrint("success 200");
-      debugPrint('Response body: ${response.body}');
-    } else {
-      debugPrint("fail... else");
-    }
 
-    debugPrint('Url: $uri/group/$groupId');
+    debugPrint('URL: PUT $uri/group/$groupId');
     debugPrint('Response status: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
   }
@@ -314,6 +288,7 @@ class Netflix extends OTT {
   Future<Service> accountLogin(String id, String pw) async {
     Service service = Service.account(name, Account(id, pw));
     service.changeStatus(0);
+
     final response = await http.post(
       Uri.parse('$uri/$name/account'),
       headers: {"Content-Type": "application/json"},
@@ -322,9 +297,8 @@ class Netflix extends OTT {
         'ott_pw': pw,
       }),
     );
+
     if (response.statusCode == 200) {
-      debugPrint("success 200");
-      debugPrint('Response body: ${response.body}');
       Map<String, dynamic> account = jsonDecode(response.body);
       Map<String, dynamic> payment = account['payment'];
       Map<String, dynamic> membership = account['membership'];
@@ -334,11 +308,10 @@ class Netflix extends OTT {
         Payment(payment['type'], payment['detail'], payment['next']),
         Membership(membership['type'], membership['cost']),
       );
-    } else {
-      debugPrint("fail... else");
     }
     service.changeStatus(response.statusCode);
-    debugPrint('Url: $uri/$name/account');
+
+    debugPrint('URL: POST $uri/$name/account');
     debugPrint('Response status: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
 
@@ -356,9 +329,8 @@ class Netflix extends OTT {
         'ott_pw': service.account.pw,
       }),
     );
+
     if (response.statusCode == 200) {
-      debugPrint("success 200");
-      debugPrint('Response body: ${response.body}');
       Map<String, dynamic> account = jsonDecode(response.body);
       Map<String, dynamic> payment = account['payment'];
       Map<String, dynamic> membership = account['membership'];
@@ -368,11 +340,10 @@ class Netflix extends OTT {
         Payment(payment['type'], payment['detail'], payment['next']),
         Membership(membership['type'], membership['cost']),
       );
-    } else {
-      debugPrint("fail... else");
     }
     service.changeStatus(response.statusCode);
-    debugPrint('Url: $uri/$name/account');
+
+    debugPrint('URL: PUT $uri/$name/account');
     debugPrint('Response status: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
 
@@ -388,6 +359,7 @@ class Wavve extends OTT {
   Future<Service> accountLogin(String id, String pw) async {
     Service service = Service.account(name, Account(id, pw));
     service.changeStatus(0);
+
     final response = await http.post(
       Uri.parse('$uri/$name/account'),
       headers: {"Content-Type": "application/json"},
@@ -396,9 +368,8 @@ class Wavve extends OTT {
         'ott_pw': pw,
       }),
     );
+
     if (response.statusCode == 200) {
-      debugPrint("success 200");
-      debugPrint('Response body: ${response.body}');
       Map<String, dynamic> account = jsonDecode(response.body);
       Map<String, dynamic> payment = account['payment'];
       Map<String, dynamic> membership = account['membership'];
@@ -408,11 +379,10 @@ class Wavve extends OTT {
         Payment(payment['type'], payment['detail'], payment['next']),
         Membership(membership['type'], membership['cost']),
       );
-    } else {
-      debugPrint("fail... else");
     }
     service.changeStatus(response.statusCode);
-    debugPrint('Url: $uri/$name');
+
+    debugPrint('URL: POST $uri/$name/account');
     debugPrint('Response status: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
 

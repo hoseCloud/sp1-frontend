@@ -1,42 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/global.dart';
-import 'package:flutterapp/uris.dart';
+import 'package:flutterapp/screen/login_member_004.dart';
+import 'package:flutterapp/screen/register_member_005.dart';
+import 'package:flutterapp/screen/login_service_006.dart';
 
-class TestGroup extends StatefulWidget {
-  const TestGroup({Key? key}) : super(key: key);
-
-  @override
-  State<TestGroup> createState() => _TestGroupState();
-}
-
-class _TestGroupState extends State<TestGroup> {
-  void search() async {
-    debugPrint('search tap!');
-    Group group = await Groups().groupSearch('629f06b26b7cb497ce39322a');
-
-    debugPrint(group.toString());
-  }
-
-  void make() async {
-    debugPrint('make tap!');
-    String groupId = await Groups()
-        .groupMake('test1', 'netflix', '4osecloud@gmail.com', 'JjJ2hyeyxDEWXGx');
-    debugPrint(groupId);
-  }
-
-  void delete() async {
-    debugPrint('delete tap!');
-    await Groups().groupDelete('629f0697910f0b6761b3244d', 'test1');
-  }
-
-  void update() async {
-    debugPrint('update tap!');
-    Service service = Service.init();
-    service.account.pw = 'JjJ2hyeyxDEWXGx';
-    service.payment = Payment('hello', 'test', 10000);
-    service.membership = Membership(7, 77777);
-    await Groups().groupUpdate('629f06b26b7cb497ce39322a', service);
-  }
+// #003 ScreenSetting
+class ScreenSetting extends StatelessWidget {
+  const ScreenSetting({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +17,10 @@ class _TestGroupState extends State<TestGroup> {
             child: InkWell(
               splashColor: Colors.blue.withAlpha(30),
               onTap: () {
-                search();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ScreenLoginMember()));
               },
               child: const SizedBox(
                 width: 300,
@@ -57,7 +29,7 @@ class _TestGroupState extends State<TestGroup> {
                   child: ListTile(
                     leading: Icon(Icons.login),
                     title: Text(
-                      'Search group',
+                      'Login to member',
                       style: TextStyle(fontWeight: FontWeight.bold),
                       textScaleFactor: 2.0,
                     ),
@@ -70,16 +42,19 @@ class _TestGroupState extends State<TestGroup> {
             child: InkWell(
               splashColor: Colors.blue.withAlpha(30),
               onTap: () {
-                make();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ScreenRegisterMember()));
               },
               child: const SizedBox(
                 width: 300,
                 height: 100,
                 child: Center(
                   child: ListTile(
-                    leading: Icon(Icons.login),
+                    leading: Icon(Icons.app_registration),
                     title: Text(
-                      'Make group',
+                      'Register to member',
                       style: TextStyle(fontWeight: FontWeight.bold),
                       textScaleFactor: 2.0,
                     ),
@@ -92,7 +67,11 @@ class _TestGroupState extends State<TestGroup> {
             child: InkWell(
               splashColor: Colors.blue.withAlpha(30),
               onTap: () {
-                delete();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const ScreenLoginService(serviceName: 'netflix')));
               },
               child: const SizedBox(
                 width: 300,
@@ -101,29 +80,7 @@ class _TestGroupState extends State<TestGroup> {
                   child: ListTile(
                     leading: Icon(Icons.login),
                     title: Text(
-                      'Delete group',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      textScaleFactor: 2.0,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Card(
-            child: InkWell(
-              splashColor: Colors.blue.withAlpha(30),
-              onTap: () {
-                update();
-              },
-              child: const SizedBox(
-                width: 300,
-                height: 100,
-                child: Center(
-                  child: ListTile(
-                    leading: Icon(Icons.login),
-                    title: Text(
-                      'Update group',
+                      'Login to Netflix',
                       style: TextStyle(fontWeight: FontWeight.bold),
                       textScaleFactor: 2.0,
                     ),

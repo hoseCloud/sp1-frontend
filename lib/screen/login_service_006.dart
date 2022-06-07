@@ -21,36 +21,39 @@ class _ScreenLoginServiceState extends State<ScreenLoginService> {
   void _scanId(String value) {
     setState(() {
       _id = value;
-      debugPrint('id $_id');
     });
   }
 
   void _scanPw(String value) {
     setState(() {
       _pw = value;
-      debugPrint('pw: $_pw');
     });
   }
 
   void _doLogin() async {
     debugPrint('Do login');
-    String name = widget.serviceName;
+
     GroupModel proGroup = Provider.of<GroupModel>(context, listen: false);
     UserModel proUser = Provider.of<UserModel>(context, listen: false);
+    String name = widget.serviceName;
     Service service = Service.account(name, Account(_id, _pw));
-    service.changeStatus(0);
     Group group = Group.init();
+
+    service.changeStatus(0);
     group.ott = service;
     proGroup.add(group);
+
     service = await OTT().doAccountLogin(service);
     group.ott = service;
-
     proGroup.update(group);
+
     if (service.status == 200) {
       String appId = proUser.items[0].id;
       String groupId = await Groups().groupMake(appId, name, _id, _pw);
+
       group.groupId = groupId;
       proGroup.update(group);
+
       await Groups().groupUpdate(groupId, service);
     }
   }

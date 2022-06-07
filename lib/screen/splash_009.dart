@@ -3,8 +3,8 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:flutterapp/stats.dart';
 import 'package:flutterapp/global.dart';
-import 'package:flutterapp/screen/login_member004.dart';
-import 'package:flutterapp/screen/main_tabs008.dart';
+import 'package:flutterapp/screen/login_member_004.dart';
+import 'package:flutterapp/screen/main_tabs_008.dart';
 
 // #009 ScreenSplash
 class ScreenSplash extends StatefulWidget {

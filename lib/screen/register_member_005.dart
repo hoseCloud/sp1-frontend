@@ -19,28 +19,24 @@ class _ScreenRegisterMemberState extends State<ScreenRegisterMember> {
   void _scanEmail(String value) {
     setState(() {
       _email = value;
-      debugPrint('email $_email');
     });
   }
 
   void _scanId(String value) {
     setState(() {
       _id = value;
-      debugPrint('id $_id');
     });
   }
 
   void _scanPw(String value) {
     setState(() {
       _pw = value;
-      debugPrint('pw: $_pw');
     });
   }
 
   void _scanPwc(String value) {
     setState(() {
       _pwc = value;
-      debugPrint('pwc: $_pwc');
     });
   }
 
@@ -48,7 +44,9 @@ class _ScreenRegisterMemberState extends State<ScreenRegisterMember> {
     if (_pw != _pwc) {
       return;
     }
+
     debugPrint('Do register');
+
     User user = User(_id, _pw, _email, []);
     Users().userAdd(user);
   }

@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:flutterapp/stats.dart';
 import 'package:flutterapp/global.dart';
 import 'package:flutterapp/uris.dart';
-import 'package:flutterapp/screen/splash009.dart';
-import 'package:flutterapp/screen/register_member005.dart';
+import 'package:flutterapp/screen/register_member_005.dart';
+import 'package:flutterapp/screen/splash_009.dart';
 
 // #004 ScreenLoginMember
 class ScreenLoginMember extends StatefulWidget {
@@ -21,14 +21,12 @@ class _ScreenLoginMemberState extends State<ScreenLoginMember> {
   void _scanId(String value) {
     setState(() {
       _id = value;
-      debugPrint('id $_id');
     });
   }
 
   void _scanPw(String value) {
     setState(() {
       _pw = value;
-      debugPrint('pw: $_pw');
     });
   }
 
