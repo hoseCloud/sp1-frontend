@@ -80,7 +80,7 @@ class ScreenServiceDetail extends StatelessWidget {
                 Container(
                   width: screenWidth * 0.05,
                 ),
-                Container(
+                SizedBox(
                   width: screenWidth * 0.4,
                   child: ElevatedButton(
                     child: const Text(
@@ -95,7 +95,7 @@ class ScreenServiceDetail extends StatelessWidget {
                 Container(
                   width: screenWidth * 0.1,
                 ),
-                Container(
+                SizedBox(
                   width: screenWidth * 0.4,
                   child: ElevatedButton(
                     child: const Text(
