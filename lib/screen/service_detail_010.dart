@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:flutterapp/stats.dart';
 import 'package:flutterapp/global.dart';
@@ -45,7 +44,7 @@ class ScreenServiceDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var screenHeight = MediaQuery.of(context).size.height;
+    // var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -54,9 +53,11 @@ class ScreenServiceDetail extends StatelessWidget {
         children: [
           Image.asset('assets/images/${data.ott.name}_banner.png'),
           Text(
-            'GID: ${data.groupId}\n'
             '계정 ID: ${data.ott.account.id}\n'
-            '계정 PW: ${data.ott.account.pw}\n'
+            '계정 PW: ${data.ott.account.pw}',
+            textScaleFactor: 2.0,
+          ),
+          Text(
             '결제수단: ${data.ott.payment.type}\n'
             '결제정보: ${data.ott.payment.detail}\n'
             '결제예정: ${DateTime.fromMillisecondsSinceEpoch(data.ott.payment.next * 1000)}\n'
@@ -65,13 +66,11 @@ class ScreenServiceDetail extends StatelessWidget {
             '마지막 동기화: ${DateTime.fromMillisecondsSinceEpoch(data.updateTime * 1000)}\n'
             '계정 상태: ${data.ott.status}\n',
             textScaleFactor: 1.5,
-            textAlign: TextAlign.left,
           ),
           Text(
             '공유중인 유저\n'
             '${sharing(data.members)}\n',
             textScaleFactor: 1.5,
-            textAlign: TextAlign.left,
           ),
           Container(
             alignment: Alignment.center,
