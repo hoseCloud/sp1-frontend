@@ -22,6 +22,27 @@ class ScreenServiceDetail extends StatelessWidget {
     return result;
   }
 
+  ListTile member(int i) {
+    if(data.members[i].isAdmin == 1) {
+      return ListTile(
+        title: Text(
+          data.members[i].appId,
+          textScaleFactor: 2.0,
+        ),
+        leading: const Icon(Icons.star, color: Colors.blue,),
+      );
+    }
+    else {
+      return ListTile(
+        title: Text(
+          data.members[i].appId,
+          textScaleFactor: 2.0,
+        ),
+        leading: const Icon(Icons.person),
+      );
+    }
+  }
+
   void refresh(BuildContext context) async {
     Navigator.pop(context);
     debugPrint('Refresh tapped!');
@@ -48,28 +69,39 @@ class ScreenServiceDetail extends StatelessWidget {
     var screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: AppBar(),
+      endDrawer: Drawer(
+        backgroundColor: Colors.white,
+        child: ListView(
+          children: [
+            const Text(
+              '공유중인 계정',
+              textAlign: TextAlign.center,
+              textScaleFactor: 3.0,
+            ),
+            for(int i = 0; i < data.members.length; i++)
+              member(i),
+          ],
+        ),
+      ),
+      appBar: AppBar(
+        leading: const BackButton(),
+      ),
       body: ListView(
         children: [
           Image.asset('assets/images/${data.ott.name}_banner.png'),
           Text(
-            '계정 ID: ${data.ott.account.id}\n'
-            '계정 PW: ${data.ott.account.pw}',
+            '\n'
+            'ID: ${data.ott.account.id}\n'
+            'PW: ${data.ott.account.pw}\n',
             textScaleFactor: 2.0,
           ),
           Text(
             '결제수단: ${data.ott.payment.type}\n'
             '결제정보: ${data.ott.payment.detail}\n'
-            '결제예정: ${DateTime.fromMillisecondsSinceEpoch(data.ott.payment.next * 1000)}\n'
+            '결제예정: ${DateTime.fromMillisecondsSinceEpoch(data.ott.payment.next * 1000)}\n\n'
             '맴버쉽 종류: ${data.ott.membership.type}\n'
             '맴버쉽 가격: ${data.ott.membership.cost}\n'
-            '마지막 동기화: ${DateTime.fromMillisecondsSinceEpoch(data.updateTime * 1000)}\n'
-            '계정 상태: ${data.ott.status}\n',
-            textScaleFactor: 1.5,
-          ),
-          Text(
-            '공유중인 유저\n'
-            '${sharing(data.members)}\n',
+            '마지막 동기화: ${DateTime.fromMillisecondsSinceEpoch(data.updateTime * 1000)}\n',
             textScaleFactor: 1.5,
           ),
           Container(
