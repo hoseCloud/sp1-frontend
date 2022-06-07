@@ -152,30 +152,55 @@ class Users {
 class Groups {
   Future<Group> groupSearch(String groupId) async {
     Group group = Group.init();
+    List<Member> member = [];
+
     final response = await http.get(
       Uri.parse('$uri/group/$groupId'),
-      //headers: {"Content-Type": "application/json"},
+      headers: {"Content-Type": "application/json"},
     );
     if (response.statusCode == 200) {
-      debugPrint("success 200");
-      debugPrint('Response body: ${response.bodyBytes}');
-      debugPrint(response.bodyBytes.toString());
-      debugPrint(jsonDecode(utf8.decode(response.bodyBytes)));
-      //Map<String, dynamic> table = jsonDecode(response.body);
-      /*
-      group = Group(
-        table['group_id'],
-        table['ott'],
-        table['account'],
-        table['members'],
-      );
-      */
+      Map<String, dynamic> table = jsonDecode(response.body);
+
+      if(table['members'] != null) {
+        List<dynamic> members = table['members'];
+
+        for(int i = 0; i < members.length; i++) {
+          Map<String, dynamic> table = members[i];
+          member.add(Member(table['app_id'], table['is_admin']));
+        }
+
+        Map<String, dynamic> account = table['account'];
+        Map<String, dynamic> payment = account['payment'];
+        Map<String, dynamic> membership = account['membership'];
+
+        group = Group(
+            table['group_id'],
+            Service(
+              table['ott'],
+              Account(
+                account['id'],
+                account['pw'],
+              ),
+              Payment(
+                payment['type'],
+                payment['detail'] ?? '',
+                payment['next'],
+              ),
+              Membership(
+                membership['type'],
+                membership['cost'],
+              )
+            ),
+            table['update_time'],
+            member,
+          );
+      }
     } else {
       debugPrint("fail... else");
     }
     debugPrint('Url: $uri/group/$groupId');
     debugPrint('Response status: ${response.statusCode}');
-    // debugPrint('Response body: ${response.body}');
+    debugPrint('Response body: ${response.body}');
 
     return group;
   }
@@ -208,8 +233,7 @@ class Groups {
     return groupId;
   }
 
-  Future<Group> groupDelete(String groupId, String appId) async {
-    Group group = Group.init();
+  Future<void> groupDelete(String groupId, String appId) async {
     final response = await http.delete(
       Uri.parse('$uri/group/$groupId'),
       headers: {"Content-Type": "application/json"},
@@ -220,13 +244,6 @@ class Groups {
     if (response.statusCode == 200) {
       debugPrint("success 200");
       debugPrint('Response body: ${response.body}');
-      Map<String, dynamic> table = jsonDecode(response.body);
-      group = Group(
-        table['group_id'],
-        table['ott'],
-        table['account'],
-        table['members'],
-      );
     } else {
       debugPrint("fail... else");
     }
@@ -234,12 +251,9 @@ class Groups {
     debugPrint('Url: $uri/group/$groupId');
     debugPrint('Response status: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
-
-    return group;
   }
 
-  Future<Group> groupUpdate(String groupId, Service service) async {
-    Group group = Group.init();
+  Future<void> groupUpdate(String groupId, Service service) async {
     final response = await http.put(
       Uri.parse('$uri/group/$groupId'),
       headers: {"Content-Type": "application/json"},
@@ -259,13 +273,6 @@ class Groups {
     if (response.statusCode == 200) {
       debugPrint("success 200");
       debugPrint('Response body: ${response.body}');
-      Map<String, dynamic> table = jsonDecode(response.body);
-      group = Group(
-        table['group_id'],
-        table['ott'],
-        table['account'],
-        table['members'],
-      );
     } else {
       debugPrint("fail... else");
     }
@@ -273,8 +280,6 @@ class Groups {
     debugPrint('Url: $uri/group/$groupId');
     debugPrint('Response status: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
-
-    return group;
   }
 }
 
