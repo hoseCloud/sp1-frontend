@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutterapp/stats.dart';
 import 'package:flutterapp/screen/account001.dart';
 import 'package:flutterapp/screen/setting003.dart';
 import 'package:flutterapp/screen/payments007.dart';
@@ -32,6 +34,7 @@ class _ScreenMainTabsState extends State<ScreenMainTabs> {
 
   @override
   Widget build(BuildContext context) {
+    UserModel proUser = Provider.of<UserModel>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -64,15 +67,15 @@ class _ScreenMainTabsState extends State<ScreenMainTabs> {
       ),
       drawer: Drawer(
         child: ListView(
-          children: const [
+          children: [
             UserAccountsDrawerHeader(
-              accountName: Text('Hose'),
-              accountEmail: Text('hose@gmail.com'),
-              currentAccountPicture: CircleAvatar(
+              accountName: Text(proUser.items[0].id),
+              accountEmail: Text(proUser.items[0].email),
+              currentAccountPicture: const CircleAvatar(
                 child: FlutterLogo(size: 42.0),
               ),
             ),
-            ListTile(
+            const ListTile(
               title: Text('Detail'),
               leading: Icon(Icons.person),
             ),
