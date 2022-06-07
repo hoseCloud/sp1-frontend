@@ -71,7 +71,6 @@ class _ScreenLoginMemberState extends State<ScreenLoginMember> {
                 height: screenHeight * 0.1,
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(16.0),
-                color: Colors.blue,
                 child: TextField(
                   obscureText: false,
                   decoration: const InputDecoration(
