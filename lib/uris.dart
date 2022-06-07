@@ -53,13 +53,8 @@ class Users {
 
     if (response.statusCode == 201) {
       debugPrint("success 201");
-      debugPrint('Response body: ${response.body}');
-      Map<String, dynamic> table = jsonDecode(response.body);
-      user = User(
-        table['app_id'],
-        table['app_pw'],
-        '',
-      );
+      debugPrint(response.bodyBytes.toString());
+      debugPrint(response.body);
     } else {
       debugPrint("fail... else");
     }
@@ -106,24 +101,28 @@ class Groups {
     Group group = Group.init();
     final response = await http.get(
       Uri.parse('$uri/group/$groupId'),
-      headers: {"Content-Type": "application/json"},
+      //headers: {"Content-Type": "application/json"},
     );
     if (response.statusCode == 200) {
       debugPrint("success 200");
-      debugPrint('Response body: ${response.body}');
-      Map<String, dynamic> table = jsonDecode(response.body);
+      debugPrint('Response body: ${response.bodyBytes}');
+      debugPrint(response.bodyBytes.toString());
+      debugPrint(jsonDecode(utf8.decode(response.bodyBytes)));
+      //Map<String, dynamic> table = jsonDecode(response.body);
+      /*
       group = Group(
         table['group_id'],
         table['ott'],
         table['account'],
         table['members'],
       );
+      */
     } else {
       debugPrint("fail... else");
     }
     debugPrint('Url: $uri/group/$groupId');
     debugPrint('Response status: ${response.statusCode}');
-    debugPrint('Response body: ${response.body}');
+    // debugPrint('Response body: ${response.body}');
 
     return group;
   }
