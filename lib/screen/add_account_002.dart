@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/screen/login_service006.dart';
+import 'package:flutterapp/screen/login_service_006.dart';
 
 // #002 ScreenAddAccount
 class ScreenAddAccount extends StatefulWidget {
@@ -37,7 +37,7 @@ class _ScreenAddAccountState extends State<ScreenAddAccount> {
               child: const Center(
                 child: Text(
                   "추가할 서비스가 무엇인가요?",
-                  textScaleFactor: 2.5,
+                  textScaleFactor: 2.0,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
@@ -73,17 +73,20 @@ class _ScreenAddAccountState extends State<ScreenAddAccount> {
                     splashColor: Colors.blue.withAlpha(30),
                     onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ScreenLoginService(
-                                  serviceName: _service[index])));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ScreenLoginService(
+                            serviceName: _service[index],
+                          ),
+                        ),
+                      );
                     },
                     child: SizedBox(
                       width: 300,
                       height: 100,
                       child: Center(
                         child: ListTile(
-                          leading: const FlutterLogo(size: 100.0),
+                          leading: Image.asset('assets/images/${_service[index]}.png'),
                           title: Text(
                             _service[index],
                             style: const TextStyle(fontWeight: FontWeight.bold),

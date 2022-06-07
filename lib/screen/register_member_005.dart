@@ -1,58 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:flutterapp/stats.dart';
 import 'package:flutterapp/global.dart';
 import 'package:flutterapp/uris.dart';
 
-// #006 ScreenLoginService
-class ScreenLoginService extends StatefulWidget {
-  const ScreenLoginService({Key? key, required this.serviceName})
-      : super(key: key);
-  final String serviceName;
+// #005 ScreenRegisterMember
+class ScreenRegisterMember extends StatefulWidget {
+  const ScreenRegisterMember({Key? key}) : super(key: key);
 
   @override
-  State<ScreenLoginService> createState() => _ScreenLoginServiceState();
+  State<ScreenRegisterMember> createState() => _ScreenRegisterMemberState();
 }
 
-class _ScreenLoginServiceState extends State<ScreenLoginService> {
+class _ScreenRegisterMemberState extends State<ScreenRegisterMember> {
+  String _email = '';
   String _id = '';
   String _pw = '';
+  String _pwc = '';
+
+  void _scanEmail(String value) {
+    setState(() {
+      _email = value;
+    });
+  }
 
   void _scanId(String value) {
     setState(() {
       _id = value;
-      debugPrint('id $_id');
     });
   }
 
   void _scanPw(String value) {
     setState(() {
       _pw = value;
-      debugPrint('pw: $_pw');
     });
   }
 
-  void _doLogin() async {
-    debugPrint('Do login');
-    String name = widget.serviceName;
-    GroupModel proGroup = Provider.of<GroupModel>(context, listen: false);
-    UserModel proUser = Provider.of<UserModel>(context, listen: false);
-    Service service = Service.account(name, Account(_id, _pw));
-    service.changeStatus(0);
-    Group group = Group.init();
-    group.ott = service;
-    proGroup.add(group);
-    service = await OTT().doAccountLogin(service);
-    group.ott = service;
+  void _scanPwc(String value) {
+    setState(() {
+      _pwc = value;
+    });
+  }
 
-    proGroup.update(group);
-    if (service.status == 200) {
-      String appId = proUser.items[0].id;
-      String groupId = await Groups().groupMake(appId, name, _id, _pw);
-      group.groupId = groupId;
-      proGroup.update(group);
-      await Groups().groupUpdate(groupId, service);
+  void _doRegister() {
+    if (_pw != _pwc) {
+      return;
     }
+
+    debugPrint('Do register');
+
+    User user = User(_id, _pw, _email, []);
+    Users().userAdd(user);
   }
 
   @override
@@ -70,10 +66,23 @@ class _ScreenLoginServiceState extends State<ScreenLoginService> {
         ),
       ),
       Container(
-          height: screenHeight * 0.2,
+          height: screenHeight * 0.4,
           alignment: Alignment.center,
           child: Column(
             children: <Widget>[
+              Container(
+                height: screenHeight * 0.1,
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(16.0),
+                child: TextField(
+                  obscureText: false,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: '이메일',
+                  ),
+                  onChanged: _scanEmail,
+                ),
+              ),
               Container(
                 height: screenHeight * 0.1,
                 alignment: Alignment.center,
@@ -100,20 +109,32 @@ class _ScreenLoginServiceState extends State<ScreenLoginService> {
                   onChanged: _scanPw,
                 ),
               ),
+              Container(
+                height: screenHeight * 0.1,
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(16.0),
+                child: TextField(
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: '비밀번호 확인',
+                  ),
+                  onChanged: _scanPwc,
+                ),
+              ),
             ],
           )),
       Container(
-          height: screenHeight * 0.1,
-          alignment: Alignment.centerRight,
-          padding: const EdgeInsets.all(16.0),
-          child: ElevatedButton(
-            onPressed: () {
-              _doLogin();
-              Navigator.pop(context);
-              Navigator.pop(context);
-            },
-            child: const Text('로그인'),
-          )),
+        height: screenHeight * 0.1,
+        alignment: Alignment.centerRight,
+        padding: const EdgeInsets.all(16.0),
+        child: ElevatedButton(
+          onPressed: () {
+            _doRegister();
+          },
+          child: const Text('회원가입'),
+        ),
+      ),
     ];
 
     return Scaffold(
