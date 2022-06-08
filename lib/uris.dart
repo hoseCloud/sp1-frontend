@@ -278,6 +278,23 @@ class OTT {
 
     return result;
   }
+
+  Future<Service> doAccountRefresh(Service service) async {
+    late Service result;
+    switch (service.name) {
+      case 'netflix':
+        result = await Netflix().accountRefresh(service);
+        break;
+      case 'wavve':
+        result = await Wavve().accountRefresh(service);
+        break;
+      default:
+        result = service;
+        break;
+    }
+
+    return result;
+  }
 }
 
 class Netflix extends OTT {
@@ -383,6 +400,38 @@ class Wavve extends OTT {
     service.changeStatus(response.statusCode);
 
     debugPrint('URL: POST $uri/$name/account');
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
+
+    return service;
+  }
+
+  Future<Service> accountRefresh(Service service) async {
+    service.changeStatus(0);
+
+    final response = await http.put(
+      Uri.parse('$uri/$name/account'),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(<String, String>{
+        'ott_id': service.account.id,
+        'ott_pw': service.account.pw,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> account = jsonDecode(response.body);
+      Map<String, dynamic> payment = account['payment'];
+      Map<String, dynamic> membership = account['membership'];
+      service = Service(
+        name,
+        Account(account['id'], account['pw']),
+        Payment(payment['type']??'', payment['detail']??'', payment['next']),
+        Membership(membership['type'], membership['cost']),
+      );
+    }
+    service.changeStatus(response.statusCode);
+
+    debugPrint('URL: PUT $uri/$name/account');
     debugPrint('Response status: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
 
