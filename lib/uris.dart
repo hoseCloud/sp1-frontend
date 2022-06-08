@@ -425,7 +425,7 @@ class Wavve extends OTT {
       service = Service(
         name,
         Account(account['id'], account['pw']),
-        Payment(payment['type'], payment['detail'], payment['next']),
+        Payment(payment['type']??'', payment['detail']??'', payment['next']),
         Membership(membership['type'], membership['cost']),
       );
     }
