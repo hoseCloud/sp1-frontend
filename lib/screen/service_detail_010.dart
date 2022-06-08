@@ -49,7 +49,7 @@ class ScreenServiceDetail extends StatelessWidget {
     GroupModel pro = Provider.of<GroupModel>(context, listen: false);
     data.ott.changeStatus(0);
     pro.update(data);
-    Service service = await Netflix().accountRefresh(data.ott);
+    Service service = await OTT().doAccountRefresh(data.ott);
     data.ott = service;
     await Groups().groupUpdate(data.groupId, data.ott);
     pro.update(data);
